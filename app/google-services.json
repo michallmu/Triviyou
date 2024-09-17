@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "920466612234",
+    "project_id": "triviyou",
+    "storage_bucket": "triviyou.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:920466612234:android:f459a3bb1c9abb3bb07ff3",
+        "android_client_info": {
+          "package_name": "triviyou.michal.com"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkEvfU7CqSKWvktUYgMi42EZwSuOfS1gY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
