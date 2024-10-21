@@ -34,7 +34,6 @@
         android:layout_height="wrap_content"
         android:hint="Email"
         android:textColor="#FFFFFF"
-        android:text="shlomi@gmail.com"
         android:inputType="textEmailAddress"
         android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +53,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:textColorHint="#FFFFFF"
         android:textColor="#FFFFFF"
-        android:text="שלומי המלך"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:fontFamily="serif" />
@@ -70,12 +68,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:textColorHint="#FFFFFF"
         android:textColor="#FFFFFF"
-        android:text="12345"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:fontFamily="serif" />
 
     <EditText
+
         android:id="@+id/repeatPasswordEtRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -88,8 +86,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:fontFamily="serif"
-        android:textColor="#FFFFFF"
-        android:text="12345" />
+        android:textColor="#FFFFFF" />
 
     <Button
         android:id="@+id/btnCreateAcc"
@@ -115,6 +112,21 @@
         android:clickable="true"
         android:fontFamily="serif"
         android:text="@string/back"
+        android:layout_gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin" />
+
+    <TextView
+        android:id="@+id/tvGuide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:clickable="true"
+        android:fontFamily="serif"
+        android:text="@string/guide"
         android:layout_gravity="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp"

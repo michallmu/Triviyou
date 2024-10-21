@@ -36,9 +36,9 @@ import org.w3c.dom.Text;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    TextView tvBack;
+    TextView tvBack, tvGuide;
     Context context;
-    Intent inputIntent, goMain, goLogin;
+    Intent inputIntent, goMain, goLogin, goUserGuide;
     EditText etNicknameReg, emailEtRegister, passwordEtRegister, repeatPasswordEtRegister;
     Button btnCreateAcc;
     Helper helper = new Helper();
@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
                 {
 
                                 ///nicknema
-                    checkIfEmailExistsAndRegister(stEmail, stPassword, stNickName);
+                    checkIfEmailExistsAndRegister(stEmail,stNickName,stPassword);
 
 
 //                    firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -93,6 +93,13 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(goLogin);
             }
         });
+
+        tvGuide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(goUserGuide);
+            }
+        });
     }
 
 private void checkIfEmailExistsAndRegister(final String email, final String nickname, final String password) {
@@ -117,7 +124,7 @@ private void checkIfEmailExistsAndRegister(final String email, final String nick
 }
 
 private void createNewUser(final String email, final String nickname, final String password) {
-    firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+    firebaseAuth.createUserWithEmailAndPassword(email.toLowerCase(), password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
             if (task.isSuccessful()) {
@@ -165,16 +172,20 @@ private boolean validate(String stEmail, String stNickName, String stPassword, S
         return true;
     }
 
+
+
     private void initComponents() {
         context = RegisterActivity.this;
         inputIntent = getIntent();
         goLogin = new Intent(context, LoginActivity.class);
         goMain = new Intent(context, MainActivity.class);
+        goUserGuide = new Intent(context, UserGuide.class);
         etNicknameReg = findViewById(R.id.etNicknameReg);
         emailEtRegister = findViewById(R.id.emailEtRegister);
         passwordEtRegister = findViewById(R.id.passwordEtRegister);
         repeatPasswordEtRegister = findViewById(R.id.repeatPasswordEtRegister);
         btnCreateAcc = findViewById(R.id.btnCreateAcc);
         tvBack = findViewById(R.id.tvBack);
+        tvGuide = findViewById(R.id.tvGuide);
     }
 }
