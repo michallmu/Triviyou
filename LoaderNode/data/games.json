@@ -1,0 +1,56 @@
+[
+  {
+      "id": 1,
+      "name": "מדינות",
+      "description": "משחק על מדינות העולם",
+      "imageUrl": "https://drive.google.com/file/d/1NLL7krHnpvBRmjN4N8JzH4kdvjJuwJ_A/view",
+      "name_en": "countries",
+      "details": "משחק טריוויה מהנה על מדינות העולם וגיאוגרפיה שלהן.",
+      "isActive": true
+  },
+  {
+      "id": 2,
+      "name": "צרפתית",
+      "description": "משחק על השפה הצרפתית",
+      "imageUrl": "https://drive.google.com/file/d/1GP7Ph5mCHKUFE1E_eE_SXL53Pb_T0T6Q/view",
+      "name_en": "french",
+      "details": "למד על תרבות, שפה והיסטוריה צרפתית דרך שאלות טריוויה מעניינות.",
+      "isActive": true
+  },
+  {
+      "id": 3,
+      "name": "תאוריה",
+      "description": "משחק על תאוריות שונות",
+      "imageUrl": "",
+      "name_en": "theory",
+      "details": "חקר ובדוק את הידע שלך על תאוריות שונות במדע ובפילוסופיה.",
+      "isActive": true
+  },
+  {
+      "id": 4,
+      "name": "חשבון",
+      "description": "משחק על חשבון ומתמטיקה",
+      "imageUrl": "",
+      "name_en": "math",
+      "details": "אתגר את כישורי המתמטיקה שלך עם שאלות על אריתמטיקה, אלגברה וגיאומטריה.",
+      "isActive": true
+  },
+  {
+      "id": 5,
+      "name": "אנגלית",
+      "description": "משחק על השפה האנגלית",
+      "imageUrl": "",
+      "name_en": "english",
+      "details": "שחק במשחק טריוויה שמעמיק בשפה האנגלית וכולל שאלות על אוצר מילים ודקדוק.",
+      "isActive": true
+  },
+  {
+      "id": 6,
+      "name": "אוכל",
+      "description": "משחק על מאכלים שונים",
+      "imageUrl": "",
+      "name_en": "food",
+      "details": "גלה מידע על מאכלים ומנות מכל רחבי העולם דרך שאלות טריוויה טעימות.",
+      "isActive": true
+  }
+]

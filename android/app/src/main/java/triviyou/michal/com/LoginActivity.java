@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.google.firebase.FirebaseApp;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class LoginActivity extends AppCompatActivity {
 
     Context context;
-    Intent goMain, goRegister, inputIntent;
+    Intent goGames, goRegister, inputIntent;
     EditText etEmail, etPassword;
     Button btnLogin;
     TextView registerLinkTview;
@@ -29,11 +29,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this); // Make sure Firebase is initialized
-
-
         setContentView(R.layout.activity_login);
         initComponents();
 
@@ -44,13 +41,11 @@ public class LoginActivity extends AppCompatActivity {
                 email = etEmail.getText().toString().toLowerCase();
                 password = etPassword.getText().toString();
 
-                //todo  change mail length to 3
+                //change mail length to 3
                 if (email.length() < 2 || password.equals("")) {
                     helper.toasting(context, getString(R.string.messageEmptyOrInvalid));
                 } else {
                     checkValidAuth(email, password); // check in firebaseAuth
-
-
                 }
             }
         });
@@ -70,21 +65,16 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        // Sign-in successful
+                    if (task.isSuccessful()) { // Sign-in successful
                         FirebaseUser user = mAuth.getCurrentUser();
 
-                        goMain.putExtra("EMAIL", user.getEmail());
-                        goMain.putExtra("USER ID", user.getUid());
+                        goGames.putExtra("email", email);
+                        goGames.putExtra("userId", user.getUid());
+                        startActivity(goGames);
 
-                        startActivity(goMain);
-
-
-                    } else {
-                        // Sign-in failed
+                    } else { // Sign-in failed
                         String errorMessage = task.getException().getMessage();
                         Log.e("LoginError", errorMessage);
-
                         helper.toasting(context, getString(R.string.messageEmptyOrInvalid));
                     }
                 });
@@ -93,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
     private void initComponents() {
         context = LoginActivity.this;
         inputIntent = getIntent();
-        goMain = new Intent(context, MainActivity.class);
+        goGames = new Intent(context, GamesActivity.class);
         goRegister = new Intent(context, RegisterActivity.class);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);

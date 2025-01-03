@@ -1,0 +1,51 @@
+Question,Answer1,Answer2,Answer3,Answer4,CorrectAnswer,DifficultyLevel,QuestionType,AnswerType,GameNumber
+איך אומרים שלום בצרפתית?,Hola,Ciao,Hello,Bonjour,4,1,text,text,6
+איך אומרים תודה בצרפתית?,Gracias,Mercy,Thank you,Merci,4,1,text,text,6
+איך אומרים סליחה בצרפתית?,Pardon,Lo siento,Scusi,Excusez-moi,1,1,text,text,6
+איך אומרים כן בצרפתית?,Oui,Yes,Si,Da,1,1,text,text,6
+איך אומרים לא בצרפתית?,Non,No,Nej,Nein,1,1,text,text,6
+איך אומרים חתול בצרפתית?,Gato,Chat,Katze,Gatto,2,2,text,text,6
+איך אומרים כלב בצרפתית?,Hund,Cane,Chien,Perro,3,2,text,text,6
+איך אומרים בית בצרפתית?,Maison,House,Casa,Zuhause,1,2,text,text,6
+איך אומרים בית ספר בצרפתית?,Escuela,School,Schule,École,4,2,text,text,6
+איך אומרים ספר בצרפתית?,Libro,Buch,Livre,Book,3,2,text,text,6
+איך אומרים מים בצרפתית?,Aqua,Agua,Eau,Water,3,3,text,text,6
+איך אומרים אוכל בצרפתית?,Comida,Nahrung,Nourriture,Food,3,3,text,text,6
+איך אומרים יום בצרפתית?,Jour,Tag,Día,Giorno,1,3,text,text,6
+איך אומרים לילה בצרפתית?,Nuit,Nacht,Noche,Noite,1,3,text,text,6
+איך אומרים אוטובוס בצרפתית?,Autobus,Bus,Autocar,Autobus,1,3,text,text,6
+מה פירוש המילה rouge?,אדום,כחול,צהוב,ירוק,1,4,text,text,6
+מה פירוש המילה bleu?,כחול,אדום,צהוב,ירוק,1,4,text,text,6
+מה פירוש המילה vert?,אדום,כחול,ירוק,צהוב,3,4,text,text,6
+מה פירוש המילה jaune?,צהוב,כחול,אדום,ירוק,1,4,text,text,6
+מה פירוש המילה noir?,שחור,לבן,אפור,חום,1,4,text,text,6
+איך אומרים רופא בצרפתית?,Doctor,Medic,Docteur,Médecin,4,5,text,text,6
+איך אומרים עורך דין בצרפתית?,Advokat,Lawyer,Avocat,Loyeur,3,5,text,text,6
+איך אומרים מורה בצרפתית?,Teacher,Professeur,Professor,Prof,2,5,text,text,6
+איך אומרים סטודנט בצרפתית?,Schüler,Étudiant,Student,Schüler,2,5,text,text,6
+איך אומרים מהנדס בצרפתית?,Engineer,Ingénieur,Ingeniero,Ingenieur,2,5,text,text,6
+איך אומרים כיסא בצרפתית?,Silla,Stuhl,Chaise,Chaire,3,6,text,text,6
+איך אומרים שולחן בצרפתית?,Table,Tisch,Mesa,Desco,1,6,text,text,6
+איך אומרים דלת בצרפתית?,Puerta,Porte,Door,Porte,2,6,text,text,6
+איך אומרים חלון בצרפתית?,Ventana,Fenster,Fenêtre,Ventana,3,6,text,text,6
+איך אומרים מיטה בצרפתית?,Cama,Bett,Lit,Lett,3,6,text,text,6
+איך אומרים ברוך הבא בצרפתית?,Welcome,Bienvenue,Willkommen,Bienvenido,2,7,text,text,6
+איך אומרים אני אוהב אותך בצרפתית?,Je t'aime,Te quiero,Ich liebe dich,Ti amo,1,7,text,text,6
+איך אומרים אני רעב בצרפתית?,Tengo hambre,Ich habe Hunger,J'ai faim,Ho fame,3,7,text,text,6
+איך אומרים אני עייף בצרפתית?,Estoy cansado,Je suis fatigué,Ich bin müde,Io sono stanco,2,7,text,text,6
+איך אומרים אני שמח בצרפתית?,Estoy feliz,Je suis heureux,Ich bin glücklich,Sono felice,2,7,text,text,6
+איך אומרים מזג אוויר בצרפתית?,Wetter,Tiempo,Météo,Clima,3,8,text,text,6
+איך אומרים גשם בצרפתית?,Lluvia,Pioggia,Regen,Pluie,4,8,text,text,6
+איך אומרים שלג בצרפתית?,Neige,Schnee,Neve,Snow,1,8,text,text,6
+איך אומרים רוח בצרפתית?,Viento,Vent,Vento,Wind,2,8,text,text,6
+איך אומרים שמש בצרפתית?,Soleil,Sol,Sonne,Sole,Soleil,1,8,text,text,6
+איך אומרים חתונה בצרפתית?,Mariage,Wedding,Hochzeit,Matrimonio,1,9,text,text,6
+איך אומרים חופשה בצרפתית?,Vacances,Vacation,Ferie,Ferien,1,9,text,text,6
+איך אומרים בית חולים בצרפתית?,Hospital,Spital,Hôpital,Clinica,3,9,text,text,6
+איך אומרים תאונה בצרפתית?,Accidente,Unfall,Accident,Incidente,3,9,text,text,6
+איך אומרים נשק בצרפתית?,Weapon,Arme,Waffe,Arma,2,9,text,text,6
+איך אומרים היסטוריה בצרפתית?,Historia,History,Historie,Histoire,4,10,text,text,6
+איך אומרים אוצר מילים בצרפתית?,Vocabulary,Vocabulaire,Vokabular,Vocabolario,2,10,text,text,6
+איך אומרים תרבות בצרפתית?,Culture,Cultura,Kultur,Cultura,1,10,text,text,6
+איך אומרים שפה בצרפתית?,Langue,Lenguaje,Language,Linguaggio,1,10,text,text,6
+איך אומרים מילה בצרפתית?,Palabra,Word,Wort,Mot,4,10,text,text,6

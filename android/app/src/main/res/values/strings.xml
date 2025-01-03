@@ -2,19 +2,31 @@
     <string name="app_name">Triviyou</string>
     <string name="password">סיסמה</string>
     <string name="repeatPassword">אימות סיסמה</string>
-    <string name="username">כינוי לבחירתך</string>
+    <string name="newPassword">סיסמה חדשה</string>
+    <string name="repeatNewPassword">אימות סיסמה חדשה</string>
     <string name="createrAccount">צור משתמש</string>
     <string name="reg">לרישום ראשוני</string>
     <string name="login">התחבר</string>
     <string name="back">חזור</string>
+    <string name="backLogin">חזור להתחברות</string>
+    <string name="backSignup">חזור להרשמה</string>
     <string name="emptyStatement">יש למלא את כל השדות</string>
     <string name="messageEmptyOrInvalid">אימייל או סיסמה אינם תקינים, נסה שוב</string>
     <string name="messagePassword">סיסמה לא תקינה, נסה שוב</string>
+    <string name="messageEmptyPassword">מלאו את כל השדות</string>
     <string name="messageNotEqualPasswords">הסיסמאות לא תואמות, נסה שוב</string>
     <string name="guide">מדריך למתחילים</string>
-
-
-    <string name="textGuide">ברוכים הבאים לאפליקציית טריוויה אינטראקטיבית שנועדה להעניק חוויית משחק מהנה ומאתגרת. התחילו ביצירת חשבון או התחברות לחשבון קיים, ולאחר מכן בחרו את רמת הקושי שמתאימה לכם. תבחרו את נושא החידון שתרצו ותצטרכו לענות נכון ובמהירות על מגוון השאלות כדי לצבור נקודות. ככל שתתקדמו בשלבים, השאלות יהפכו קשות יותר, אבל כך גם הניקוד שתוכלו לצבור.</string>
-
-
+    <string name="letsPlay">בחרו את נושא המשחק</string>
+    <string name="startPlay">התחילו לשחק!</string>
+    <string name="close">סגור</string>
+    <string name="nextQuestion">לשאלה הבאה</string>
+    <string name="iWantChangePass">אני רוצה לשנות סיסמה</string>
+    <string name="change">שנה</string>
+    <string name="emailAlreadyExists">אימייל זה כבר קיים במערכת</string>
+    <string name="ErrorCheckingEmail">שגיאה בבדיקת האימייל</string>
+    <string name="registeredSuccessfuly">נרשמת בהצלחה</string>
+    <string name="iWantLogOut">אני רוצה להתנתק</string>
+    <string name="statusMessage">רמה: %d/%d</string>
+    <string name="wrongAnswerTryAgain">טעית. נסו שוב!</string>
+    <string name="textGuide">אפליקציית TRIVIYOU היא משחק טריוויה מהנה ומאתגר שמציע חווית למידה תוך כדי תחרות. בתחילת השימוש, עליכם להתחבר לחשבונכם או ליצור חשבון חדש אם זו הפעם הראשונה שלכם באפליקציה. לאחר מכן, תוכלו לבחור את נושא הטריוויה שמעניין אתכם, כמו היסטוריה, מדע, ספורט או מוזיקה. כל חידון מורכב ממספר שאלות, ובכל שאלה יש ארבע תשובות אפשריות, רק אחת מהן נכונה. לכל שאלה מוקצב זמן מוגבל, כך שתצטרכו להיות מהירים ומדויקים כדי לענות נכונה. רמות הקושי עולות ככל שתתקדמו בחידון, כך שבמהלך המשחק תתמודדו עם שאלות מאתגרות יותר. האפליקציה לא רק מספקת אתגר, אלא גם מסייעת ללמוד נושאים חדשים בדרך כיפית ומרתקת.</string>
 </resources>

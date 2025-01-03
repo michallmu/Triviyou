@@ -5,58 +5,47 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1C4D75"
+    android:background="#DBCCC6"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:padding="15dp"
     tools:context=".UserGuide">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="serif"
-        android:gravity="center"
-        android:text="אודותינו"
-        android:textColor="#FFFFFF"
-        android:textSize="60dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"  />
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imgBback2"
+            android:layout_width="43dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="#DBCCC6"
+            app:srcCompat="@drawable/back" />
+
+        <TextView
+            android:layout_width="307dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:gravity="center"
+
+            android:text="@string/guide"
+            android:textColor="#333333"
+            android:textSize="26dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="584dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
         android:fontFamily="serif"
         android:gravity="center"
-        android:lineSpacingExtra="10sp"
+        android:lineSpacingExtra="10dp"
         android:text="@string/textGuide"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="#333333"
+        android:textSize="20dp" />
 
 
-    <Button
-        android:id="@+id/bBack2"
-        android:layout_width="152dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#FFFFFF"
-        android:fontFamily="serif"
-        android:text="@string/back"
-        android:textColor="#1C4D75"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" /> />
 </LinearLayout>

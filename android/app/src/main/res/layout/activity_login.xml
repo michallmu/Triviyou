@@ -1,88 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1C4D75"
-    android:padding="20dp"
+    android:background="#DBCCC6"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:gravity="center"
     tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:fontFamily="serif-monospace"
-        android:text="TRIVIYOU"
-        android:textColor="#FFFFFF"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/etEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        android:fontFamily="serif"
+        android:textColor="#333333"
+        android:gravity="center"
+        android:text="התחברות"
+        android:textSize="46dp"
+        android:textStyle="bold" />
+
 
     <EditText
         android:id="@+id/etEmail"
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="25dp"
-        android:fontFamily="serif"
-        android:hint="כתובת אימייל"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_background"
+        android:gravity="right"
         android:inputType="textEmailAddress"
+        android:hint="כתובת אימייל"
+        android:textColor="#333333"
         android:text="shlomi@gmail.com"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+        android:textColorHint="#333333"
+        android:fontFamily="serif"
+        />
+
+
 
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="0dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
         android:fontFamily="serif"
-        android:hint="סיסמה"
+        android:layout_marginTop="7dp"
+        android:hint="@string/password"
         android:inputType="textPassword"
+        android:background="@drawable/round_background"
+        android:textColor="#333333"
+        android:layout_gravity="center"
+        android:gravity="right"
         android:text="123456789"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etEmail" />
+        android:textColorHint="#333333" />
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#FFFFFF"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#333333"
         android:fontFamily="serif"
         android:text="@string/login"
-        android:textColor="#1C4D75"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPassword" />
+        android:textColor="#fff2e0"
+        android:textSize="18dp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/registerLinkTview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:clickable="true"
         android:fontFamily="serif"
         android:text="@string/reg"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnLogin" />
+        android:textColor="#333333"
+        android:textSize="20dp"
+        android:layout_gravity="center"
+        android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

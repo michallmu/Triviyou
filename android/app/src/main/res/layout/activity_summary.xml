@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:background="#DBCCC6"
+    tools:context=".SummaryActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:textColor="#333333"
+        android:layout_marginTop="150dp"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:text="כל הכבוד" />
+
+    <TextView
+        android:id="@+id/tvGameDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:textColor="#333333"
+        android:textSize="20dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:text="סיימת את משחק __(שם המשחק)__!" />
+
+
+    <Button
+        android:id="@+id/bBackGamesList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#333333"
+        android:fontFamily="serif"
+        android:text="חזור לדף בחירת משחק"
+        android:textColor="#DBCCC6"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+</LinearLayout>

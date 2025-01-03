@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#DBCCC6">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imgBback5"
+            android:layout_width="43dp"
+            android:layout_height="match_parent"
+            android:backgroundTint="#DBCCC6"
+            app:srcCompat="@drawable/back" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgGame"
+        android:layout_width="104dp"
+        android:layout_height="93dp"
+        android:layout_gravity="center" />
+
+    <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:textColor="#333333"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:textColor="#333333"
+            android:textSize="20dp"
+            android:layout_marginBottom="15dp"
+            android:text="" />
+
+
+    <TextView
+        android:id="@+id/tvDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:textColor="#333333"
+        android:textSize="20dp"
+        android:layout_marginBottom="15dp"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:textColor="#333333"
+        android:textSize="20dp"
+        android:layout_marginBottom="15dp" />
+
+    <Button
+            android:id="@+id/bPlay"
+            android:layout_width="221dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#333333"
+            android:fontFamily="serif"
+            android:text="@string/startPlay"
+            android:textColor="#DBCCC6"
+            android:layout_gravity="center"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
