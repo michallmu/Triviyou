@@ -154,6 +154,7 @@ public class QuestionActivity extends AppCompatActivity {
         return questions;
     }
 
+    // i use this function to load question from local json, before i  have the questions inside firestore
     private  String loadJSONFromAsset(Context context, int resourceId) {
             StringBuilder json = new StringBuilder();
             try {

@@ -3,58 +3,72 @@ package triviyou.michal.com.entities;
 import java.util.Objects;
 
 public class Game {
-    private String id;          // GUID
-    private String title;       // Game title
+    private int id;          // GUID
+    private String name;
+    private String name_en;
     private String description; // Game description
     private String imageUrl;
-    private boolean clickable;
+    private boolean isActive;
 
-    public Game(String id, String title, String description, String imageUrl, boolean clickable) {
+    public Game()
+    {
+
+    }
+    public Game(int id,String name, String name_en, String description ,String imageUrl,boolean isActive) {
         this.id = id;
-        this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
-        this.clickable = clickable;
+        this.isActive = isActive;
+        this.name = name;
+        this.name_en = name_en;
+
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName_en() {
+        return name_en;
+    }
+
+    public void setName_en(String name_en) {
+        this.name_en = name_en;
+    }
+
     public String getImageUrl() {
         return imageUrl;
-    }
-
-    public void setClickable(boolean clickable) {
-        this.clickable = clickable;
-    }
-
-    public boolean isClickable() {
-        return clickable ;
     }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public boolean isActive() {
+        return isActive;
     }
 
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }

@@ -1,6 +1,7 @@
 package triviyou.michal.com.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +37,9 @@ public class GameAdapter extends ArrayAdapter<Game> {
         TextView txtGameDescription = convertView.findViewById(R.id.txtGameDescription);
         ImageView imgGame = convertView.findViewById(R.id.imgGame);
 
-        txtGameTitle.setText(game.getTitle());
+        txtGameTitle.setText(game.getName());
         txtGameDescription.setText(game.getDescription());
-
+        imgGame.setImageURI(Uri.parse(game.getImageUrl()));
         // Load the image using Glide (fetch from Firebase URL)
         Glide.with(context)
                 .load(game.getImageUrl())
@@ -46,8 +47,8 @@ public class GameAdapter extends ArrayAdapter<Game> {
                 .into(imgGame);
 
         // Set clickable or non-clickable based on logic
-        convertView.setEnabled(game.isClickable());
-        convertView.setAlpha(game.isClickable() ? 1.0f : 0.5f);
+        convertView.setEnabled(game.isActive());
+        convertView.setAlpha(game.isActive() ? 1.0f : 0.5f);
 
         return convertView;
     }

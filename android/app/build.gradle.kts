@@ -38,7 +38,8 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.auth)
-    implementation(libs.play.services.games) // אם lib לא עובד, הוסף את השורות הבאות
+    implementation(libs.play.services.games)
+    implementation(libs.firebase.firestore) // אם lib לא עובד, הוסף את השורות הבאות
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -56,5 +57,6 @@ dependencies {
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.code.gson:gson:2.8.8")
+    implementation("com.google.firebase:firebase-firestore:24.7.1")
 
 }

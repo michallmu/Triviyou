@@ -47,7 +47,7 @@
     <ListView
         android:id="@+id/lvGames"
         android:layout_width="match_parent"
-        android:layout_height="447dp"
+        android:layout_height="642dp"
         android:layout_marginTop="25dp" />
 
 
