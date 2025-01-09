@@ -28,7 +28,6 @@ public class GamesActivity extends AppCompatActivity {
     Context context;
     String email, userId;
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,71 +41,52 @@ public class GamesActivity extends AppCompatActivity {
         lvGames = findViewById(R.id.lvGames);
         imageAccount = findViewById(R.id.imageAccount);
 
+        lvGames.setClickable(true);
 
         userId = inputIntent.getStringExtra("userId");
-        //email = inputIntent.getStringExtra(email);
 
-        imgBback3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(goLogin);
-            }
-        });
+        imgBback3.setOnClickListener(v -> startActivity(goLogin));
 
-        imageAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(goProfile);
-        //        goProfile.putExtra("email", email);
-            }
-        });
+        imageAccount.setOnClickListener(v -> startActivity(goProfile));
 
         // Initialize Firestore
         db = FirebaseFirestore.getInstance();
 
-       gameList =  new ArrayList<Game>();
-       adapter = new GameAdapter(this, gameList);
-        // Set adapter
+        gameList = new ArrayList<>();
+        adapter = new GameAdapter(this, gameList);
+
+        // Set adapter to ListView
         lvGames.setAdapter(adapter);
+
         getGamesFromDB();
-
-
-
-        // Item click listener
-
-        lvGames.setOnItemClickListener((parent, view, position, id) -> {
-            Game clickedGame = gameList.get(position);
-            if (clickedGame.isActive()) {
-                // Logic for when a game is clicked
-                Intent goPlaying = new Intent(context, PlayingActivity.class);
-
-                /*goPlaying.putExtra("gameTitle", clickedGame.getTitle());
-                goPlaying.putExtra("gameDescription", clickedGame.getDescription());
-                goPlaying.putExtra("gameUrl", clickedGame.getImageUrl());*/
-                goPlaying.putExtra("userId", userId);
-                goPlaying.putExtra("gameId", clickedGame.getId());
-                startActivity(goPlaying);
-
-            }
-        });
     }
 
     private void getGamesFromDB() {
-
-
-//        gameList.add(new Game("1", "סרטים", "גלה את העולם המרתק של הסרטים","hello123.hpg", true));
-//        gameList.add(new Game("2", "מדינות", "חידון מדינות","hello123.hpg", true));
-//        gameList.add(new Game("3", "מאכלים", "חידון מאכלים","hello123.hpg", true));
-
         db.collection("games")
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        gameList.clear(); // Clear old data
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Game game = document.toObject(Game.class);
+                            boolean isActive = document.getBoolean("isActive");
+                            game.setActive(isActive);
                             gameList.add(game);
                         }
+                        Log.d("GameList", "Games fetched: " + gameList.size());  // Log the size of the list
                         adapter.notifyDataSetChanged(); // Update ListView
+
+                        // Set item click listener after data is fetched
+                        lvGames.setOnItemClickListener((parent, view, position, id) -> {
+                            Log.d("ItemClick", "Item clicked at position: " + position);  // Log click event
+                            Game clickedGame = gameList.get(position);
+                            if (clickedGame.isActive()) {
+                                Intent goPlaying = new Intent(context, PlayingActivity.class);
+                                goPlaying.putExtra("userId", userId);
+                                goPlaying.putExtra("gameId", clickedGame.getId());
+                                startActivity(goPlaying);
+                            }
+                        });
                     } else {
                         Log.e("DataBase", "Error", task.getException());
                     }
