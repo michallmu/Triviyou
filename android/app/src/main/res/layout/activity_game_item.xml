@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:padding="10dp"
-    android:background="#DBCCC6"
+    android:background="#F9F9F9"
     android:layout_marginBottom="8dp">
 
     <!-- Text (Name and Description) on the left -->
@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:text="שם המשחק"
             android:textSize="18dp"
+            android:fontFamily="serif"
             android:layout_gravity="right"
             android:clickable="false"
             android:textStyle="bold"
@@ -37,6 +38,7 @@
             android:layout_marginTop="5dp"
             android:text="תיאור קצר של המשחק"
             android:textSize="14dp"
+            android:fontFamily="serif"
             android:layout_gravity="right"
             android:clickable="false"
             android:focusable="false"

@@ -4,15 +4,16 @@ const csv = require('csv-parser');
 const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccountKey.json');
 
+//init fb with secert keys
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 
 const db = admin.firestore();
-let questionId = 0; // Initialize global question ID
+let questionId = 1; // Initialize global question ID
 
 // Function to upload games data and images to Firestore
-async function uploadAll() {
+async function mainUploadAll() {
 
   const games = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'games.json'), 'utf8'));
 
@@ -21,11 +22,11 @@ async function uploadAll() {
       // Read image file and convert to base64
       const gameData = initGameData(game);
 
-      const docRef = await db.collection('games').doc(game.id.toString()).set(gameData);
-      //console.log(`Inserted game: ${JSON.stringify(gameData)}`);
-      //console.log(`Document URL: https://console.firebase.google.com/project/${serviceAccount.project_id}/firestore/data/games/${docRef.id}`);
-
-      // Call uploadCSVData for each game
+      // when no need to load the games set this in comment
+      //const docRef = await db.collection('games').doc(game.id.toString()).set(gameData);
+    
+    
+      // load the question from csv, Call uploadCSVData for each game
       await uploadCSVData(game.name_en);
     } catch (error) {
       console.error('Error inserting game data:', error);
@@ -68,7 +69,7 @@ async function uploadCSVData(gameName) {
   return;
 }
 
-  // Read the CSV file in data[]
+  // Read the CSV file into  data array
   fs.createReadStream(csvFilePath)
     .pipe(csv())
     .on('data', (row) => {
@@ -76,35 +77,32 @@ async function uploadCSVData(gameName) {
       data.push(row);
     })
     .on('end', () => {
-      console.log(`CSV file ${gameName}.csv successfully processed. `);
+      console.log(`CSV file ${gameName}.csv successfully converted to local array. `);
 
       // Insert data into Firestore collection
       data.forEach(async (record) => {
         try {
           // Map CSV fields to Firestore document fields
-          const docData = {           
-            gameNumber: parseInt(record['GameNumber'], 10),
-            question: record['Question'].replace(/"/g, '').trim(),
-            answer1: record['Answer1'].replace(/"/g, '').trim(),
-            answer2: record['Answer2'].replace(/"/g, '').trim(),
-            answer3: record['Answer3'].replace(/"/g, '').trim(),
-            answer4: record['Answer4'].replace(/"/g, '').trim(),
-            correctAnswer: parseInt(record['CorrectAnswer'], 10),
-            difficultyLevel: parseInt(record['DifficultyLevel'], 10),
-            questionType: record['QuestionType'],
-            answerType: record['AnswerType']
+          const docData = {    
+            id: questionId,       
+            gameId: parseInt(record['gameId'], 10),
+            questionText: record['questionText'].replace(/"/g, '').trim(),
+            answer1: record['answer1'].replace(/"/g, '').trim(),
+            answer2: record['answer2'].replace(/"/g, '').trim(),
+            answer3: record['answer3'].replace(/"/g, '').trim(),
+            answer4: record['answer4'].replace(/"/g, '').trim(),
+            correctAnswer: parseInt(record['correctAnswer'], 10),
+            level: parseInt(record['level'], 10),
+            questionType: record['questionType'],
           };
 
-          // Add data to "questions" collection in Firestore
-          questionId++;
-          const docRef = await db.collection('questions').doc(questionId.toString()).set(docData);
-         
-          //console.log(`Document URL: https://console.firebase.google.com/project/${serviceAccount.project_id}/firestore/data/${docRef.path}`);
-          //console.log(`insert doc id ${questionId} in game ${gameName}`);         
-          //console.log(`Inserted: ${JSON.stringify(docData)}`);
-          //console.log(`Document URL: https://console.firebase.google.com/project/${serviceAccount.project_id}/firestore/data/${docRef.path}`);
+          // Add data to "questions" collection in Firestore       
+          const docRef = await db.collection('questions').doc((questionId++).toString()).set(docData);         
+         // console.log('questionId : ',questionId);
+        
+          
         } catch (error) {
-          console.error('Error inserting data:', error);
+          console.error('Error inserting  question :', docData,  error);
         }
       });
     })
@@ -113,5 +111,5 @@ async function uploadCSVData(gameName) {
     });
 }
 
-// Run the functions
-uploadAll();
+// Main Run the functions
+mainUploadAll();

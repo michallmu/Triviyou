@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp"
-    android:background="#DBCCC6"
+    android:background="#F9F9F9"
     tools:context=".GamesActivity">
 
 
@@ -21,24 +21,24 @@
             android:id="@+id/imgBback3"
             android:layout_width="43dp"
             android:layout_height="match_parent"
-            android:backgroundTint="#DBCCC6"
+            android:backgroundTint="#F9F9F9"
             app:srcCompat="@drawable/back" />
 
         <TextView
-            android:layout_width="282dp"
+            android:layout_width="291dp"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
-            android:text="@string/letsPlay"
             android:gravity="center"
-            android:textColor="#333333"
+            android:text="@string/letsPlay"
+            android:textColor="#004680"
             android:textSize="25dp"
             android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/imageAccount"
-            android:layout_width="wrap_content"
+            android:layout_width="62dp"
             android:layout_height="match_parent"
-            android:backgroundTint="#DBCCC6"
+            android:backgroundTint="#F9F9F9"
             app:srcCompat="@drawable/account" />
 
     </LinearLayout>

@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context=".RegisterActivity"
     android:padding="15dp"
-    android:background="#DBCCC6" >
+    android:background="#F9F9F9" >
 
 
     <LinearLayout
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="left"
-            android:backgroundTint="#DBCCC6"
+            android:backgroundTint="#F9F9F9"
             app:srcCompat="@drawable/back" />
 
         <ImageButton
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginLeft="280dp"
-            android:backgroundTint="#DBCCC6"
+            android:backgroundTint="#F9F9F9"
             app:srcCompat="@drawable/userguide" />
     </LinearLayout>
 
@@ -42,9 +42,9 @@
         android:fontFamily="serif"
         android:gravity="center"
         android:text="הרשמה"
-        android:textColor="#333333"
+        android:textColor="#004680"
         android:textStyle="bold"
-        android:textSize="45dp" />
+        android:textSize="30dp" />
 
     <EditText
         android:id="@+id/emailEtRegister"
@@ -65,7 +65,7 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/round_background"
         android:fontFamily="serif"
         android:gravity="right"
@@ -82,7 +82,7 @@
         android:inputType="textPassword"
         android:textColorHint="#3d6664"
         android:layout_gravity="center"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="serif"
         android:background="@drawable/round_background"
         android:gravity="right"
@@ -94,10 +94,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#333333"
+        android:backgroundTint="#004680"
         android:fontFamily="serif"
         android:text="@string/createrAccount"
-        android:textColor="#DBCCC6"
+        android:textColor="#FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold" />
 

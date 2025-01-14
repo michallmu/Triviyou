@@ -13,17 +13,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
 import java.util.LinkedList;
 import java.util.List;
 import androidx.activity.EdgeToEdge;
@@ -33,13 +26,17 @@ import triviyou.michal.com.entities.Question;
 public class QuestionActivity extends AppCompatActivity {
     Context context;
     ImageButton imgBback6;
+    private FirebaseFirestore db;
     Intent goGames, inputIntent;
-    String userId, gameId;
+    String userId;
+    int gameId;
     TextView tvShowLevel, tvQuestionText;
     RadioGroup answersGroup;
     RadioButton rbAnswer1, rbAnswer2, rbAnswer3, rbAnswer4;
-    Button bNextQuestion;
+    Button bSubmit;
     int currentLevel, maxLevel, selectedAnswer, checkedId;
+    private List<Question> questionList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +49,16 @@ public class QuestionActivity extends AppCompatActivity {
         imgBback6 = findViewById(R.id.imgbBack6);
         inputIntent = getIntent();
         userId = inputIntent.getStringExtra("userId");
-        gameId = inputIntent.getStringExtra("gameId");
+        gameId = inputIntent.getIntExtra("gameId",1);
         tvShowLevel = findViewById(R.id.tvShowLevel);
         tvQuestionText = findViewById(R.id.tvQuestionText);
         rbAnswer1 = findViewById(R.id.rbAnswer1);
         rbAnswer2 = findViewById(R.id.rbAnswer2);
         rbAnswer3 = findViewById(R.id.rbAnswer3);
         rbAnswer4 = findViewById(R.id.rbAnswer4);
-        bNextQuestion = findViewById(R.id.bNextQuestion);
+        bSubmit = findViewById(R.id.bSubmit);
         answersGroup = findViewById(R.id.answersGroup);
+        db = FirebaseFirestore.getInstance();
 
 
         //goto fireabse ask 2 queries
@@ -73,9 +71,9 @@ public class QuestionActivity extends AppCompatActivity {
         tvShowLevel.setText(statusMessage);
 
         //get the questions left in game
-        LinkedList<Question> questions = getQuestion(gameId);
+         getQuestionsFromDB(gameId);
 
-        initQuestion(questions.getFirst());
+        initQuestion(questionList.get(0));
 
         //return to  game screen
         imgBback6.setOnClickListener(new View.OnClickListener() {
@@ -87,17 +85,17 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
 
-        bNextQuestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!questions.isEmpty()) { // Remove the first question from the list and get the next one
-                    questions.removeFirst();
-                    if (!questions.isEmpty()) {
-                        initQuestion(questions.getFirst());
-                    }
-                }
-            }
-        });
+//        bSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!questions.isEmpty()) { // Remove the first question from the list and get the next one
+//                    questions.removeFirst();
+//                    if (!questions.isEmpty()) {
+//                        initQuestion(questions.getFirst());
+//                    }
+//                }
+//            }
+//        });
 
     }
     private void initQuestion(Question question) {
@@ -120,7 +118,7 @@ public class QuestionActivity extends AppCompatActivity {
             }
 
             // הצגת כפתור "שאלה הבאה" לאחר בחירת תשובה
-            bNextQuestion.setVisibility(View.VISIBLE);
+            bSubmit.setVisibility(View.VISIBLE);
 
             // בדיקת אם התשובה שנבחרה נכונה
             if (selectedAnswer != question.correctAnswer) {
@@ -130,10 +128,32 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
         // נסתר אם לא נבחרה תשובה
-        bNextQuestion.setVisibility(View.GONE);
+        bSubmit.setVisibility(View.GONE);
     }
 
-    private LinkedList<Question> getQuestion(String gameId) {
+
+    private void getQuestionsFromDB(int gameId) {
+        db.collection("questions")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        questionList.clear(); // Clear old data
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Question question = document.toObject(Question.class);
+                            questionList.add(question);
+                        }
+
+                        Log.d("QuestionList", "Questions fetched: " + questionList.size());
+
+                    } else {
+                        Log.e("DataBase", "Error", task.getException());
+                    }
+                });
+    }
+
+    /* i keep this code - that i use when start programing, before i have the quesoins inside firestore
+
+    private LinkedList<Question> getQuestions(String gameId) {
 
         // Load and deserialize JSON from assets
         LinkedList<Question> questions = new LinkedList<Question>();
@@ -153,27 +173,7 @@ public class QuestionActivity extends AppCompatActivity {
         }
         return questions;
     }
-
-    // i use this function to load question from local json, before i  have the questions inside firestore
-    private  String loadJSONFromAsset(Context context, int resourceId) {
-            StringBuilder json = new StringBuilder();
-            try {
-                // Open the raw resource file
-                InputStream inputStream = context.getResources().openRawResource(resourceId);
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    json.append(line);
-                }
-
-                reader.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null; // Return null if there's an error
-            }
-            return json.toString();
-        }
+     */
 
 
 }

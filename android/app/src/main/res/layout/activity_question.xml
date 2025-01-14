@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="#DBCCC6"
+    android:background="#F9F9F9"
     tools:context=".QuestionActivity">
 
     <LinearLayout
@@ -19,7 +19,7 @@
             android:id="@+id/imgbBack6"
             android:layout_width="43dp"
             android:layout_height="38dp"
-            android:backgroundTint="#DBCCC6"
+            android:backgroundTint="#F9F9F9"
             app:srcCompat="@drawable/back" />
 
         <TextView
@@ -41,7 +41,7 @@
         android:fontFamily="serif"
         android:gravity="center"
         android:text=""
-        android:textColor="#333333"
+        android:textColor="#004680"
         android:textSize="30dp"
         android:textStyle="bold" />
 
@@ -111,15 +111,15 @@
     </RadioGroup>
 
         <Button
-            android:id="@+id/bNextQuestion"
+            android:id="@+id/bSubmit"
             android:layout_width="173dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:backgroundTint="#333333"
+            android:backgroundTint="#004680"
             android:fontFamily="serif"
             android:text="@string/nextQuestion"
-            android:textColor="#DBCCC6"
+            android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:visibility="gone"
             android:textStyle="bold" />

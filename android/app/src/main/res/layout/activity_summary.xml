@@ -7,13 +7,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="15dp"
-    android:background="#DBCCC6"
+    android:background="#F9F9F9"
     tools:context=".SummaryActivity">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
-        android:textColor="#333333"
+        android:textColor="#004680"
         android:layout_marginTop="150dp"
         android:textSize="30dp"
         android:gravity="center"
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="serif"
-        android:textColor="#333333"
+        android:textColor="#000000"
         android:textSize="20dp"
         android:layout_marginBottom="15dp"
         android:gravity="center"
@@ -39,10 +39,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#333333"
+        android:backgroundTint="#2C5F92"
         android:fontFamily="serif"
         android:text="חזור לדף בחירת משחק"
-        android:textColor="#DBCCC6"
+        android:textColor="#FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold" />
 </LinearLayout>

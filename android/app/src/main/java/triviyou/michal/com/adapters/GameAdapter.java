@@ -55,9 +55,9 @@ public class GameAdapter extends ArrayAdapter<Game> {
 //        convertView.setAlpha(game.isActive() ? 1.0f : 0.5f);
 
         // מאזין קליקים לפריט ברמת ה-Adapter
-        convertView.setOnClickListener(v ->
-                Log.d("GameAdapter", "Clicked on game: " + game.getName())
-        );
+     //   convertView.setOnClickListener(v ->
+        //        Log.d("GameAdapter", "Clicked on game: " + game.getName())
+        //);
 
         return convertView;
     }

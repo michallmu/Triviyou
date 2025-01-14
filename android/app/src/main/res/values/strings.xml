@@ -5,7 +5,7 @@
     <string name="newPassword">סיסמה חדשה</string>
     <string name="repeatNewPassword">אימות סיסמה חדשה</string>
     <string name="createrAccount">צור משתמש</string>
-    <string name="reg">לרישום ראשוני</string>
+    <string name="reg">צור חשבון חדש </string>
     <string name="login">התחבר</string>
     <string name="back">חזור</string>
     <string name="backLogin">חזור להתחברות</string>
@@ -16,7 +16,7 @@
     <string name="messageEmptyPassword">מלאו את כל השדות</string>
     <string name="messageNotEqualPasswords">הסיסמאות לא תואמות, נסה שוב</string>
     <string name="guide">מדריך למתחילים</string>
-    <string name="letsPlay">בחרו את נושא המשחק</string>
+    <string name="letsPlay">בחרו משחק</string>
     <string name="startPlay">התחילו לשחק!</string>
     <string name="close">סגור</string>
     <string name="nextQuestion">לשאלה הבאה</string>

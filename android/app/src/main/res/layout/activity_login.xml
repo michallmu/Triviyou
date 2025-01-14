@@ -4,80 +4,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DBCCC6"
+    android:background="#F9F9F9"
     android:orientation="vertical"
-    android:padding="15dp"
+    android:padding="20dp"
     android:gravity="center"
     tools:context=".LoginActivity">
 
+    <!-- כותרת -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
         android:fontFamily="serif"
-        android:textColor="#333333"
         android:gravity="center"
-        android:text="התחברות"
-        android:textSize="46dp"
+        android:text="ברוכים הבאים"
+        android:textColor="#004680"
+        android:textSize="30dp"
         android:textStyle="bold" />
 
+    <!-- תווית אימייל -->
 
+    <!-- שדה אימייל -->
     <EditText
         android:id="@+id/etEmail"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:background="@drawable/round_background"
-        android:gravity="right"
-        android:inputType="textEmailAddress"
-        android:hint="כתובת אימייל"
-        android:textColor="#333333"
-        android:text="shlomi@gmail.com"
-        android:textColorHint="#333333"
         android:fontFamily="serif"
-        />
+        android:hint="הכנס כתובת אימייל"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"
+        android:text="shlomi@gmail.com"
+        android:textColor="#333333"
+        android:textColorHint="#3d6664"
+        android:gravity="right" />
 
+    <!-- תווית סיסמה -->
 
-
+    <!-- שדה סיסמה -->
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:layout_marginTop="7dp"
-        android:hint="@string/password"
-        android:inputType="textPassword"
         android:background="@drawable/round_background"
+        android:fontFamily="serif"
+        android:hint="הכנס סיסמה"
+        android:inputType="textPassword"
+        android:padding="12dp"
         android:textColor="#333333"
-        android:layout_gravity="center"
-        android:gravity="right"
+        android:textColorHint="#3d6664"
+        android:layout_marginBottom="15dp"
         android:text="123456789"
-        android:textColorHint="#333333" />
+        android:gravity="right" />
 
+    <!-- כפתור התחברות -->
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="350dp"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#333333"
+        android:backgroundTint="#004680"
         android:fontFamily="serif"
-        android:text="@string/login"
-        android:textColor="#fff2e0"
+        android:padding="12dp"
+        android:text="התחבר"
+        android:textColor="#FFFFFF"
         android:textSize="18dp"
         android:textStyle="bold" />
 
+    <!-- קישור להרשמה -->
     <TextView
         android:id="@+id/registerLinkTview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:clickable="true"
+        android:layout_marginTop="20dp"
         android:fontFamily="serif"
         android:text="@string/reg"
-        android:textColor="#333333"
+        android:textColor="#004680"
         android:textSize="20dp"
         android:layout_gravity="center"
-        android:textStyle="bold" />
-
+        android:textStyle="italic"
+        android:clickable="true" />
 </LinearLayout>
