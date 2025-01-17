@@ -81,10 +81,10 @@ public class GamesActivity extends AppCompatActivity {
                             Log.d("ItemClick", "Item clicked at position: " + position);  // Log click event
                             Game clickedGame = gameList.get(position);
                             if (clickedGame.isActive()) {
-                                Intent goPlaying = new Intent(context, PlayingActivity.class);
-                                goPlaying.putExtra("userId", userId);
-                                goPlaying.putExtra("gameId", clickedGame.getId());
-                                startActivity(goPlaying);
+                                Intent startPlaying = new Intent(context, QuestionActivity.class);
+                                startPlaying.putExtra("userId", userId);
+                                startPlaying.putExtra("gameId", clickedGame.getId());
+                                startActivity(startPlaying);
                             }
                         });
                     } else {

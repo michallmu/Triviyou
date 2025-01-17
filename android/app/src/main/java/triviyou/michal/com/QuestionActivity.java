@@ -6,22 +6,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 import java.util.LinkedList;
 import java.util.List;
 import androidx.activity.EdgeToEdge;
-
 import triviyou.michal.com.entities.Question;
+import triviyou.michal.com.entities.Session;
 
 public class QuestionActivity extends AppCompatActivity {
     Context context;
@@ -34,22 +33,22 @@ public class QuestionActivity extends AppCompatActivity {
     RadioGroup answersGroup;
     RadioButton rbAnswer1, rbAnswer2, rbAnswer3, rbAnswer4;
     Button bSubmit;
-    int currentLevel, maxLevel, selectedAnswer, checkedId;
-    private List<Question> questionList;
-
+    int userLevel, maxLevel, selectedAnswer, checkedId;
+    private List<Question> questionList = new LinkedList<>(); // Initialize as an empty list
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // ui issues
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_question);
-
         context = QuestionActivity.this;
         goGames = new Intent(context, GamesActivity.class);
         imgBback6 = findViewById(R.id.imgbBack6);
         inputIntent = getIntent();
         userId = inputIntent.getStringExtra("userId");
-        gameId = inputIntent.getIntExtra("gameId",1);
+        gameId = inputIntent.getIntExtra("gameId", 1);
         tvShowLevel = findViewById(R.id.tvShowLevel);
         tvQuestionText = findViewById(R.id.tvQuestionText);
         rbAnswer1 = findViewById(R.id.rbAnswer1);
@@ -58,122 +57,151 @@ public class QuestionActivity extends AppCompatActivity {
         rbAnswer4 = findViewById(R.id.rbAnswer4);
         bSubmit = findViewById(R.id.bSubmit);
         answersGroup = findViewById(R.id.answersGroup);
+        progressBar = findViewById(R.id.progressBar);
+
+        //init db (firestore)
         db = FirebaseFirestore.getInstance();
 
-
-        //goto fireabse ask 2 queries
-        //1. get current level of userId in gameId
-        // 2. get list of all questions in gameId
-        // set all data from first questionh
-        currentLevel = 3;
+        // Get user current level from Firestore
+        Session session = getUserSessionFromDB(userId, gameId);
+        if (session == null) {
+            userLevel = 1;
+        }
+        else {
+            userLevel = session.getCurrentLevel();
+        }
         maxLevel = 10;
-        String statusMessage = getString(R.string.statusMessage, currentLevel, maxLevel);
+        String statusMessage = getString(R.string.statusMessage, userLevel, maxLevel);
         tvShowLevel.setText(statusMessage);
 
-        //get the questions left in game
-         getQuestionsFromDB(gameId);
+        // Get the questions from Firestore
+        getQuestionsFromDB(gameId);
 
-        initQuestion(questionList.get(0));
 
-        //return to  game screen
-        imgBback6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goGames.putExtra("userId", userId);
-                startActivity(goGames);
-            }
+        // Listen for back button click (currently commented out)
+        imgBback6.setOnClickListener(v -> {
+            goGames.putExtra("userId", userId);
+            startActivity(goGames);
         });
-
-
-//        bSubmit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!questions.isEmpty()) { // Remove the first question from the list and get the next one
-//                    questions.removeFirst();
-//                    if (!questions.isEmpty()) {
-//                        initQuestion(questions.getFirst());
-//                    }
-//                }
-//            }
-//        });
-
-    }
-    private void initQuestion(Question question) {
-        tvQuestionText.setText(question.questionText);
-        rbAnswer1.setText(question.answer1);
-        rbAnswer2.setText(question.answer2);
-        rbAnswer3.setText(question.answer3);
-        rbAnswer4.setText(question.answer4);
-        // הגדרת מאזין לבחירת תשובה
-        answersGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            // הגדרת המשתנה selectedAnswer לפי ה-checkedId
-            if (checkedId == R.id.rbAnswer1) {
-                selectedAnswer = 1;
-            } else if (checkedId == R.id.rbAnswer2) {
-                selectedAnswer = 2;
-            } else if (checkedId == R.id.rbAnswer3) {
-                selectedAnswer = 3;
-            } else if (checkedId == R.id.rbAnswer4) {
-                selectedAnswer = 4;
-            }
-
-            // הצגת כפתור "שאלה הבאה" לאחר בחירת תשובה
-            bSubmit.setVisibility(View.VISIBLE);
-
-            // בדיקת אם התשובה שנבחרה נכונה
-            if (selectedAnswer != question.correctAnswer) {
-                // הצגת טוסט אם התשובה לא נכונה
-                Toast.makeText(this, getString(R.string.wrongAnswerTryAgain), Toast.LENGTH_SHORT).show();
-            }
+        // Submit button action (currently commented out)
+        bSubmit.setOnClickListener(v -> {
+            onSubmitClicked();
         });
-
-        // נסתר אם לא נבחרה תשובה
-        bSubmit.setVisibility(View.GONE);
     }
 
+    private Session getUserSessionFromDB(String userId, int gameId) {
+        //todo: return session from firestore
+        return null;
+    }
 
     private void getQuestionsFromDB(int gameId) {
+        // Show loading indicator while fetching data (optional)
+        progressBar.setVisibility(View.VISIBLE); // Assuming you have a progressBar
+
+        //todo - get question where :  Level >  currentLevel , order by level  asc
         db.collection("questions")
+                .whereEqualTo("gameId", gameId) // Filter by gameId, if necessary
                 .get()
                 .addOnCompleteListener(task -> {
+                    // Hide loading indicator after the task completes
+                    progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
                         questionList.clear(); // Clear old data
+                        // the task return document (json) for each question in FB
                         for (QueryDocumentSnapshot document : task.getResult()) {
+                            //convert document to Question Class
                             Question question = document.toObject(Question.class);
                             questionList.add(question);
                         }
 
-                        Log.d("QuestionList", "Questions fetched: " + questionList.size());
+                        // Ensure we have data before calling initQuestion
+                        if (!questionList.isEmpty()) {
+                            progressBar.setVisibility(View.GONE);
+                            //show the first question from the list
+                            showSingleQuestion(questionList.get(0)); // Show the first question
 
+                        } else {
+                            Toast.makeText(QuestionActivity.this, "No questions found.", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                        }
+
+                        Log.d("QuestionList", "Questions fetched: " + questionList.size());
                     } else {
-                        Log.e("DataBase", "Error", task.getException());
+                        progressBar.setVisibility(View.GONE);
+                        Log.e("FirestoreError", "Error fetching questions: ", task.getException());
+                        Toast.makeText(QuestionActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    /* i keep this code - that i use when start programing, before i have the quesoins inside firestore
+    private void onSubmitClicked() {
+        if (!questionList.isEmpty()) {
+            // Check if the selected answer is correct
+            int selectAnswer = 0;
+            selectAnswer = getSelectAnswer(selectAnswer);
+            if(   selectAnswer == 0)
+            {
+                Toast.makeText(this,"no answer selected", Toast.LENGTH_SHORT).show();
+            }
+            else if (selectAnswer != questionList.get(0).correctAnswer) {
+                Toast.makeText(this, getString(R.string.wrongAnswerTryAgain), Toast.LENGTH_SHORT).show();
+            }
+            else {
+                //answer is correct !!! - remove the question from the list
+                questionList.remove(0);
+                if(userLevel < questionList.get(0).getLevel()) {
+                    userLevel = questionList.get(0).getLevel();
 
-    private LinkedList<Question> getQuestions(String gameId) {
+                    //todo: update session's level in DB
+                }
 
-        // Load and deserialize JSON from assets
-        LinkedList<Question> questions = new LinkedList<Question>();
-        try {
-            // Read the JSON file from res/raw
-            String json = loadJSONFromAsset(this, R.raw.questions); // Replace 'data' with your JSON file name (without extension)
-            // Create Gson instance
-            Gson gson = new Gson();
-            // Define the type for the array of questions
-            Type questionListType = new TypeToken<List<Question>>() {
-            }.getType();
-            // Deserialize JSON into a list of Question objects
-            ArrayList<Question> tempList = gson.fromJson(json, questionListType);
-            questions = new LinkedList<>(tempList);
-        } catch (Exception e) {
-            Log.e("QuestionActivity", "Error reading the JSON file", e);
+                if(questionList.isEmpty()) {
+                    handleGameFinished();
+                }
+                else {
+                    //show next question after submit
+                    showSingleQuestion(questionList.get(0)); // Get next question
+                }
+            }
         }
-        return questions;
     }
-     */
+
+    private int getSelectAnswer(int selectAnswer) {
+        if(rbAnswer1.isChecked())
+        {
+            selectAnswer = 1;
+        }
+        if(rbAnswer2.isChecked())
+        {
+            selectAnswer = 2;
+        }
+        if(rbAnswer3.isChecked())
+        {
+            selectAnswer = 3;
+        }
+        if(rbAnswer4.isChecked())
+        {
+            selectAnswer = 4;
+        }
+        return selectAnswer;
+    }
+
+    //todo  -   move to  Summary activity
+    private void handleGameFinished() {
+    }
+
+    private void showSingleQuestion(Question question) {
+        String qt = question.questionText + question.id + ",Correct ans:" + question.correctAnswer + " level: " + question.level;
+        tvQuestionText.setText(qt);
+        rbAnswer1.setText(question.answer1);
+        rbAnswer1.setChecked(false);
+        rbAnswer2.setText(question.answer2);
+        rbAnswer2.setChecked(false);
+        rbAnswer3.setText(question.answer3);
+        rbAnswer3.setChecked(false);
+        rbAnswer4.setText(question.answer4);
+        rbAnswer4.setChecked(false);
+    }
 
 
 }
