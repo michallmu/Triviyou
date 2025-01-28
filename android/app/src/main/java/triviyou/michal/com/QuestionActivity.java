@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.util.Log;
 import android.widget.Toast;
+import android.widget.VideoView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.LinkedList;
@@ -28,6 +32,8 @@ public class QuestionActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     Intent goGames, inputIntent;
     String userId;
+    ImageView imgQuestion;
+    VideoView videoQuestion;
     int gameId;
     TextView tvShowLevel, tvQuestionText;
     RadioGroup answersGroup;
@@ -58,6 +64,11 @@ public class QuestionActivity extends AppCompatActivity {
         bSubmit = findViewById(R.id.bSubmit);
         answersGroup = findViewById(R.id.answersGroup);
         progressBar = findViewById(R.id.progressBar);
+        imgQuestion = findViewById(R.id.imgQuestion);
+        videoQuestion = findViewById(R.id.videoQuestion);
+
+
+
 
         //init db (firestore)
         db = FirebaseFirestore.getInstance();
@@ -96,42 +107,56 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void getQuestionsFromDB(int gameId) {
         // Show loading indicator while fetching data (optional)
-        progressBar.setVisibility(View.VISIBLE); // Assuming you have a progressBar
+        try {
+            progressBar.setVisibility(View.VISIBLE); // Assuming you have a progressBar
 
-        //todo - get question where :  Level >  currentLevel , order by level  asc
-        db.collection("questions")
-                .whereEqualTo("gameId", gameId) // Filter by gameId, if necessary
-                .get()
-                .addOnCompleteListener(task -> {
-                    // Hide loading indicator after the task completes
-                    progressBar.setVisibility(View.GONE);
-                    if (task.isSuccessful()) {
-                        questionList.clear(); // Clear old data
-                        // the task return document (json) for each question in FB
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            //convert document to Question Class
-                            Question question = document.toObject(Question.class);
-                            questionList.add(question);
-                        }
-
-                        // Ensure we have data before calling initQuestion
-                        if (!questionList.isEmpty()) {
-                            progressBar.setVisibility(View.GONE);
-                            //show the first question from the list
-                            showSingleQuestion(questionList.get(0)); // Show the first question
-
-                        } else {
-                            Toast.makeText(QuestionActivity.this, "No questions found.", Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
-                        }
-
-                        Log.d("QuestionList", "Questions fetched: " + questionList.size());
-                    } else {
+            //todo - get question where :  Level >  currentLevel , order by level  asc
+            db.collection("questions")
+                    .whereEqualTo("gameId", gameId) // Filter by gameId, if necessary
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        try{
+                        // Hide loading indicator after the task completes
                         progressBar.setVisibility(View.GONE);
-                        Log.e("FirestoreError", "Error fetching questions: ", task.getException());
-                        Toast.makeText(QuestionActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        if (task.isSuccessful()) {
+                            questionList.clear(); // Clear old data
+                            // the task return document (json) for each question in FB
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //convert document to Question Class
+                                Question question = document.toObject(Question.class);
+                                questionList.add(question);
+                            }
+
+                            // Ensure we have data before calling initQuestion
+                            if (!questionList.isEmpty()) {
+                                progressBar.setVisibility(View.GONE);
+                                //show the first question from the list
+                                showSingleQuestion(questionList.get(0)); // Show the first question
+
+                            } else {
+                                Toast.makeText(QuestionActivity.this, "No questions found.", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+
+                            Log.d("QuestionList", "Questions fetched: " + questionList.size());
+                        } else {
+                            progressBar.setVisibility(View.GONE);
+                            Log.e("FirestoreError", "Error fetching questions: ", task.getException());
+                            Toast.makeText(QuestionActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
+                        }
+                        } catch (Exception e) {
+                            Log.e("FirestoreException", "Exception in Firestore callback: ", e);
+                            Toast.makeText(QuestionActivity.this, "Unexpected error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+
+        }
+        catch (Exception e) {
+            Log.e("DatabaseException", "Exception in getQuestionsFromDB: ", e);
+            Toast.makeText(QuestionActivity.this, "Unexpected error occurred while fetching questions", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     private void onSubmitClicked() {
@@ -201,6 +226,30 @@ public class QuestionActivity extends AppCompatActivity {
         rbAnswer3.setChecked(false);
         rbAnswer4.setText(question.answer4);
         rbAnswer4.setChecked(false);
+
+        imgQuestion.setVisibility(View.GONE);
+        videoQuestion.setVisibility(View.GONE);
+
+        switch (question.getQuestionType().toLowerCase()) {
+            case "video":
+                videoQuestion.setVisibility(View.VISIBLE);
+                break;
+            case "image":
+                //https://drive.google.com/uc?id=1fTQYtxXkda0j_kAKnyBj5_xHJFFrAs8-
+                imgQuestion.setVisibility(View.VISIBLE);
+                Glide.with(this)
+                        .load(question.getQuestionUrl())
+                        //.placeholder(R.drawable.placeholder) // Show a placeholder while loading
+                        //.error(R.drawable.error_image) // Show an error image if the URL fails
+                        .into(imgQuestion);
+                break;
+            default:
+                break;
+
+        }
+
+
+
     }
 
 

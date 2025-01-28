@@ -22,9 +22,6 @@
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".PlayingActivity"
-            android:exported="false" />
-        <activity
             android:name=".gameItem"
             android:exported="false" />
         <activity

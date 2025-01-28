@@ -16,6 +16,9 @@ public class Question {
     public int correctAnswer;
    // private Date createdAt;
 
+    public Question() {
+
+    }
 
     public Question(int id, String answer1, String answer2, String answer3, String answer4, int gameId, int level, String questionText, String questionType, String questionUrl, int correctAnswer) {
         this.id = id;

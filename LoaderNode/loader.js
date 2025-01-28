@@ -93,6 +93,7 @@ async function uploadCSVData(gameName) {
             answer4: record['answer4'].replace(/"/g, '').trim(),
             correctAnswer: parseInt(record['correctAnswer'], 10),
             level: parseInt(record['level'], 10),
+            questionUrl: record['questionUrl']==undefined ? null :  record['questionUrl'],
             questionType: record['questionType'],
           };
 
