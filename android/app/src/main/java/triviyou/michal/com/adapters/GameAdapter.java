@@ -42,8 +42,13 @@ public class GameAdapter extends ArrayAdapter<Game> {
         TextView txtGameDescription = convertView.findViewById(R.id.txtGameDescription);
         ImageView imgGame = convertView.findViewById(R.id.imgGame);
 
-        txtGameName.setText(game.getName());
+
         txtGameDescription.setText(game.getDescription());
+
+        if (game.isActive())
+            txtGameName.setText(game.getName());
+        else
+            txtGameName.setText(String.format("%s - %s...", game.getName(), context.getString(R.string.soon)));
 
         Glide.with(context)
                 .load(game.getImageUrl())

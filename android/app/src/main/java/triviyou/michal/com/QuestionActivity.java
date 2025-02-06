@@ -18,13 +18,20 @@ import android.widget.VideoView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.LinkedList;
 import java.util.List;
 import androidx.activity.EdgeToEdge;
 import triviyou.michal.com.entities.Question;
-import triviyou.michal.com.entities.Session;
+import triviyou.michal.com.entities.UserGameHistory;
 
 public class QuestionActivity extends AppCompatActivity {
     Context context;
@@ -67,26 +74,13 @@ public class QuestionActivity extends AppCompatActivity {
         imgQuestion = findViewById(R.id.imgQuestion);
         videoQuestion = findViewById(R.id.videoQuestion);
 
-
-
-
         //init db (firestore)
         db = FirebaseFirestore.getInstance();
 
         // Get user current level from Firestore
-        Session session = getUserSessionFromDB(userId, gameId);
-        if (session == null) {
-            userLevel = 1;
-        }
-        else {
-            userLevel = session.getCurrentLevel();
-        }
-        maxLevel = 10;
-        String statusMessage = getString(R.string.statusMessage, userLevel, maxLevel);
-        tvShowLevel.setText(statusMessage);
+       getUserHistory(userId, gameId);
 
-        // Get the questions from Firestore
-        getQuestionsFromDB(gameId);
+
 
 
         // Listen for back button click (currently commented out)
@@ -100,19 +94,72 @@ public class QuestionActivity extends AppCompatActivity {
         });
     }
 
-    private Session getUserSessionFromDB(String userId, int gameId) {
-        //todo: return session from firestore
-        return null;
+    private void getUserHistory(String userId, int gameId) {
+        String documentId = userId + "_" + gameId; // Combine userId and gameId to form the document ID
+        DocumentReference docRef = db.collection("userGameHistory").document(documentId);
+
+        // Asynchronously get the document
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                UserGameHistory userGameHistory =null;
+
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    // Document exists, process it
+                    try {
+                        userGameHistory = documentSnapshot.toObject(UserGameHistory.class);
+                    }
+                    catch (Exception e) {
+                        Log.e("Error casting",e.getMessage());
+                    }
+
+                } else {
+                    // Document doesn't exist, handle accordingly (return null)
+                    Log.d("UserHistory", "No history found for this user and game.");
+                }
+                continueAfterGettingUserHistory(userGameHistory);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                // Handle any errors that occur during the fetch
+                Log.e("UserHistory", "Error fetching data: " + e.getMessage());
+
+                // return null - docment  maybe not found
+                continueAfterGettingUserHistory(null);
+            }
+        });
     }
 
-    private void getQuestionsFromDB(int gameId) {
+    // Method to continue with the rest of the logic after fetching the data
+    private void continueAfterGettingUserHistory(UserGameHistory userGameHistory) {
+        if (userGameHistory == null) {
+            userLevel = 1;
+        }
+        else {
+            userLevel = userGameHistory.getCurrentLevel();
+        }
+        maxLevel = 10;
+        String statusMessage = getString(R.string.statusMessage, userLevel, maxLevel);
+        tvShowLevel.setText(statusMessage);
+
+        // Get the questions from Firestore
+        getQuestionsFromDB(gameId, userLevel);
+
+
+    }
+
+    // Fetching Document Snapshot based on userId and gameId
+
+    private void getQuestionsFromDB(int gameId, int userLevel) {
         // Show loading indicator while fetching data (optional)
         try {
             progressBar.setVisibility(View.VISIBLE); // Assuming you have a progressBar
 
-            //todo - get question where :  Level >  currentLevel , order by level  asc
             db.collection("questions")
-                    .whereEqualTo("gameId", gameId) // Filter by gameId, if necessary
+                    .whereEqualTo("gameId", gameId)
+                    .whereGreaterThan("level", userLevel)
+                    .orderBy("level", Query.Direction.ASCENDING)
                     .get()
                     .addOnCompleteListener(task -> {
                         try{

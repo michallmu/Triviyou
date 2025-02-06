@@ -67,15 +67,19 @@ public class GamesActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         gameList.clear(); // Clear old data
+
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Game game = document.toObject(Game.class);
+
+                            //this handle the boolean from firestore object
                             boolean isActive = document.getBoolean("isActive");
                             game.setActive(isActive);
+
                             gameList.add(game);
                         }
-                        Log.d("GameList", "Games fetched: " + gameList.size());  // Log the size of the list
                         adapter.notifyDataSetChanged(); // Update ListView
 
+                        
                         // Set item click listener after data is fetched
                         lvGames.setOnItemClickListener((parent, view, position, id) -> {
                             Log.d("ItemClick", "Item clicked at position: " + position);  // Log click event

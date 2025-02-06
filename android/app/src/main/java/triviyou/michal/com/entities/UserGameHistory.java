@@ -1,21 +1,23 @@
 package triviyou.michal.com.entities;
 
-import java.sql.Time;
-import java.sql.Timestamp;
+import java.util.Date;
 
-public class Session {
+public class UserGameHistory {
     private String userId;
     private int gameId;
     private boolean isFinished;
     private int currentLevel;
-    private Timestamp updatedAt;
+    private Date updatedAt;
 
-    public Session(int gameId, String userId, boolean isFinished, int currentLevel, Timestamp updatedAt) {
+    public UserGameHistory(int gameId, String userId, boolean isFinished, int currentLevel, Date updatedAt) {
         this.gameId = gameId;
         this.userId = userId;
         this.isFinished = isFinished;
         this.currentLevel = currentLevel;
         this.updatedAt = updatedAt;
+    }
+
+    public UserGameHistory() {
     }
 
     public String getUserId() {
@@ -50,11 +52,11 @@ public class Session {
         this.currentLevel = currentLevel;
     }
 
-    public Timestamp getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 }

@@ -63,14 +63,14 @@
 
         <ImageView
             android:id="@+id/imgQuestion"
-            android:layout_width="104dp"
-            android:layout_height="93dp"
+            android:layout_width="123dp"
+            android:layout_height="95dp"
             android:layout_gravity="center" />
 
         <VideoView
             android:id="@+id/videoQuestion"
-            android:layout_width="108dp"
-            android:layout_height="96dp"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center" />
 
     </LinearLayout>
