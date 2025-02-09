@@ -20,13 +20,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.type.DateTime;
+import java.time.LocalDate;
+
 import java.util.LinkedList;
 import java.util.List;
 import androidx.activity.EdgeToEdge;
@@ -46,7 +47,7 @@ public class QuestionActivity extends AppCompatActivity {
     RadioGroup answersGroup;
     RadioButton rbAnswer1, rbAnswer2, rbAnswer3, rbAnswer4;
     Button bSubmit;
-    int userLevel, maxLevel, selectedAnswer, checkedId;
+    int userLevel, selectedAnswer, checkedId;
     private List<Question> questionList = new LinkedList<>(); // Initialize as an empty list
     private ProgressBar progressBar;
 
@@ -94,6 +95,53 @@ public class QuestionActivity extends AppCompatActivity {
         });
     }
 
+    private void onSubmitClicked() {
+        if (!questionList.isEmpty()) {
+            // Check if the selected answer is correct
+            int selectAnswer = 0;
+            selectAnswer = getSelectAnswer(selectAnswer);
+            if(selectAnswer == 0)
+            {
+                Toast.makeText(this,"no answer selected", Toast.LENGTH_SHORT).show();
+            }
+            else if (selectAnswer != questionList.get(0).correctAnswer) {
+                Toast.makeText(this, getString(R.string.wrongAnswerTryAgain), Toast.LENGTH_SHORT).show();
+            }
+            else {
+                //answer is correct !!!
+                // first- remove the question from the list
+                questionList.remove(0);
+                if(questionList.get(0).getLevel() == userLevel + 1) {
+                    userLevel = questionList.get(0).getLevel();
+
+                    //todo: update user history  in DB
+                    updateUserGameHistoryLevelInDB(userLevel);
+                }
+
+                if(questionList.isEmpty()) {
+                    handleGameFinished();
+                }
+                else {
+                    //show next question after submit
+                    showSingleQuestion(questionList.get(0)); // Get next question
+                }
+            }
+        }
+    }
+
+    // Method to continue with the rest of the logic after fetching the data
+    private void continueAfterGettingUserHistory(UserGameHistory userGameHistory) {
+        if (userGameHistory == null) {
+            userLevel = 1;
+        }
+        else {
+            userLevel = userGameHistory.getCurrentLevel();
+        }
+        // get the questions from Firestore
+        getQuestionsFromDB(gameId, userLevel);
+
+
+    }
     private void getUserHistory(String userId, int gameId) {
         String documentId = userId + "_" + gameId; // Combine userId and gameId to form the document ID
         DocumentReference docRef = db.collection("userGameHistory").document(documentId);
@@ -131,26 +179,23 @@ public class QuestionActivity extends AppCompatActivity {
         });
     }
 
-    // Method to continue with the rest of the logic after fetching the data
-    private void continueAfterGettingUserHistory(UserGameHistory userGameHistory) {
-        if (userGameHistory == null) {
-            userLevel = 1;
-        }
-        else {
-            userLevel = userGameHistory.getCurrentLevel();
-        }
-        maxLevel = 10;
-        String statusMessage = getString(R.string.statusMessage, userLevel, maxLevel);
-        tvShowLevel.setText(statusMessage);
+    private void updateUserGameHistoryLevelInDB(int userLevel) {
+        UserGameHistory userGameHistory = new UserGameHistory(gameId,userId,questionList.isEmpty(),userLevel);
+        String documentId = userId + "_" + gameId;
 
-        // Get the questions from Firestore
-        getQuestionsFromDB(gameId, userLevel);
-
+        // Save to Firestore in "userGameHistory" collection
+        db.collection("userGameHistory").document(documentId)
+                .set(userGameHistory)
+                .addOnSuccessListener(aVoid ->
+                        System.out.println("UserGameHistory saved successfully!")
+                )
+                .addOnFailureListener(e ->
+                        System.err.println("Error saving UserGameHistory: " + e.getMessage())
+                );
 
     }
 
     // Fetching Document Snapshot based on userId and gameId
-
     private void getQuestionsFromDB(int gameId, int userLevel) {
         // Show loading indicator while fetching data (optional)
         try {
@@ -158,43 +203,47 @@ public class QuestionActivity extends AppCompatActivity {
 
             db.collection("questions")
                     .whereEqualTo("gameId", gameId)
-                    .whereGreaterThan("level", userLevel)
+                    .whereGreaterThanOrEqualTo("level", userLevel)
                     .orderBy("level", Query.Direction.ASCENDING)
                     .get()
                     .addOnCompleteListener(task -> {
                         try{
-                        // Hide loading indicator after the task completes
-                        progressBar.setVisibility(View.GONE);
-                        if (task.isSuccessful()) {
-                            questionList.clear(); // Clear old data
-                            // the task return document (json) for each question in FB
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //convert document to Question Class
-                                Question question = document.toObject(Question.class);
-                                questionList.add(question);
-                            }
-
-                            // Ensure we have data before calling initQuestion
-                            if (!questionList.isEmpty()) {
-                                progressBar.setVisibility(View.GONE);
-                                //show the first question from the list
-                                showSingleQuestion(questionList.get(0)); // Show the first question
-
-                            } else {
-                                Toast.makeText(QuestionActivity.this, "No questions found.", Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.GONE);
-                            }
-
-                            Log.d("QuestionList", "Questions fetched: " + questionList.size());
-                        } else {
+                            // Hide loading indicator after the task completes
                             progressBar.setVisibility(View.GONE);
-                            Log.e("FirestoreError", "Error fetching questions: ", task.getException());
-                            Toast.makeText(QuestionActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
-                        }
+                            if (task.isSuccessful()) {
+                                questionList.clear(); // Clear old data
+                                // the task return document (json) for each question in FB
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    //convert document to Question Class
+                                    Question question = document.toObject(Question.class);
+                                    questionList.add(question);
+                                }
+
+                                // Ensure we have data before calling initQuestion
+                                if (!questionList.isEmpty()) {
+                                    progressBar.setVisibility(View.GONE);
+                                    //show the first question from the list
+                                    showSingleQuestion(questionList.get(0)); // Show the first question
+
+
+
+                                } else {
+                                    Toast.makeText(QuestionActivity.this, "No questions found.", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.GONE);
+                                }
+
+                                Log.d("QuestionList", "Questions fetched: " + questionList.size());
+                            } else {
+                                progressBar.setVisibility(View.GONE);
+                                Log.e("FirestoreError", "Error fetching questions: ", task.getException());
+                                Toast.makeText(QuestionActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
+                            }
                         } catch (Exception e) {
                             Log.e("FirestoreException", "Exception in Firestore callback: ", e);
                             Toast.makeText(QuestionActivity.this, "Unexpected error occurred", Toast.LENGTH_SHORT).show();
                         }
+
+
                     });
 
 
@@ -206,65 +255,10 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-    private void onSubmitClicked() {
-        if (!questionList.isEmpty()) {
-            // Check if the selected answer is correct
-            int selectAnswer = 0;
-            selectAnswer = getSelectAnswer(selectAnswer);
-            if(   selectAnswer == 0)
-            {
-                Toast.makeText(this,"no answer selected", Toast.LENGTH_SHORT).show();
-            }
-            else if (selectAnswer != questionList.get(0).correctAnswer) {
-                Toast.makeText(this, getString(R.string.wrongAnswerTryAgain), Toast.LENGTH_SHORT).show();
-            }
-            else {
-                //answer is correct !!! - remove the question from the list
-                questionList.remove(0);
-                if(userLevel < questionList.get(0).getLevel()) {
-                    userLevel = questionList.get(0).getLevel();
-
-                    //todo: update session's level in DB
-                }
-
-                if(questionList.isEmpty()) {
-                    handleGameFinished();
-                }
-                else {
-                    //show next question after submit
-                    showSingleQuestion(questionList.get(0)); // Get next question
-                }
-            }
-        }
-    }
-
-    private int getSelectAnswer(int selectAnswer) {
-        if(rbAnswer1.isChecked())
-        {
-            selectAnswer = 1;
-        }
-        if(rbAnswer2.isChecked())
-        {
-            selectAnswer = 2;
-        }
-        if(rbAnswer3.isChecked())
-        {
-            selectAnswer = 3;
-        }
-        if(rbAnswer4.isChecked())
-        {
-            selectAnswer = 4;
-        }
-        return selectAnswer;
-    }
-
-    //todo  -   move to  Summary activity
-    private void handleGameFinished() {
-    }
-
     private void showSingleQuestion(Question question) {
         String qt = question.questionText + question.id + ",Correct ans:" + question.correctAnswer + " level: " + question.level;
         tvQuestionText.setText(qt);
+        answersGroup.clearCheck();
         rbAnswer1.setText(question.answer1);
         rbAnswer1.setChecked(false);
         rbAnswer2.setText(question.answer2);
@@ -276,6 +270,9 @@ public class QuestionActivity extends AppCompatActivity {
 
         imgQuestion.setVisibility(View.GONE);
         videoQuestion.setVisibility(View.GONE);
+
+        String statusMessage = getString(R.string.statusMessage, userLevel, questionList.get(questionList.size() - 1).getLevel());
+        tvShowLevel.setText(statusMessage);
 
         switch (question.getQuestionType().toLowerCase()) {
             case "video":
@@ -298,6 +295,31 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     }
+
+    private int getSelectAnswer(int selectAnswer) {
+        if(rbAnswer1.isChecked())
+        {
+            selectAnswer = 1;
+        }
+        if(rbAnswer2.isChecked())
+        {
+            selectAnswer = 2;
+        }
+        if(rbAnswer3.isChecked())
+        {
+            selectAnswer = 3;
+        }
+        if(rbAnswer4.isChecked())
+        {
+            selectAnswer = 4;
+        }
+        return selectAnswer;
+    }
+
+    //todo  -   move to  Sumamry activity
+    private void handleGameFinished() {
+    }
+
 
 
 }

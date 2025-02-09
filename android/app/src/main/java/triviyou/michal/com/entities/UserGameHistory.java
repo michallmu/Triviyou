@@ -7,14 +7,12 @@ public class UserGameHistory {
     private int gameId;
     private boolean isFinished;
     private int currentLevel;
-    private Date updatedAt;
 
-    public UserGameHistory(int gameId, String userId, boolean isFinished, int currentLevel, Date updatedAt) {
+    public UserGameHistory(int gameId, String userId, boolean isFinished, int currentLevel) {
         this.gameId = gameId;
         this.userId = userId;
         this.isFinished = isFinished;
         this.currentLevel = currentLevel;
-        this.updatedAt = updatedAt;
     }
 
     public UserGameHistory() {
@@ -52,11 +50,5 @@ public class UserGameHistory {
         this.currentLevel = currentLevel;
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }

@@ -43,6 +43,14 @@ public class ProfileActivity extends AppCompatActivity {
         email = inputIntent.getStringExtra("email");
         tvCurrentEmail.setText(email);
 
+        imgbBack4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(goGames);
+            }
+        });
+
+
         tvWantChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,12 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
                 isFragmentDisplayed = false;
             }
 
-            imgbBack4.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(goGames);
-                }
-            });
+
     }
 
 
