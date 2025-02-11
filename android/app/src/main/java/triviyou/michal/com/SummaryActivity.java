@@ -13,8 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SummaryActivity extends AppCompatActivity {
 
     Context context;
-    Intent goGames;
+    Intent goGames, inputIntent;
     Button bBackGamesList;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class SummaryActivity extends AppCompatActivity {
         context = SummaryActivity.this;
         goGames = new Intent(context, GamesActivity.class);
         bBackGamesList = findViewById(R.id.bBackGamesList);
+        inputIntent = getIntent();
 
         bBackGamesList.setOnClickListener(new View.OnClickListener() {
             @Override

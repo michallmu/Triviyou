@@ -25,8 +25,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.type.DateTime;
-import java.time.LocalDate;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +36,7 @@ public class QuestionActivity extends AppCompatActivity {
     Context context;
     ImageButton imgBback6;
     private FirebaseFirestore db;
-    Intent goGames, inputIntent;
+    Intent goGames, inputIntent, goSummary;
     String userId;
     ImageView imgQuestion;
     VideoView videoQuestion;
@@ -61,6 +59,7 @@ public class QuestionActivity extends AppCompatActivity {
         goGames = new Intent(context, GamesActivity.class);
         imgBback6 = findViewById(R.id.imgbBack6);
         inputIntent = getIntent();
+        goSummary = new Intent(context, SummaryActivity.class);
         userId = inputIntent.getStringExtra("userId");
         gameId = inputIntent.getIntExtra("gameId", 1);
         tvShowLevel = findViewById(R.id.tvShowLevel);
@@ -79,7 +78,7 @@ public class QuestionActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         // Get user current level from Firestore
-       getUserHistory(userId, gameId);
+       getUserHistoryAndQuestions(userId, gameId);
 
 
 
@@ -110,16 +109,17 @@ public class QuestionActivity extends AppCompatActivity {
             else {
                 //answer is correct !!!
                 // first- remove the question from the list
+                userLevel = questionList.get(0).getLevel();
                 questionList.remove(0);
-                if(questionList.get(0).getLevel() == userLevel + 1) {
+                if((questionList.size()>0) && (questionList.get(0).getLevel() == (userLevel + 1))) {
                     userLevel = questionList.get(0).getLevel();
-
-                    //todo: update user history  in DB
-                    updateUserGameHistoryLevelInDB(userLevel);
                 }
+                    //update user history  in DB
+                updateUserGameHistoryLevelInDB(userLevel);
+
 
                 if(questionList.isEmpty()) {
-                    handleGameFinished();
+                    moveToSummaryActivity();
                 }
                 else {
                     //show next question after submit
@@ -129,20 +129,25 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
-    // Method to continue with the rest of the logic after fetching the data
+    // Method to continue with the rest of the logic after fetching the user history data
     private void continueAfterGettingUserHistory(UserGameHistory userGameHistory) {
         if (userGameHistory == null) {
             userLevel = 1;
         }
         else {
             userLevel = userGameHistory.getCurrentLevel();
+            if (userGameHistory.isFinished()) {
+                moveToSummaryActivity();
+            }
         }
+
+
         // get the questions from Firestore
         getQuestionsFromDB(gameId, userLevel);
 
 
     }
-    private void getUserHistory(String userId, int gameId) {
+    private void getUserHistoryAndQuestions(String userId, int gameId) {
         String documentId = userId + "_" + gameId; // Combine userId and gameId to form the document ID
         DocumentReference docRef = db.collection("userGameHistory").document(documentId);
 
@@ -156,6 +161,7 @@ public class QuestionActivity extends AppCompatActivity {
                     // Document exists, process it
                     try {
                         userGameHistory = documentSnapshot.toObject(UserGameHistory.class);
+
                     }
                     catch (Exception e) {
                         Log.e("Error casting",e.getMessage());
@@ -317,7 +323,10 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     //todo  -   move to  Sumamry activity
-    private void handleGameFinished() {
+    private void moveToSummaryActivity() {
+        goSummary.putExtra("gameId", gameId);
+        startActivity(goSummary);
+
     }
 
 
