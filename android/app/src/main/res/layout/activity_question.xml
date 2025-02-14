@@ -45,13 +45,14 @@
     <TextView
         android:id="@+id/tvQuestionText"
         android:layout_width="296dp"
+        android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="serif"
         android:gravity="center"
         android:text=""
         android:textColor="#004680"
-        android:textSize="30dp"
+        android:textSize="40dp"
         android:textStyle="bold" />
 
 
@@ -97,6 +98,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:layoutDirection="rtl"
+            android:layout_marginTop="10dp"
             android:text=""
             android:textSize="20dp" />
 
@@ -106,6 +108,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:layoutDirection="rtl"
+            android:layout_marginTop="10dp"
             android:text=""
             android:textSize="20dp" />
 
@@ -115,6 +118,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:layoutDirection="rtl"
+            android:layout_marginTop="10dp"
             android:text=""
             android:textSize="20dp" />
     </RadioGroup>
@@ -131,5 +135,18 @@
             android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvQuestionInfo"
+        android:layout_width="296dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#6A7278"
+        android:textSize="15dp"
+        android:textStyle="bold" />
 
 </LinearLayout>

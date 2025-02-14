@@ -4,9 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.os.CountDownTimer;
 import android.widget.Button;
-
+import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,10 @@ public class SummaryActivity extends AppCompatActivity {
     Context context;
     Intent goGames, inputIntent;
     Button bBackGamesList;
+    CountDownTimer countDownTimer;
+    TextView tvTimer;
+    boolean isButtonClicked = false;
+    int summaryDuration = 6000; // 6 seconds
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -27,12 +31,37 @@ public class SummaryActivity extends AppCompatActivity {
         goGames = new Intent(context, GamesActivity.class);
         bBackGamesList = findViewById(R.id.bBackGamesList);
         inputIntent = getIntent();
+        tvTimer = findViewById(R.id.tvTimer);
 
-        bBackGamesList.setOnClickListener(new View.OnClickListener() {
+        // Start countdown timer
+        countDownTimer = new CountDownTimer(summaryDuration, 1000) {
             @Override
-            public void onClick(View v) {
-                startActivity(goGames);
+            public void onTick(long millisUntilFinished) {
+                tvTimer.setText("מעבר אוטומטי בעוד " + (millisUntilFinished / 1000) + " שניות");
             }
+
+            @Override
+            public void onFinish() {
+                if (!isButtonClicked) { // Only navigate if button wasn't clicked
+                    startActivity(goGames);
+                    finish();
+                }
+            }
+        }.start(); // <-- You forgot this!
+
+        bBackGamesList.setOnClickListener(v -> {
+            isButtonClicked = true; // Prevent auto navigation
+            countDownTimer.cancel();
+            startActivity(goGames);
+            finish();
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
     }
 }

@@ -19,7 +19,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:layout_marginBottom="20dp"
-        android:text="כל הכבוד" />
+        android:text="@string/goodJob" />
 
     <TextView
         android:id="@+id/tvGameDescription"
@@ -30,8 +30,19 @@
         android:textSize="20dp"
         android:layout_marginBottom="15dp"
         android:gravity="center"
-        android:text="סיימת את משחק __(שם המשחק)__!" />
+        android:text="@string/finishGame" />
 
+
+    <TextView
+        android:id="@+id/tvTimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:text="" />
 
     <Button
         android:id="@+id/bBackGamesList"
@@ -41,7 +52,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="#2C5F92"
         android:fontFamily="serif"
-        android:text="חזור לדף בחירת משחק"
+        android:text="@string/backToGames"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold" />
