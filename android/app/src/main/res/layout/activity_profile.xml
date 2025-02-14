@@ -25,9 +25,14 @@
 
         <ImageView
             android:id="@+id/imgAccount"
-            android:layout_width="291dp"
-            android:layout_height="162dp"
-            app:srcCompat="@drawable/account" />
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/account"
+            android:clickable="true"
+            android:layout_marginLeft="70dp"
+            android:focusable="true"/>
+
 
     </LinearLayout>
 

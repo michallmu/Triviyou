@@ -30,4 +30,10 @@
     <string name="wrongAnswerTryAgain">טעית. נסו שוב!</string>
     <string name="textGuide">אפליקציית TRIVIYOU היא משחק טריוויה מהנה ומאתגר שמציע חווית למידה תוך כדי תחרות. בתחילת השימוש, עליכם להתחבר לחשבונכם או ליצור חשבון חדש אם זו הפעם הראשונה שלכם באפליקציה. לאחר מכן, תוכלו לבחור את נושא הטריוויה שמעניין אתכם, כמו היסטוריה, מדע, ספורט או מוזיקה. כל חידון מורכב ממספר שאלות, ובכל שאלה יש ארבע תשובות אפשריות, רק אחת מהן נכונה. לכל שאלה מוקצב זמן מוגבל, כך שתצטרכו להיות מהירים ומדויקים כדי לענות נכונה. רמות הקושי עולות ככל שתתקדמו בחידון, כך שבמהלך המשחק תתמודדו עם שאלות מאתגרות יותר. האפליקציה לא רק מספקת אתגר, אלא גם מסייעת ללמוד נושאים חדשים בדרך כיפית ומרתקת.</string>
     <string name="soon">בקרוב</string>
+    <string name="finishGame">סיימת את המשחק!\n</string>
+    <string name="goodJob">כל הכבוד 😎</string>
+    <string name="backToGames">בחזרה לרשימת המשחקים\n</string>
+    <string name="chooseImageSource">בחר מקור תמונה</string>
+    <string name="gallery">גלריה</string>
+    <string name="camera">מצלמה</string>
 </resources>
