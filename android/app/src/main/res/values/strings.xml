@@ -36,4 +36,6 @@
     <string name="chooseImageSource">בחר מקור תמונה</string>
     <string name="gallery">גלריה</string>
     <string name="camera">מצלמה</string>
+    <string name="gameOver">המשחק נגמר</string>
+    <string name="goodJobToTheList">אלופים, קדימה למשחק הבא</string>
 </resources>

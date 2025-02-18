@@ -25,7 +25,7 @@
             app:srcCompat="@drawable/back" />
 
         <TextView
-            android:layout_width="291dp"
+            android:layout_width="268dp"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:gravity="center"
