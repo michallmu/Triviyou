@@ -38,4 +38,8 @@
     <string name="camera">מצלמה</string>
     <string name="gameOver">המשחק נגמר</string>
     <string name="goodJobToTheList">אלופים, קדימה למשחק הבא</string>
+    <string name="didntFinish">" משחקים שטרם סיימת"</string>
+    <string name="thereAre">"נותרו "</string>
+    <string name="allThe">"סיימת את כל המשחקים שהתחלת, כל הכבוד"</string>
+    <string name="finishGamesCompliment">"המשחקים שהתחלת, סיימת! כל הכבוד! "</string>
 </resources>

@@ -48,7 +48,6 @@ public class SummaryActivity extends AppCompatActivity {
                     startActivity(goGames);
                     finish();
                 }
-                triggerGameEndNotification(); // Trigger notification when the countdown finishes
             }
         }.start(); // <-- You forgot this!
 
@@ -57,19 +56,10 @@ public class SummaryActivity extends AppCompatActivity {
             countDownTimer.cancel();
             startActivity(goGames);
             finish();
-            triggerGameEndNotification(); // Trigger notification when the button is clicked
         });
     }
 
-    private void triggerGameEndNotification() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(this, NotificationReceiver.class); // Create intent for notification
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        // Set delay for notification (for example 10 seconds)
-        long triggerAtMillis = System.currentTimeMillis() + 10000; // 10 seconds
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
-    }
 
     @Override
     protected void onDestroy() {
