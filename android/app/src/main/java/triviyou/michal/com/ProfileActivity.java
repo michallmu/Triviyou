@@ -31,6 +31,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -104,6 +106,27 @@ public class ProfileActivity extends AppCompatActivity {
                 startActivity(goLogin);
             }
         });
+
+        // בתוך ProfileActivity
+        tvIwantLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(ProfileActivity.this)
+                        .setMessage("אתה בטוח שאתה רוצה להתנתק?")
+                        .setCancelable(false) // Make the dialog non-cancelable outside the dialog
+                        .setPositiveButton("כן", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                FirebaseAuth.getInstance().signOut();
+                                startActivity(goLogin);
+                                finish(); // Finish ProfileActivity to remove it from the stack
+                            }
+                        })
+                        .setNegativeButton("לא", null) // If user clicks "No", just close the dialog
+                        .show(); // Show the alert dialog
+            }
+        });
+
     }
 
     // הגדרת Launcher לפעולה של גלריה
@@ -126,6 +149,7 @@ public class ProfileActivity extends AppCompatActivity {
             });
 
 
+
     private void selectImageFromStorage() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.chooseImageSource)
@@ -143,9 +167,6 @@ public class ProfileActivity extends AppCompatActivity {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, REQUEST_GALLERY);
     }
-
-
-
 
     private void openCamera() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -167,7 +188,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-
     private void takePhoto() {
         try {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -183,7 +203,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
 }
 
-
     private void loadImageFromStorage() {
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         String imagePath = preferences.getString("userImagePath", null);
@@ -196,7 +215,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }
     }
-
 
     private File createImageFile() {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
@@ -238,11 +256,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -257,8 +270,6 @@ public class ProfileActivity extends AppCompatActivity {
             }
         }
     }
-
-
 
     private void showFragment() {
         Fragment fragment = new changePasswordFragment();
@@ -281,7 +292,6 @@ public class ProfileActivity extends AppCompatActivity {
 
 
     }
-
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

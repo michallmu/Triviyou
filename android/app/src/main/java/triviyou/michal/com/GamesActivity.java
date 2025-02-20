@@ -1,5 +1,11 @@
 package triviyou.michal.com;
+import static triviyou.michal.com.R.*;
+
 import android.Manifest;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
@@ -7,8 +13,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -20,6 +26,8 @@ import java.util.List;
 import triviyou.michal.com.adapters.GameAdapter;
 import triviyou.michal.com.entities.Game;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -30,10 +38,9 @@ public class GamesActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private List<Game> gameList;
     GameAdapter adapter;
-
-    ImageButton imgBback3, imageAccount;
-    Intent goLogin, goProfile, inputIntent;
+    Intent goUserGuide, goProfile, inputIntent;
     Context context;
+    BottomNavigationView bottomNavigationView;
     String email, userId;
 
     @SuppressLint("MissingInflatedId")
@@ -41,29 +48,41 @@ public class GamesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_games);
+
+
+        bottomNavigationView = findViewById(id.bottomNavigationView);
         context = GamesActivity.this;
         inputIntent = getIntent();
-        goLogin = new Intent(context, LoginActivity.class);
+        goUserGuide = new Intent(context, UserGuide.class);
         goProfile = new Intent(context, ProfileActivity.class);
-        imgBback3 = findViewById(R.id.imgBback3);
         lvGames = findViewById(R.id.lvGames);
-        imageAccount = findViewById(R.id.imageAccount);
 
         lvGames.setClickable(true);
 
         userId = inputIntent.getStringExtra("userId");
 
-        imgBback3.setOnClickListener(v -> startActivity(goLogin));
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.nav_profile) {
+                    startActivity(goProfile);
+                    return true; }
+                else if (item.getItemId() == R.id.nav_userGuide) {
+                    startActivity(goUserGuide);
+                    return true; }
+                else {
+                    return false;
+                }
+            }
+        });
 
-        imageAccount.setOnClickListener(v -> startActivity(goProfile));
-
-        // Initialize Firestore
-        db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance(); // initialize Firestore
 
         gameList = new ArrayList<>();
         adapter = new GameAdapter(this, gameList);
-        // Set adapter to ListView
-        lvGames.setAdapter(adapter);
+
+        lvGames.setAdapter(adapter); // set adapter to ListView
         getGamesFromDB();
 
         checkUnfinishedGamesForUser();

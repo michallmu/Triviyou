@@ -23,11 +23,11 @@ import com.google.firebase.auth.SignInMethodQueryResult;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    ImageButton imgBback1, imgBguide;
+    ImageButton imgBback1;
     Context context;
     Intent inputIntent, goGames, goLogin, goUserGuide;
-    EditText emailEtRegister, passwordEtRegister, repeatPasswordEtRegister;
-    Button btnCreateAcc;
+    EditText etEmailRegister, etPasswordRegister, etRepeatPasswordRegister;
+    Button bCreateAcc;
     Helper helper = new Helper();
     private FirebaseAuth firebaseAuth;
 
@@ -44,18 +44,12 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(goLogin);
             }
         });
-        imgBguide.setOnClickListener(new View.OnClickListener() {
+        bCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(goUserGuide);
-            }
-        });
-        btnCreateAcc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String stEmail = emailEtRegister.getText().toString();
-                String stPassword = passwordEtRegister.getText().toString();
-                String stRepeatPassword = repeatPasswordEtRegister.getText().toString();
+                String stEmail = etEmailRegister.getText().toString();
+                String stPassword = etPasswordRegister.getText().toString();
+                String stRepeatPassword = etRepeatPasswordRegister.getText().toString();
 
                 if (validate(stEmail, stPassword, stRepeatPassword)) {
                     checkIfEmailExistsAndRegister(stEmail, stPassword);
@@ -119,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                     helper.toasting(context, getString(R.string.messagePassword));
                     return false;
                 }
-                if (!stPassword.equals(stRepeatPassword) || passwordEtRegister.length() < 3) {
+                if (!stPassword.equals(stRepeatPassword) || etPasswordRegister.length() < 3) {
                     helper.toasting(context, getString(R.string.messageNotEqualPasswords));
                     return false;
                 }
@@ -134,12 +128,11 @@ public class RegisterActivity extends AppCompatActivity {
                 goLogin = new Intent(context, LoginActivity.class);
                 goGames = new Intent(context, GamesActivity.class);
                 goUserGuide = new Intent(context, UserGuide.class);
-                emailEtRegister = findViewById(R.id.emailEtRegister);
-                passwordEtRegister = findViewById(R.id.passwordEtRegister);
-                repeatPasswordEtRegister = findViewById(R.id.repeatPasswordEtRegister);
-                btnCreateAcc = findViewById(R.id.btnCreateAcc);
+                etEmailRegister = findViewById(R.id.etEmailRegister);
+                etPasswordRegister = findViewById(R.id.etPasswordRegister);
+                etRepeatPasswordRegister = findViewById(R.id.etRepeatPasswordRegister);
+                bCreateAcc = findViewById(R.id.bCreateAcc);
                 imgBback1 = findViewById(R.id.imgBback1);
-                imgBguide = findViewById(R.id.imgBguide);
             }
         }
 

@@ -21,8 +21,8 @@ public class LoginActivity extends AppCompatActivity {
     Context context;
     Intent goGames, goRegister, inputIntent;
     EditText etEmail, etPassword;
-    Button btnLogin;
-    TextView registerLinkTview;
+    Button bLogin;
+    TextView tvRegisterLink;
     String email, password;
     Helper helper = new Helper();
     FirebaseAuth mAuth;
@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initComponents();
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        registerLinkTview.setOnClickListener(new View.OnClickListener() {
+        tvRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(goRegister);
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         goRegister = new Intent(context, RegisterActivity.class);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        registerLinkTview = findViewById(R.id.registerLinkTview);
+        bLogin = findViewById(R.id.bLogin);
+        tvRegisterLink = findViewById(R.id.tvRegisterLink);
     }
 }

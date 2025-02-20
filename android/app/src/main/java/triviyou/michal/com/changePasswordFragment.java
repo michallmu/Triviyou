@@ -3,6 +3,7 @@ package triviyou.michal.com;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,6 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class changePasswordFragment extends Fragment {
 
@@ -46,8 +53,28 @@ public class changePasswordFragment extends Fragment {
                     helper.toasting(context, getString(R.string.messageEmptyPassword));
                     return;
                 }
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                if (user != null) {
+                    // עדכון הסיסמה
+                    user.updatePassword(newPassword)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        // אם הסיסמה שונתה בהצלחה
+                                        helper.toasting(context, getString(R.string.passwordUpdatedSuccessfully));
+
+                                    } else {
+                                        // אם הייתה שגיאה בעדכון
+                                        helper.toasting(context, getString(R.string.passwordUpdateFailed));
+                                    }
+                                }
+                            });
+                }
             }
         });
+
 
         return view;
     }

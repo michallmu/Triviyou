@@ -25,14 +25,6 @@
             android:backgroundTint="#F9F9F9"
             app:srcCompat="@drawable/back" />
 
-        <ImageButton
-            android:id="@+id/imgBguide"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginLeft="280dp"
-            android:backgroundTint="#F9F9F9"
-            app:srcCompat="@drawable/userguide" />
     </LinearLayout>
 
     <TextView
@@ -47,7 +39,7 @@
         android:textSize="30dp" />
 
     <EditText
-        android:id="@+id/emailEtRegister"
+        android:id="@+id/etEmailRegister"
         android:layout_marginTop="20dp"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
@@ -61,7 +53,7 @@
         android:textColorHint="#333333" />
 
     <EditText
-        android:id="@+id/passwordEtRegister"
+        android:id="@+id/etPasswordRegister"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -75,7 +67,7 @@
         android:textColorHint="#333333" />
 
     <EditText
-        android:id="@+id/repeatPasswordEtRegister"
+        android:id="@+id/etRepeatPasswordRegister"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:hint="@string/repeatPassword"
@@ -89,7 +81,7 @@
         android:textColor="#333333" />
 
     <Button
-        android:id="@+id/btnCreateAcc"
+        android:id="@+id/bCreateAcc"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

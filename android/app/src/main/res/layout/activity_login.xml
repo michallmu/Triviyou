@@ -10,7 +10,6 @@
     android:gravity="center"
     tools:context=".LoginActivity">
 
-    <!-- כותרת -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,9 +21,6 @@
         android:textSize="30dp"
         android:textStyle="bold" />
 
-    <!-- תווית אימייל -->
-
-    <!-- שדה אימייל -->
     <EditText
         android:id="@+id/etEmail"
         android:layout_width="350dp"
@@ -40,9 +36,7 @@
         android:textColorHint="#3d6664"
         android:gravity="right" />
 
-    <!-- תווית סיסמה -->
 
-    <!-- שדה סיסמה -->
     <EditText
         android:id="@+id/etPassword"
         android:layout_width="350dp"
@@ -53,14 +47,13 @@
         android:inputType="textPassword"
         android:padding="12dp"
         android:textColor="#333333"
+        android:text="123456789"
         android:textColorHint="#3d6664"
         android:layout_marginBottom="15dp"
-        android:text="123456789"
         android:gravity="right" />
 
-    <!-- כפתור התחברות -->
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/bLogin"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#004680"
@@ -71,9 +64,8 @@
         android:textSize="18dp"
         android:textStyle="bold" />
 
-    <!-- קישור להרשמה -->
     <TextView
-        android:id="@+id/registerLinkTview"
+        android:id="@+id/tvRegisterLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

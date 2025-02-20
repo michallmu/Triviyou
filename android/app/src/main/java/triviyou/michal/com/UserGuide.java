@@ -24,7 +24,7 @@ public class UserGuide extends AppCompatActivity {
 
     Context context;
     ImageButton imgBback2;
-    Intent inputIntent, goRegister;
+    Intent inputIntent, goGames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class UserGuide extends AppCompatActivity {
         imgBback2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(goRegister);
+                startActivity(goGames);
             }
         });
     }
@@ -43,7 +43,7 @@ public class UserGuide extends AppCompatActivity {
     private void initComponents() {
         context = UserGuide.this;
         inputIntent = getIntent();
-        goRegister = new Intent(context, RegisterActivity.class);
+        goGames = new Intent(context, GamesActivity.class);
         imgBback2 = findViewById(R.id.imgBback2);
     }
 }

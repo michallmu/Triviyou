@@ -42,4 +42,6 @@
     <string name="thereAre">"נותרו "</string>
     <string name="allThe">"סיימת את כל המשחקים שהתחלת, כל הכבוד"</string>
     <string name="finishGamesCompliment">"המשחקים שהתחלת, סיימת! כל הכבוד! "</string>
+    <string name="passwordUpdatedSuccessfully">סיסמה שונתה בהצלחה\n</string>
+    <string name="passwordUpdateFailed">עדכון הסיסמה נכשל</string>
 </resources>

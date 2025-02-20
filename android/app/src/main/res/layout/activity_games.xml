@@ -10,22 +10,13 @@
     android:background="#F9F9F9"
     tools:context=".GamesActivity">
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/imgBback3"
-            android:layout_width="43dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="#F9F9F9"
-            app:srcCompat="@drawable/back" />
-
         <TextView
-            android:layout_width="268dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:gravity="center"
@@ -34,21 +25,30 @@
             android:textSize="25dp"
             android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/imageAccount"
-            android:layout_width="62dp"
-            android:layout_height="match_parent"
-            android:backgroundTint="#F9F9F9"
-            app:srcCompat="@drawable/account" />
-
     </LinearLayout>
 
 
+    <!-- תפריט ניווט תחתון -->
     <ListView
         android:id="@+id/lvGames"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="25dp"/>
+        android:layout_height="547dp"
+        android:layout_marginTop="25dp" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="154dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/bottom_nav_background"
+        app:itemActiveIndicatorStyle="@style/Widget.Design.BottomNavigationView"
+        app:itemIconSize="24dp"
+        app:itemIconTint="#121D50"
+        app:itemRippleColor="#A6A9BA"
+        app:itemTextColor="#121D50"
+        app:menu="@menu/bottom_menu" />
+
 
 
 
