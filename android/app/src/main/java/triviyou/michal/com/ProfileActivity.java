@@ -46,9 +46,9 @@ public class ProfileActivity extends AppCompatActivity {
     Context context;
     ImageButton imgbBack4;
     ImageView imgAccount;
-    TextView tvWantChangePassword, tvIwantLogOut, tvCurrentEmail;
+    TextView tvWantChangePassword, tvIwantLogOut;
     Intent inputIntent, goGames, goLogin;
-    String email;
+
     private static final String FRAGMENT_TAG = "CHANGE_PASSWORD_FRAGMENT"; // תגית לפרגמנט
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int REQUEST_CAMERA = 1; // קבוע לזיהוי בקשה לצילום
@@ -57,7 +57,8 @@ public class ProfileActivity extends AppCompatActivity {
     private Uri imageUri;
     private boolean isFragmentDisplayed = false; // משתנה שמנהל את מצב הפרגמנט
 
-
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    String userId = auth.getCurrentUser().getUid();
 
 
     @SuppressLint("MissingInflatedId")
@@ -72,12 +73,10 @@ public class ProfileActivity extends AppCompatActivity {
         tvWantChangePassword = findViewById(R.id.tvWantChangePassword);
         inputIntent = getIntent();
         tvIwantLogOut = findViewById(R.id.tvIwantLogOut);
-        tvCurrentEmail = findViewById(R.id.tvCurrentEmail);
+
         goGames = new Intent(context, GamesActivity.class);
         goLogin = new Intent(context, LoginActivity.class);
 
-        email = inputIntent.getStringExtra("email");
-        tvCurrentEmail.setText(email);
 
         // Load the saved profile image
         loadImageFromStorage();
@@ -205,7 +204,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void loadImageFromStorage() {
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
-        String imagePath = preferences.getString("userImagePath", null);
+        String imagePath = preferences.getString(userId, null);
 
         if (imagePath != null) {
             File imageFile = new File(imagePath);
@@ -248,7 +247,8 @@ public class ProfileActivity extends AppCompatActivity {
             // Store the file path for later use (you can store this path in SharedPreferences or a database)
             SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("userImagePath", outputFile.getAbsolutePath());
+            editor.putString(userId, outputFile.getAbsolutePath());
+            //editor.putString("userImagePath", outputFile.getAbsolutePath());
             editor.apply();
 
         } catch (IOException e) {

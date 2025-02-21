@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -60,7 +61,6 @@ public class QuestionActivity extends AppCompatActivity {
         imgBback6 = findViewById(R.id.imgbBack6);
         inputIntent = getIntent();
         goSummary = new Intent(context, SummaryActivity.class);
-        userId = inputIntent.getStringExtra("userId");
         gameId = inputIntent.getIntExtra("gameId", 1);
         tvShowLevel = findViewById(R.id.tvShowLevel);
         tvQuestionText = findViewById(R.id.tvQuestionText);
@@ -74,13 +74,15 @@ public class QuestionActivity extends AppCompatActivity {
         imgQuestion = findViewById(R.id.imgQuestion);
         videoQuestion = findViewById(R.id.videoQuestion);
 
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        userId = auth.getCurrentUser().getUid();
+
+
         //init db (firestore)
         db = FirebaseFirestore.getInstance();
 
         // Get user current level from Firestore
        getUserHistoryAndQuestions(userId, gameId);
-
-
 
 
         // Listen for back button click (currently commented out)
@@ -147,6 +149,7 @@ public class QuestionActivity extends AppCompatActivity {
 
 
     }
+
     private void getUserHistoryAndQuestions(String userId, int gameId) {
         String documentId = userId + "_" + gameId; // Combine userId and gameId to form the document ID
         DocumentReference docRef = db.collection("userGameHistory").document(documentId);
@@ -186,6 +189,7 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void updateUserGameHistoryLevelInDB(int userLevel) {
+
         UserGameHistory userGameHistory = new UserGameHistory(gameId,userId,questionList.isEmpty(),userLevel);
         String documentId = userId + "_" + gameId;
 

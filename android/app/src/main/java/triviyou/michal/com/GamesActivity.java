@@ -85,11 +85,14 @@ public class GamesActivity extends AppCompatActivity {
         lvGames.setAdapter(adapter); // set adapter to ListView
         getGamesFromDB();
 
-        checkUnfinishedGamesForUser();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+        // global data is actually a singleton i used to show the notification once after login
+        if (!GlobalData.getInstance().isNotificationAppeared()) {
+            checkUnfinishedGamesForUser();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
+                GlobalData.getInstance().setNotificationAppeared(true);
+            }
         }
-
     }
 
     private void checkUnfinishedGamesForUser() {
@@ -101,6 +104,8 @@ public class GamesActivity extends AppCompatActivity {
                 .whereEqualTo("finished", false)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
+                    //queryDocumentSnapshots, means , that user have at least one history doc in db.
+                    //otherwise , we not  popup him
                     if (!queryDocumentSnapshots.isEmpty()) {
                         scheduleNotification(queryDocumentSnapshots.size());
                     }
@@ -115,7 +120,7 @@ public class GamesActivity extends AppCompatActivity {
 
         try {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-            long triggerTime = System.currentTimeMillis() + 3000; // 3 seconds delay
+            long triggerTime = System.currentTimeMillis() + 3000;
 
             if (alarmManager != null) {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);

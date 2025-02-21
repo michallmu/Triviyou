@@ -65,6 +65,7 @@ public class changePasswordFragment extends Fragment {
                                         // אם הסיסמה שונתה בהצלחה
                                         helper.toasting(context, getString(R.string.passwordUpdatedSuccessfully));
 
+
                                     } else {
                                         // אם הייתה שגיאה בעדכון
                                         helper.toasting(context, getString(R.string.passwordUpdateFailed));
