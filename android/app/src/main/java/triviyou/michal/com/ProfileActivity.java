@@ -232,7 +232,7 @@ public class ProfileActivity extends AppCompatActivity {
             InputStream inputStream = getContentResolver().openInputStream(imageUri);
 
             // Create a file to save the image
-            File outputFile = new File(getFilesDir(), "userImageAccount.jpg"); // Save it in the internal app directory
+            File outputFile = new File(getFilesDir(), userId+".jpg"); // Save it in the internal app directory
             FileOutputStream outputStream = new FileOutputStream(outputFile);
 
             // Copy the image from input stream to output file

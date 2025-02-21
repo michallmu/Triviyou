@@ -73,11 +73,7 @@
   <component name="ChangeListManager">
     <list default="true" id="15d9a660-1884-439f-aafe-65812ce8a32b" name="Changes" comment="# FRIDAY17">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/GamesActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/GamesActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/ProfileActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/QuestionActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/QuestionActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/changePasswordFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/changePasswordFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +83,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\ADMIN\.android\avd\Pixel_3a_API_35_1.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -167,7 +163,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Android App.app.executor": "Run",
+    "Android App.app.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
@@ -177,7 +173,8 @@
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/code/Triviyou/android",
-    "recommended.upgrade.last.time.stamp": "1738860901685"
+    "recommended.upgrade.last.time.stamp": "1738860901685",
+    "settings.editor.selected.configurable": "device.mirroring"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -273,6 +270,11 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/QuestionActivity.java</url>
           <line>228</line>
           <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/ProfileActivity.java</url>
+          <line>231</line>
+          <option name="timeStamp" value="81" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
