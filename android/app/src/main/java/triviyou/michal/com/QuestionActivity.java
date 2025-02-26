@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-/*
+
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
- */
+
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -49,7 +49,7 @@ public class QuestionActivity extends AppCompatActivity {
     String userId;
     Helper helper = new Helper();
     ImageView imgQuestion;
-    //WebView videoQuestion;
+    WebView videoQuestion;
     int gameId;
     TextView tvShowLevel, tvQuestionText, tvQuestionInfo;
     RadioGroup answersGroup;
@@ -83,7 +83,7 @@ public class QuestionActivity extends AppCompatActivity {
         answersGroup = findViewById(R.id.answersGroup);
         progressBar = findViewById(R.id.progressBar);
         imgQuestion = findViewById(R.id.imgQuestion);
-        //videoQuestion = findViewById(R.id.videoQuestion);
+        videoQuestion = findViewById(R.id.videoQuestion);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         userId = auth.getCurrentUser().getUid();
 
@@ -93,6 +93,7 @@ public class QuestionActivity extends AppCompatActivity {
 
         // Get user current level from Firestore
         getUserHistoryAndQuestions(userId, gameId);
+
 
 
         // Listen for back button click (currently commented out)
@@ -111,7 +112,17 @@ public class QuestionActivity extends AppCompatActivity {
                 onSubmitClicked();
             }
         });
+
     }
+
+    private void showElements() {
+        rbAnswer1.setVisibility(View.VISIBLE);
+        rbAnswer2.setVisibility(View.VISIBLE);
+        rbAnswer3.setVisibility(View.VISIBLE);
+        rbAnswer4.setVisibility(View.VISIBLE);
+        bSubmit.setVisibility(View.VISIBLE);
+    }
+
     private void onSubmitClicked() {
         if (!questionList.isEmpty()) {
             // Check if the selected answer is correct
@@ -281,7 +292,14 @@ public class QuestionActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void showSingleQuestion(Question question) {
+        //just now , we visible the elements
+        imgQuestion.setVisibility(View.GONE);
+        videoQuestion.setVisibility(View.GONE);
+
+        showElements();
+
         String qt = question.questionText;
         String qtInfo = getString(R.string.questionNumber) + question.id + "\n" + getString(R.string.correctAnswer) + question.correctAnswer + "\n" +getString(R.string.level) + question.level;
         tvQuestionText.setText(qt);
@@ -296,20 +314,19 @@ public class QuestionActivity extends AppCompatActivity {
         rbAnswer4.setText(question.answer4);
         rbAnswer4.setChecked(false);
 
-        imgQuestion.setVisibility(View.GONE);
-        //videoQuestion.setVisibility(View.GONE);
 
         String statusMessage = getString(R.string.statusMessage, userLevel, questionList.get(questionList.size() - 1).getLevel());
         tvShowLevel.setText(statusMessage);
 
         switch (question.getQuestionType().toLowerCase()) {
             case "video":
-                //videoQuestion.setVisibility(View.VISIBLE);
+                videoQuestion.setVisibility(View.VISIBLE);
                 //videoQuestion.setVideoPath(question.getQuestionUrl());
-
+                videoQuestion.setWebViewClient(new WebViewClient());
                 String videoUrl = "https://www.youtube.com/watch?v=b0ZYNOc1Tck";
-               // videoQuestion.getSettings().setJavaScriptEnabled(true);
-               // videoQuestion.loadUrl(videoUrl);
+
+                videoQuestion.getSettings().setJavaScriptEnabled(true);
+               videoQuestion.loadUrl(videoUrl);
 
                 break;
 
@@ -329,6 +346,14 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (videoQuestion.canGoBack()) {
+            videoQuestion.goBack(); // Navigate back in WebView if possible
+        } else {
+            super.onBackPressed();
+        }
+    }
     private int getSelectAnswer(int selectAnswer) {
         if(rbAnswer1.isChecked())
         {
