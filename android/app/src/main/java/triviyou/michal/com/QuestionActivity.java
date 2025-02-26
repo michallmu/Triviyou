@@ -1,9 +1,17 @@
 package triviyou.michal.com;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+/*
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+ */
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -41,7 +49,7 @@ public class QuestionActivity extends AppCompatActivity {
     String userId;
     Helper helper = new Helper();
     ImageView imgQuestion;
-    VideoView videoQuestion;
+    //WebView videoQuestion;
     int gameId;
     TextView tvShowLevel, tvQuestionText, tvQuestionInfo;
     RadioGroup answersGroup;
@@ -51,6 +59,7 @@ public class QuestionActivity extends AppCompatActivity {
     private List<Question> questionList = new LinkedList<>(); // Initialize as an empty list
     private ProgressBar progressBar;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // ui issues
@@ -74,8 +83,7 @@ public class QuestionActivity extends AppCompatActivity {
         answersGroup = findViewById(R.id.answersGroup);
         progressBar = findViewById(R.id.progressBar);
         imgQuestion = findViewById(R.id.imgQuestion);
-        videoQuestion = findViewById(R.id.videoQuestion);
-
+        //videoQuestion = findViewById(R.id.videoQuestion);
         FirebaseAuth auth = FirebaseAuth.getInstance();
         userId = auth.getCurrentUser().getUid();
 
@@ -289,21 +297,20 @@ public class QuestionActivity extends AppCompatActivity {
         rbAnswer4.setChecked(false);
 
         imgQuestion.setVisibility(View.GONE);
-        videoQuestion.setVisibility(View.GONE);
+        //videoQuestion.setVisibility(View.GONE);
 
         String statusMessage = getString(R.string.statusMessage, userLevel, questionList.get(questionList.size() - 1).getLevel());
         tvShowLevel.setText(statusMessage);
 
         switch (question.getQuestionType().toLowerCase()) {
             case "video":
-                videoQuestion.setVisibility(View.VISIBLE);
-                videoQuestion.setVideoPath(question.getQuestionUrl());
+                //videoQuestion.setVisibility(View.VISIBLE);
+                //videoQuestion.setVideoPath(question.getQuestionUrl());
 
-                MediaController mediaController = new MediaController(this);
-                mediaController.setAnchorView(videoQuestion);
-                videoQuestion.setMediaController(mediaController);
+                String videoUrl = "https://www.youtube.com/watch?v=b0ZYNOc1Tck";
+               // videoQuestion.getSettings().setJavaScriptEnabled(true);
+               // videoQuestion.loadUrl(videoUrl);
 
-                videoQuestion.start();
                 break;
 
             case "image":
