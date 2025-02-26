@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int STORAGE_PERMISSION_CODE = 101; // קבוע לבדוק הרשאת אחסון
     private Uri imageUri;
     private boolean isFragmentDisplayed = false; // משתנה שמנהל את מצב הפרגמנט
-
+    Helper helper = new Helper();
     FirebaseAuth auth = FirebaseAuth.getInstance();
     String userId = auth.getCurrentUser().getUid();
 
@@ -102,14 +102,10 @@ public class ProfileActivity extends AppCompatActivity {
         tvIwantLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(goLogin);
-            }
-        });
-
-        // בתוך ProfileActivity
-        tvIwantLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                if (!Helper.isInternetAvailable(context)) {
+                    helper.toasting(context, "אין חיבור לאינטרנט");
+                    return;
+                }
                 new AlertDialog.Builder(ProfileActivity.this)
                         .setMessage("אתה בטוח שאתה רוצה להתנתק?")
                         .setCancelable(false) // Make the dialog non-cancelable outside the dialog
@@ -123,6 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
                         })
                         .setNegativeButton("לא", null) // If user clicks "No", just close the dialog
                         .show(); // Show the alert dialog
+
             }
         });
 

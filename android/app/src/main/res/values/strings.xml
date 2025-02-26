@@ -44,4 +44,7 @@
     <string name="finishGamesCompliment">"המשחקים שהתחלת, סיימת! כל הכבוד! "</string>
     <string name="passwordUpdatedSuccessfully">סיסמה שונתה בהצלחה\n</string>
     <string name="passwordUpdateFailed">עדכון הסיסמה נכשל</string>
+    <string name="questionNumber">"שאלה מספר "</string>
+    <string name="correctAnswer">"התשובה הנכונה: "</string>
+    <string name="level">"רמה: "</string>
 </resources>

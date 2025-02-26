@@ -40,6 +40,10 @@ public class changePasswordFragment extends Fragment {
         bChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!Helper.isInternetAvailable(context)) {
+                    helper.toasting(context, "אין חיבור לאינטרנט");
+                    return;
+                }
                 String newPassword = etNewPassword.getText().toString();
                 String repeatNewPassword = etRepeatNewPassword.getText().toString();
 

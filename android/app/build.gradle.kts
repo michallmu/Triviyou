@@ -52,6 +52,7 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
     implementation("com.google.android.material:material:1.10.0")
+    implementation("    com.google.android.youtube:youtube-android-player:1.2.2")
 
     // Firebase product dependencies
     implementation("com.google.firebase:firebase-analytics")

@@ -52,7 +52,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         new Handler().postDelayed(() -> {
             notificationManager.cancel(notificationId); // Dismiss the notification after 8 seconds
-        }, 8000); // 8000 milliseconds = 8 seco
+        }, 8000); // 8000 milliseconds = 8 sec
     }
 
 }

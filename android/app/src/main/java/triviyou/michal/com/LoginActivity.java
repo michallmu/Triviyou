@@ -32,7 +32,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this); // Make sure Firebase is initialized
         setContentView(R.layout.activity_login);
-        initComponents();
+        context = LoginActivity.this;
+        inputIntent = getIntent();
+        goGames = new Intent(context, GamesActivity.class);
+        goRegister = new Intent(context, RegisterActivity.class);
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
+        bLogin = findViewById(R.id.bLogin);
+        tvRegisterLink = findViewById(R.id.tvRegisterLink);
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +54,12 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     checkValidAuth(email, password); // check in firebaseAuth
                 }
+
+                if (!Helper.isInternetAvailable(context)) {
+                    helper.toasting(context,"אין חיבור לאינטרנט");
+                    return;
+                }
+
             }
         });
 
@@ -80,14 +93,5 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void initComponents() {
-        context = LoginActivity.this;
-        inputIntent = getIntent();
-        goGames = new Intent(context, GamesActivity.class);
-        goRegister = new Intent(context, RegisterActivity.class);
-        etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
-        bLogin = findViewById(R.id.bLogin);
-        tvRegisterLink = findViewById(R.id.tvRegisterLink);
-    }
+
 }

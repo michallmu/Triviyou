@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import triviyou.michal.com.adapters.GameAdapter;
 import triviyou.michal.com.entities.Game;
-
+import triviyou.michal.com.Helper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +40,7 @@ public class GamesActivity extends AppCompatActivity {
     GameAdapter adapter;
     Intent goUserGuide, goProfile, inputIntent;
     Context context;
+    Helper helper  = new Helper();
     BottomNavigationView bottomNavigationView;
     String email, userId;
 
@@ -162,6 +163,11 @@ public class GamesActivity extends AppCompatActivity {
                                 Intent startPlaying = new Intent(context, QuestionActivity.class);
                                 startPlaying.putExtra("userId", userId);
                                 startPlaying.putExtra("gameId", clickedGame.getId());
+                                if (!Helper.isInternetAvailable(context)) {
+                                    helper.toasting(context,"אין חיבור לאינטרנט");
+                                    return;
+                                }
+
                                 startActivity(startPlaying);
                             }
                         });

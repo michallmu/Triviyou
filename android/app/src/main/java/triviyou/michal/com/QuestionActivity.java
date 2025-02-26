@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -14,9 +15,8 @@ import android.widget.TextView;
 import android.util.Log;
 import android.widget.Toast;
 import android.widget.VideoView;
-
+import triviyou.michal.com.Helper;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,10 +39,11 @@ public class QuestionActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     Intent goGames, inputIntent, goSummary;
     String userId;
+    Helper helper = new Helper();
     ImageView imgQuestion;
     VideoView videoQuestion;
     int gameId;
-    TextView tvShowLevel, tvQuestionText;
+    TextView tvShowLevel, tvQuestionText, tvQuestionInfo;
     RadioGroup answersGroup;
     RadioButton rbAnswer1, rbAnswer2, rbAnswer3, rbAnswer4;
     Button bSubmit;
@@ -64,6 +65,7 @@ public class QuestionActivity extends AppCompatActivity {
         gameId = inputIntent.getIntExtra("gameId", 1);
         tvShowLevel = findViewById(R.id.tvShowLevel);
         tvQuestionText = findViewById(R.id.tvQuestionText);
+        tvQuestionInfo = findViewById(R.id.tvQuestionInfo);
         rbAnswer1 = findViewById(R.id.rbAnswer1);
         rbAnswer2 = findViewById(R.id.rbAnswer2);
         rbAnswer3 = findViewById(R.id.rbAnswer3);
@@ -82,7 +84,7 @@ public class QuestionActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         // Get user current level from Firestore
-       getUserHistoryAndQuestions(userId, gameId);
+        getUserHistoryAndQuestions(userId, gameId);
 
 
         // Listen for back button click (currently commented out)
@@ -91,11 +93,17 @@ public class QuestionActivity extends AppCompatActivity {
             startActivity(goGames);
         });
         // Submit button action (currently commented out)
-        bSubmit.setOnClickListener(v -> {
-            onSubmitClicked();
+        bSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!Helper.isInternetAvailable(context)) {
+                    helper.toasting(context, "אין חיבור לאינטרנט");
+                    return;
+                }
+                onSubmitClicked();
+            }
         });
     }
-
     private void onSubmitClicked() {
         if (!questionList.isEmpty()) {
             // Check if the selected answer is correct
@@ -266,8 +274,10 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void showSingleQuestion(Question question) {
-        String qt = question.questionText + question.id + ",Correct ans:" + question.correctAnswer + " level: " + question.level;
+        String qt = question.questionText;
+        String qtInfo = getString(R.string.questionNumber) + question.id + "\n" + getString(R.string.correctAnswer) + question.correctAnswer + "\n" +getString(R.string.level) + question.level;
         tvQuestionText.setText(qt);
+        tvQuestionInfo.setText(qtInfo);
         answersGroup.clearCheck();
         rbAnswer1.setText(question.answer1);
         rbAnswer1.setChecked(false);
@@ -287,7 +297,15 @@ public class QuestionActivity extends AppCompatActivity {
         switch (question.getQuestionType().toLowerCase()) {
             case "video":
                 videoQuestion.setVisibility(View.VISIBLE);
+                videoQuestion.setVideoPath(question.getQuestionUrl());
+
+                MediaController mediaController = new MediaController(this);
+                mediaController.setAnchorView(videoQuestion);
+                videoQuestion.setMediaController(mediaController);
+
+                videoQuestion.start();
                 break;
+
             case "image":
                 //https://drive.google.com/uc?id=1fTQYtxXkda0j_kAKnyBj5_xHJFFrAs8-
                 imgQuestion.setVisibility(View.VISIBLE);
@@ -299,9 +317,7 @@ public class QuestionActivity extends AppCompatActivity {
                 break;
             default:
                 break;
-
         }
-
 
 
     }
