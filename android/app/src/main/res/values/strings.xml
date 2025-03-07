@@ -47,4 +47,11 @@
     <string name="questionNumber">"שאלה מספר "</string>
     <string name="correctAnswer">"התשובה הנכונה: "</string>
     <string name="level">"רמה: "</string>
+    <string name="seconds">" שניות"</string>
+    <string name="noAnswerSelected">לא נבחרה תשובה</string>
+    <string name="timesOut">תם הזמן. הזדרזו בפעם הבאה!</string>
+    <string name="areLeft">"נותרו "</string>
+    <string name="startGameAgain">"אני רוצה לשחק שוב"</string>
+    <string name="shortPasswordChange">העדכון נכשל, נסה סיסמה ארוכה יותר\n\n</string>
+    <string name="numberOfFailures">"מספר הטעויות שלך הוא: "</string>
 </resources>

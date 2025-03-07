@@ -91,10 +91,10 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (isFragmentDisplayed) {
                     closeFragment();
-                    tvWantChangePassword.setText(getString(R.string.iWantChangePass)); // מצב מקורי - רוצה לשנות
+                    tvWantChangePassword.setText(getString(R.string.iWantChangePass));
                 } else {
                     showFragment(); // Show the fragment
-                    tvWantChangePassword.setText(getString(R.string.close)); // אני רוצה לסגור את הפרגמנט
+                    tvWantChangePassword.setText(getString(R.string.close));
                 }
             }
         });

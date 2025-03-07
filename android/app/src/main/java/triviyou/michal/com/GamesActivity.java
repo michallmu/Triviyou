@@ -49,8 +49,6 @@ public class GamesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_games);
-
-
         bottomNavigationView = findViewById(id.bottomNavigationView);
         context = GamesActivity.this;
         inputIntent = getIntent();

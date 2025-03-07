@@ -60,21 +60,29 @@
         android:layout_marginBottom="20dp"/>
 
     <!-- ImageView and WebView in the same position using FrameLayout -->
+    <TextView
+        android:id="@+id/tvTimerQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#6A7278"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="visible"
         tools:ignore="WebViewLayout">
-        <!-- ImageView for the question -->
         <ImageView
             android:id="@+id/imgQuestion"
             android:layout_width="123dp"
             android:layout_height="95dp"
             android:layout_gravity="center"
-            android:visibility="gone" /> <!-- Set visibility to gone by default -->
-
-        <!-- WebView for the video question -->
+            android:visibility="gone" />
         <WebView
             android:id="@+id/videoQuestion"
             android:layout_width="match_parent"
@@ -163,6 +171,6 @@
         android:gravity="center"
         android:text=""
         android:textColor="#6A7278"
-        android:textSize="15sp"
+        android:textSize="15dp"
         android:textStyle="bold" />
 </LinearLayout>

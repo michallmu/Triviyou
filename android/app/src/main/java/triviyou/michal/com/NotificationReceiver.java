@@ -44,9 +44,6 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setAutoCancel(true)
                 .setColor(ContextCompat.getColor(context, R.color.blue));
 
-
-
-
         int notificationId = 1;
         notificationManager.notify(notificationId, builder.build());
 

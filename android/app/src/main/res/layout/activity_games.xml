@@ -28,7 +28,6 @@
     </LinearLayout>
 
 
-    <!-- תפריט ניווט תחתון -->
     <ListView
         android:id="@+id/lvGames"
         android:layout_width="match_parent"

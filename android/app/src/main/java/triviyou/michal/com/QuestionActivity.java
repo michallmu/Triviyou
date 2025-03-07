@@ -4,10 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -15,15 +14,13 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.util.Log;
 import android.widget.Toast;
-import android.widget.VideoView;
-import triviyou.michal.com.Helper;
+
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -46,16 +43,16 @@ public class QuestionActivity extends AppCompatActivity {
     ImageButton imgBback6;
     private FirebaseFirestore db;
     Intent goGames, inputIntent, goSummary;
+    private CountDownTimer countdownTimer;
     String userId;
     Helper helper = new Helper();
     ImageView imgQuestion;
     WebView videoQuestion;
-    int gameId;
-    TextView tvShowLevel, tvQuestionText, tvQuestionInfo;
+    TextView tvShowLevel, tvQuestionText, tvQuestionInfo, tvTimerQuestion;
     RadioGroup answersGroup;
     RadioButton rbAnswer1, rbAnswer2, rbAnswer3, rbAnswer4;
     Button bSubmit;
-    int userLevel, selectedAnswer, checkedId;
+    int userLevel, gameId, failuresNumber, selectedAnswer, checkedId;
     private List<Question> questionList = new LinkedList<>(); // Initialize as an empty list
     private ProgressBar progressBar;
 
@@ -75,6 +72,7 @@ public class QuestionActivity extends AppCompatActivity {
         tvShowLevel = findViewById(R.id.tvShowLevel);
         tvQuestionText = findViewById(R.id.tvQuestionText);
         tvQuestionInfo = findViewById(R.id.tvQuestionInfo);
+        tvTimerQuestion = findViewById(R.id.tvTimerQuestion);
         rbAnswer1 = findViewById(R.id.rbAnswer1);
         rbAnswer2 = findViewById(R.id.rbAnswer2);
         rbAnswer3 = findViewById(R.id.rbAnswer3);
@@ -94,8 +92,6 @@ public class QuestionActivity extends AppCompatActivity {
         // Get user current level from Firestore
         getUserHistoryAndQuestions(userId, gameId);
 
-
-
         // Listen for back button click (currently commented out)
         imgBback6.setOnClickListener(v -> {
             goGames.putExtra("userId", userId);
@@ -109,8 +105,11 @@ public class QuestionActivity extends AppCompatActivity {
                     helper.toasting(context, "אין חיבור לאינטרנט");
                     return;
                 }
-                onSubmitClicked();
-            }
+                if (countdownTimer != null) {
+                    countdownTimer.cancel();
+                }
+
+                onSubmitClicked();            }
         });
 
     }
@@ -130,10 +129,12 @@ public class QuestionActivity extends AppCompatActivity {
             selectAnswer = getSelectAnswer(selectAnswer);
             if(selectAnswer == 0)
             {
-                Toast.makeText(this,"no answer selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.noAnswerSelected, Toast.LENGTH_SHORT).show();
             }
             else if (selectAnswer != questionList.get(0).correctAnswer) {
+                failuresNumber++;
                 Toast.makeText(this, getString(R.string.wrongAnswerTryAgain), Toast.LENGTH_SHORT).show();
+                updateUserGameHistoryInDB(userLevel, failuresNumber);
             }
             else {
                 //answer is correct !!!
@@ -144,7 +145,7 @@ public class QuestionActivity extends AppCompatActivity {
                     userLevel = questionList.get(0).getLevel();
                 }
                     //update user history  in DB
-                updateUserGameHistoryLevelInDB(userLevel);
+                updateUserGameHistoryInDB(userLevel, failuresNumber);
 
 
                 if(questionList.isEmpty()) {
@@ -162,9 +163,11 @@ public class QuestionActivity extends AppCompatActivity {
     private void continueAfterGettingUserHistory(UserGameHistory userGameHistory) {
         if (userGameHistory == null) {
             userLevel = 1;
+            failuresNumber = 0;
         }
         else {
             userLevel = userGameHistory.getCurrentLevel();
+            failuresNumber = userGameHistory.getFailuresNumber();
             if (userGameHistory.isFinished()) {
                 moveToSummaryActivity();
             }
@@ -215,12 +218,12 @@ public class QuestionActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUserGameHistoryLevelInDB(int userLevel) {
+    private void updateUserGameHistoryInDB(int userLevel, int failuresNumber) {
 
-        UserGameHistory userGameHistory = new UserGameHistory(gameId,userId,questionList.isEmpty(),userLevel);
+        UserGameHistory userGameHistory = new UserGameHistory(gameId,userId,questionList.isEmpty(),userLevel, failuresNumber);
         String documentId = userId + "_" + gameId;
 
-        // Save to Firestore in "userGameHistory" collection
+        // save to Firestore in "userGameHistory" collection
         db.collection("userGameHistory").document(documentId)
                 .set(userGameHistory)
                 .addOnSuccessListener(aVoid ->
@@ -261,9 +264,6 @@ public class QuestionActivity extends AppCompatActivity {
                                     progressBar.setVisibility(View.GONE);
                                     //show the first question from the list
                                     showSingleQuestion(questionList.get(0)); // Show the first question
-
-
-
                                 } else {
                                     Toast.makeText(QuestionActivity.this, "No questions found.", Toast.LENGTH_SHORT).show();
                                     progressBar.setVisibility(View.GONE);
@@ -296,7 +296,10 @@ public class QuestionActivity extends AppCompatActivity {
     private void showSingleQuestion(Question question) {
         //just now , we visible the elements
         imgQuestion.setVisibility(View.GONE);
+        videoQuestion.loadUrl("about:blank");
+        videoQuestion.clearHistory();
         videoQuestion.setVisibility(View.GONE);
+
 
         showElements();
 
@@ -314,6 +317,7 @@ public class QuestionActivity extends AppCompatActivity {
         rbAnswer4.setText(question.answer4);
         rbAnswer4.setChecked(false);
 
+        startTimer(userLevel);
 
         String statusMessage = getString(R.string.statusMessage, userLevel, questionList.get(questionList.size() - 1).getLevel());
         tvShowLevel.setText(statusMessage);
@@ -323,10 +327,10 @@ public class QuestionActivity extends AppCompatActivity {
                 videoQuestion.setVisibility(View.VISIBLE);
                 //videoQuestion.setVideoPath(question.getQuestionUrl());
                 videoQuestion.setWebViewClient(new WebViewClient());
-                String videoUrl = "https://www.youtube.com/watch?v=b0ZYNOc1Tck";
-
+                String videoUrl = question.questionUrl;
+                //String videoUrl = "https://www.youtube.com/watch?v=b0ZYNOc1Tck";
                 videoQuestion.getSettings().setJavaScriptEnabled(true);
-               videoQuestion.loadUrl(videoUrl);
+                videoQuestion.loadUrl(videoUrl);
 
                 break;
 
@@ -335,16 +339,43 @@ public class QuestionActivity extends AppCompatActivity {
                 imgQuestion.setVisibility(View.VISIBLE);
                 Glide.with(this)
                         .load(question.getQuestionUrl())
-                        //.placeholder(R.drawable.placeholder) // Show a placeholder while loading
-                        //.error(R.drawable.error_image) // Show an error image if the URL fails
                         .into(imgQuestion);
                 break;
             default:
                 break;
         }
-
-
     }
+
+    private void startTimer(int userLevel) {
+        // cancel any existing timer if it's already running
+        if (countdownTimer != null) {
+            countdownTimer.cancel();
+        }
+
+        countdownTimer = new CountDownTimer((userLevel * 1000) + 4000, 1000) { // Milliseconds
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (millisUntilFinished / 1000 > 0)
+                    tvTimerQuestion.setText(getString(R.string.areLeft) + (millisUntilFinished / 1000) + getString(R.string.seconds));
+                else
+                    tvTimerQuestion.setText(getString(R.string.timesOut));
+                   // failuresNumber++;
+            }
+
+            @Override
+            public void onFinish() {
+                // for the timer, do nothing
+            }
+        };
+
+        countdownTimer.start();
+    }
+
+    private boolean isAnswerSubmitted() {
+        return rbAnswer1.isChecked() || rbAnswer2.isChecked() || rbAnswer3.isChecked() || rbAnswer4.isChecked();
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -374,7 +405,7 @@ public class QuestionActivity extends AppCompatActivity {
         return selectAnswer;
     }
 
-    //todo  -   move to  Sumamry activity
+
     private void moveToSummaryActivity() {
         goSummary.putExtra("gameId", gameId);
         startActivity(goSummary);

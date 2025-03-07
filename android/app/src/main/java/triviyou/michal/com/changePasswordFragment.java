@@ -66,13 +66,9 @@ public class changePasswordFragment extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        // אם הסיסמה שונתה בהצלחה
                                         helper.toasting(context, getString(R.string.passwordUpdatedSuccessfully));
-
-
                                     } else {
-                                        // אם הייתה שגיאה בעדכון
-                                        helper.toasting(context, getString(R.string.passwordUpdateFailed));
+                                        helper.toasting(context, getString(R.string.shortPasswordChange));
                                     }
                                 }
                             });
