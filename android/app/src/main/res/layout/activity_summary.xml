@@ -9,28 +9,35 @@
     android:padding="15dp"
     android:background="#F9F9F9"
     tools:context=".SummaryActivity">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:textColor="#004680"
-        android:layout_marginTop="150dp"
-        android:textSize="30dp"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"
-        android:text="@string/goodJob" />
 
     <TextView
-        android:id="@+id/tvGameDescription"
-        android:layout_width="match_parent"
+        android:layout_width="373dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="20dp"
         android:fontFamily="serif"
-        android:textColor="#000000"
-        android:textSize="20dp"
-        android:layout_marginBottom="15dp"
         android:gravity="center"
-        android:text="@string/finishGame" />
+        android:text="@string/goodJob"
+        android:textColor="#004680"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="384dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"
+        app:srcCompat="@drawable/finishgameclear" />
+
+    <TextView
+        android:id="@+id/tvResults"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#000000"
+        android:textSize="20dp" />
 
 
     <TextView
@@ -40,19 +47,31 @@
         android:fontFamily="serif"
         android:textColor="#000000"
         android:textSize="20dp"
-        android:layout_marginBottom="15dp"
         android:gravity="center"
         android:text="" />
 
     <Button
         android:id="@+id/bBackGamesList"
-        android:layout_width="wrap_content"
+        android:layout_width="275dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#2C5F92"
+        android:layout_marginTop="190dp"
+        android:backgroundTint="#58728C"
         android:fontFamily="serif"
         android:text="@string/backToGames"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/bStartGame"
+        android:layout_width="275dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:backgroundTint="#8195B3"
+        android:fontFamily="serif"
+        android:text="@string/startGameAgain"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold" />

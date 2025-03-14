@@ -14,7 +14,6 @@ public class Question {
     public String questionType;
     public String questionUrl;
     public int correctAnswer;
-   // private Date createdAt;
 
     public Question() {
 

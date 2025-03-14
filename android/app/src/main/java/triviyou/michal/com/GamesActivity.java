@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import triviyou.michal.com.adapters.GameAdapter;
 import triviyou.michal.com.entities.Game;
-
+import triviyou.michal.com.Helper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +40,7 @@ public class GamesActivity extends AppCompatActivity {
     GameAdapter adapter;
     Intent goUserGuide, goProfile, inputIntent;
     Context context;
+    Helper helper  = new Helper();
     BottomNavigationView bottomNavigationView;
     String email, userId;
 
@@ -48,8 +49,6 @@ public class GamesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_games);
-
-
         bottomNavigationView = findViewById(id.bottomNavigationView);
         context = GamesActivity.this;
         inputIntent = getIntent();
@@ -104,8 +103,8 @@ public class GamesActivity extends AppCompatActivity {
                 .whereEqualTo("finished", false)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    //queryDocumentSnapshots, means , that user have at least one history doc in db.
-                    //otherwise , we not  popup him
+                    // queryDocumentSnapshots, means , that user have at least one history doc in db.
+                    // otherwise , we not  popup him
                     if (!queryDocumentSnapshots.isEmpty()) {
                         scheduleNotification(queryDocumentSnapshots.size());
                     }
@@ -140,7 +139,7 @@ public class GamesActivity extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        gameList.clear(); // Clear old data
+                        gameList.clear(); // clear old data
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Game game = document.toObject(Game.class);
@@ -151,17 +150,22 @@ public class GamesActivity extends AppCompatActivity {
 
                             gameList.add(game);
                         }
-                        adapter.notifyDataSetChanged(); // Update ListView
+                        adapter.notifyDataSetChanged(); // update ListView
 
                         
-                        // Set item click listener after data is fetched
+                        // set item click listener after data is fetched
                         lvGames.setOnItemClickListener((parent, view, position, id) -> {
-                            Log.d("ItemClick", "Item clicked at position: " + position);  // Log click event
+                            Log.d("ItemClick", "Item clicked at position: " + position);  // log click event
                             Game clickedGame = gameList.get(position);
                             if (clickedGame.isActive()) {
                                 Intent startPlaying = new Intent(context, QuestionActivity.class);
                                 startPlaying.putExtra("userId", userId);
                                 startPlaying.putExtra("gameId", clickedGame.getId());
+                                if (!Helper.isInternetAvailable(context)) {
+                                    helper.toasting(context,getString(string.noInternetConnection));
+                                    return;
+                                }
+
                                 startActivity(startPlaying);
                             }
                         });

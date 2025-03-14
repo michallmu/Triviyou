@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -56,7 +57,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int STORAGE_PERMISSION_CODE = 101; // קבוע לבדוק הרשאת אחסון
     private Uri imageUri;
     private boolean isFragmentDisplayed = false; // משתנה שמנהל את מצב הפרגמנט
-
+    Helper helper = new Helper();
     FirebaseAuth auth = FirebaseAuth.getInstance();
     String userId = auth.getCurrentUser().getUid();
 
@@ -82,19 +83,29 @@ public class ProfileActivity extends AppCompatActivity {
         loadImageFromStorage();
 
 
-        imgbBack4.setOnClickListener(v -> startActivity(goGames));
+        imgbBack4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(goGames);
+            }
+        });
 
-        imgAccount.setOnClickListener(v -> selectImageFromStorage());
+        imgAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImageFromStorage();
+            }
+        });
 
         tvWantChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isFragmentDisplayed) {
                     closeFragment();
-                    tvWantChangePassword.setText(getString(R.string.iWantChangePass)); // מצב מקורי - רוצה לשנות
+                    tvWantChangePassword.setText(getString(R.string.iWantChangePass));
                 } else {
-                    showFragment(); // Show the fragment
-                    tvWantChangePassword.setText(getString(R.string.close)); // אני רוצה לסגור את הפרגמנט
+                    showFragment();
+                    tvWantChangePassword.setText(getString(R.string.close));
                 }
             }
         });
@@ -102,33 +113,30 @@ public class ProfileActivity extends AppCompatActivity {
         tvIwantLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(goLogin);
-            }
-        });
-
-        // בתוך ProfileActivity
-        tvIwantLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                if (!Helper.isInternetAvailable(context)) {
+                    helper.toasting(context, getString(R.string.noInternetConnection));
+                    return;
+                }
                 new AlertDialog.Builder(ProfileActivity.this)
-                        .setMessage("אתה בטוח שאתה רוצה להתנתק?")
-                        .setCancelable(false) // Make the dialog non-cancelable outside the dialog
-                        .setPositiveButton("כן", new DialogInterface.OnClickListener() {
+                        .setMessage(R.string.sureLogOut)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 FirebaseAuth.getInstance().signOut();
                                 startActivity(goLogin);
-                                finish(); // Finish ProfileActivity to remove it from the stack
+                                finish();
                             }
                         })
-                        .setNegativeButton("לא", null) // If user clicks "No", just close the dialog
-                        .show(); // Show the alert dialog
+                        .setNegativeButton(R.string.no, null) // if user clicks "No", just close the dialog
+                        .show(); // show the alert dialog
+
             }
         });
 
     }
 
-    // הגדרת Launcher לפעולה של גלריה
+    // define a Launcher for the gallery action
     private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -138,7 +146,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             });
 
-    // הגדרת Launcher לפעולה של מצלמה
+    // define a Launcher for the camera action
     private ActivityResultLauncher<Intent> takePictureLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -171,7 +179,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
         } else {
-            takePhoto(); // מצלמה
+            takePhoto(); // camera
         }
     }
 
@@ -180,9 +188,9 @@ public class ProfileActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                takePhoto(); // If permission granted, proceed with taking the photo
+                takePhoto(); // if permission granted, proceed with taking the photo
             } else {
-                Toast.makeText(this, "Camera permission is required", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.cameraPermissionsRequired), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -190,12 +198,12 @@ public class ProfileActivity extends AppCompatActivity {
     private void takePhoto() {
         try {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            File photoFile = createImageFile(); // יצירת קובץ תמונה
+            File photoFile = createImageFile(); // creating image file
             if (photoFile != null) {
-                // יצירת URI דרך FileProvider במקום Uri.fromFile
+                // create a URI using FileProvider instead of Uri.fromFile
                 imageUri = FileProvider.getUriForFile(this, "triviyou.michal.com.fileprovider", photoFile);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri); // צירוף ה-URI למצלמה
-                startActivityForResult(cameraIntent, REQUEST_CAMERA); // התחלת צילום
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri); // add the URL to the camera
+                startActivityForResult(cameraIntent, REQUEST_CAMERA); // start capturing
             }
         } catch (Exception e) {
             Log.e("error camera", "", e);
@@ -210,7 +218,7 @@ public class ProfileActivity extends AppCompatActivity {
             File imageFile = new File(imagePath);
             if (imageFile.exists()) {
                 Uri imageUri = Uri.fromFile(imageFile);
-                imgAccount.setImageURI(imageUri); // Load the image into the ImageView
+                imgAccount.setImageURI(imageUri); // load the image into the ImageView
             }
         }
     }
@@ -228,14 +236,14 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void saveImageToInternalStorage(Uri imageUri) {
         try {
-            // Get the input stream of the selected image
+            // get the input stream of the selected image
             InputStream inputStream = getContentResolver().openInputStream(imageUri);
 
-            // Create a file to save the image
+            // create a file to save the image
             File outputFile = new File(getFilesDir(), userId+".jpg"); // Save it in the internal app directory
             FileOutputStream outputStream = new FileOutputStream(outputFile);
 
-            // Copy the image from input stream to output file
+            // copy the image from input stream to output file
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = inputStream.read(buffer)) != -1) {
@@ -244,11 +252,10 @@ public class ProfileActivity extends AppCompatActivity {
             inputStream.close();
             outputStream.close();
 
-            // Store the file path for later use (you can store this path in SharedPreferences or a database)
+            // store the file path for later use (you can store this path in SharedPreferences or a database)
             SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString(userId, outputFile.getAbsolutePath());
-            //editor.putString("userImagePath", outputFile.getAbsolutePath());
             editor.apply();
 
         } catch (IOException e) {
@@ -263,10 +270,10 @@ public class ProfileActivity extends AppCompatActivity {
             if (requestCode == REQUEST_GALLERY && data != null) {
                 imageUri = data.getData();
                 imgAccount.setImageURI(imageUri);
-                saveImageToInternalStorage(imageUri); // שמירת התמונה לזיכרון הפנימי (אם יש צורך)
+                saveImageToInternalStorage(imageUri); // saving the image to internal storage (if needed)
             } else if (requestCode == REQUEST_CAMERA) {
-                imgAccount.setImageURI(imageUri); // הצגת התמונה שצולמה
-                saveImageToInternalStorage(imageUri); // שמירת התמונה לזיכרון הפנימי
+                imgAccount.setImageURI(imageUri); // displaying the captured image**
+                saveImageToInternalStorage(imageUri); // saving the image to internal storage**
             }
         }
     }
@@ -289,8 +296,6 @@ public class ProfileActivity extends AppCompatActivity {
                     .commit();
             isFragmentDisplayed = false;
         }
-
-
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -298,6 +303,5 @@ public class ProfileActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutChangePassword, fragment);
         fragmentTransaction.commit();
-
     }
 }

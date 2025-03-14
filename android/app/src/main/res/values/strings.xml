@@ -5,7 +5,7 @@
     <string name="newPassword">סיסמה חדשה</string>
     <string name="repeatNewPassword">אימות סיסמה חדשה</string>
     <string name="createrAccount">צור משתמש</string>
-    <string name="reg">צור חשבון חדש </string>
+    <string name="reg">ליצירת חשבון חדש </string>
     <string name="login">התחבר</string>
     <string name="back">חזור</string>
     <string name="backLogin">חזור להתחברות</string>
@@ -28,10 +28,19 @@
     <string name="iWantLogOut">להתנתקות</string>
     <string name="statusMessage">רמה: %d/%d</string>
     <string name="wrongAnswerTryAgain">טעית. נסו שוב!</string>
-    <string name="textGuide">אפליקציית TRIVIYOU היא משחק טריוויה מהנה ומאתגר שמציע חווית למידה תוך כדי תחרות. בתחילת השימוש, עליכם להתחבר לחשבונכם או ליצור חשבון חדש אם זו הפעם הראשונה שלכם באפליקציה. לאחר מכן, תוכלו לבחור את נושא הטריוויה שמעניין אתכם, כמו היסטוריה, מדע, ספורט או מוזיקה. כל חידון מורכב ממספר שאלות, ובכל שאלה יש ארבע תשובות אפשריות, רק אחת מהן נכונה. לכל שאלה מוקצב זמן מוגבל, כך שתצטרכו להיות מהירים ומדויקים כדי לענות נכונה. רמות הקושי עולות ככל שתתקדמו בחידון, כך שבמהלך המשחק תתמודדו עם שאלות מאתגרות יותר. האפליקציה לא רק מספקת אתגר, אלא גם מסייעת ללמוד נושאים חדשים בדרך כיפית ומרתקת.</string>
+    <string name="textGuide">ברוכים הבאים לTRIVIYOU – משחקי טריוויה בנושאים שונים!
+ברשימת המשחקים תוכלו לבחור את התחום שמעניין אתכם ביותר – מתמטיקה, מדינות, צרפתית ועוד. כל משחק כולל מספר שאלות, ולכל שאלה ארבע תשובות אפשריות. רק אחת מהן נכונה! כל שאלה מוקצב זמן מוגבל, אך אם הזמן נגמר, תוכלו עדיין לבחור תשובה ולהמשיך במשחק בקצב שלכם. כך, תוכל לשמור על חוויית משחק מאתגרת, אך ללא לחץ, ולשלוט בקצב שבו אתם מתקדמים. \n
+ככל שתתקדמו ותענו נכון, השאלות יהפכו למאתגרות יותר, כך שתמיד תמצאו את עצמכם לומדים ומשתפרים. \n
+באפליקציה תוכלו גם \n
+☑️ לשנות את תמונת הפרופיל שלכם \n
+ ☑️לעדכן את הסיסמה שלכם \n
+☑️ לצפות במדריך זה שוב בכל רגע שתרצו לרענן את זיכרונכם בנוגע לפעולות השונות באפליקציה \n
+מוכנים לאתגר? 🚀 \n
+
+</string>
     <string name="soon">בקרוב</string>
     <string name="finishGame">סיימת את המשחק!\n</string>
-    <string name="goodJob">כל הכבוד 😎</string>
+    <string name="goodJob">כל הכבוד! סיימת את המשחק</string>
     <string name="backToGames">בחזרה לרשימת המשחקים\n</string>
     <string name="chooseImageSource">בחר מקור תמונה</string>
     <string name="gallery">גלריה</string>
@@ -44,4 +53,25 @@
     <string name="finishGamesCompliment">"המשחקים שהתחלת, סיימת! כל הכבוד! "</string>
     <string name="passwordUpdatedSuccessfully">סיסמה שונתה בהצלחה\n</string>
     <string name="passwordUpdateFailed">עדכון הסיסמה נכשל</string>
+    <string name="questionNumber">"שאלה מספר "</string>
+    <string name="correctAnswer">"התשובה הנכונה: "</string>
+    <string name="level">"רמה: "</string>
+    <string name="seconds">" שניות"</string>
+    <string name="noAnswerSelected">לא נבחרה תשובה</string>
+    <string name="timesOut">תם הזמן. הזדרזו בפעם הבאה!</string>
+    <string name="areLeft">"נותרו "</string>
+    <string name="startGameAgain">"אני רוצה לשחק שוב"</string>
+    <string name="shortPasswordChange">העדכון נכשל, נסה סיסמה ארוכה יותר\n\n</string>
+    <string name="numberOfFailures">"מספר הטעויות שלך הוא: "</string>
+    <string name="noInternetConnection">אין חיבור לאינטרנט</string>
+    <string name="reminding">תזכורת קטנה</string>
+    <string name="yes">כן</string>
+    <string name="no">לא</string>
+    <string name="sureLogOut">אתה בטוח שאתה רוצה להתנתק?</string>
+    <string name="cameraPermissionsRequired">נדרשות הרשאות מצלמה</string>
+    <string name="errorFetchingData">שגיאה בשליפת הנתונים</string>
+    <string name="unexpectedErrorOccurred">אירעה שגיאה לא צפויה</string>
+    <string name="registrationFailed">"הרשמה נכשלה: "</string>
+    <string name="automaticTransition">"מעבר אוטומטי בעוד "</string>
+    <string name="errorDeletingGame">שגיאה במחיקת המשחק</string>
 </resources>

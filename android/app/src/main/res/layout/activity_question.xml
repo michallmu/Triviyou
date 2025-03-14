@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +10,6 @@
     android:background="#F9F9F9"
     tools:context=".QuestionActivity">
 
-    <!-- ProgressBar to show while loading -->
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -22,123 +20,143 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:gravity="center_vertical">
 
         <ImageButton
             android:id="@+id/imgbBack6"
             android:layout_width="43dp"
             android:layout_height="38dp"
             android:backgroundTint="#F9F9F9"
-            app:srcCompat="@drawable/back" />
+            app:srcCompat="@drawable/back"
+             />
 
         <TextView
             android:id="@+id/tvShowLevel"
-            android:layout_width="43dp"
-            android:layout_height="38dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
             android:text=""
-            android:textSize="20dp" />
-
-
+            android:textSize="20sp" />
     </LinearLayout>
+
+    <!-- Question Text -->
     <TextView
         android:id="@+id/tvQuestionText"
-        android:layout_width="296dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="serif"
         android:gravity="center"
         android:text=""
         android:textColor="#004680"
-        android:textSize="40dp"
-        android:textStyle="bold" />
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"/>
 
-
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <FrameLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="horizontal">
-
+        android:visibility="visible"
+        tools:ignore="WebViewLayout">
         <ImageView
             android:id="@+id/imgQuestion"
             android:layout_width="123dp"
             android:layout_height="95dp"
-            android:layout_gravity="center" />
-
-        <VideoView
+            android:layout_gravity="center"
+            android:visibility="gone" />
+        <WebView
             android:id="@+id/videoQuestion"
-            android:layout_width="160dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
-
-    </LinearLayout>
-
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:visibility="gone" />
+    </FrameLayout>
+    <TextView
+        android:id="@+id/tvTimerQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#6A7278"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"/>
     <RadioGroup
         android:id="@+id/answersGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
 
         <RadioButton
             android:id="@+id/rbAnswer1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="serif"
-            android:layoutDirection="rtl"
+            android:visibility="gone"
             android:text=""
-            android:textSize="20dp" />
+            android:textSize="20sp"
+            android:layoutDirection="rtl" />
 
         <RadioButton
             android:id="@+id/rbAnswer2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="serif"
-            android:layoutDirection="rtl"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:fontFamily="serif"
             android:text=""
-            android:textSize="20dp" />
+            android:textSize="20sp"
+            android:layoutDirection="rtl" />
 
         <RadioButton
             android:id="@+id/rbAnswer3"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
-            android:fontFamily="serif"
-            android:layoutDirection="rtl"
             android:layout_marginTop="10dp"
+            android:fontFamily="serif"
             android:text=""
-            android:textSize="20dp" />
+            android:textSize="20sp"
+            android:layoutDirection="rtl" />
 
         <RadioButton
             android:id="@+id/rbAnswer4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="serif"
-            android:layoutDirection="rtl"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:fontFamily="serif"
             android:text=""
-            android:textSize="20dp" />
+            android:textSize="20sp"
+            android:layoutDirection="rtl" />
     </RadioGroup>
 
-        <Button
-            android:id="@+id/bSubmit"
-            android:layout_width="173dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:backgroundTint="#004680"
-            android:fontFamily="serif"
-            android:text="@string/nextQuestion"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+    <Button
+        android:id="@+id/bSubmit"
+        android:layout_width="173dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        android:backgroundTint="#004680"
+        android:fontFamily="serif"
+        android:text="@string/nextQuestion"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvQuestionInfo"
-        android:layout_width="296dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
@@ -148,5 +166,4 @@
         android:textColor="#6A7278"
         android:textSize="15dp"
         android:textStyle="bold" />
-
 </LinearLayout>

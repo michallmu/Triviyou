@@ -40,6 +40,10 @@ public class changePasswordFragment extends Fragment {
         bChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!Helper.isInternetAvailable(context)) {
+                    helper.toasting(context, "אין חיבור לאינטרנט");
+                    return;
+                }
                 String newPassword = etNewPassword.getText().toString();
                 String repeatNewPassword = etRepeatNewPassword.getText().toString();
 
@@ -55,20 +59,15 @@ public class changePasswordFragment extends Fragment {
                 }
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    // עדכון הסיסמה
+                if (user != null) { // updating password
                     user.updatePassword(newPassword)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        // אם הסיסמה שונתה בהצלחה
                                         helper.toasting(context, getString(R.string.passwordUpdatedSuccessfully));
-
-
                                     } else {
-                                        // אם הייתה שגיאה בעדכון
-                                        helper.toasting(context, getString(R.string.passwordUpdateFailed));
+                                        helper.toasting(context, getString(R.string.shortPasswordChange));
                                     }
                                 }
                             });

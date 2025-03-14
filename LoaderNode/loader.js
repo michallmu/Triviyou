@@ -10,7 +10,9 @@ admin.initializeApp({
 });
 
 const db = admin.firestore();
-let questionId = 80; // Initialize global question ID
+
+let questionId = 83; // Initialize global question ID
+console.log('please note , we start from questionId ',questionId);
 
 // Function to upload games data and images to Firestore
 async function mainUploadAll() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -22,13 +23,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Triviyou"
         tools:targetApi="31">
-        <activity
-            android:name=".Menu"
-            android:exported="false" />
+
 
         <receiver
             android:name=".NotificationReceiver"
-            android:exported="false"></receiver>
+            android:exported="false">
+        </receiver>
 
         <activity
             android:name=".SummaryActivity"
@@ -38,12 +38,12 @@
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
-            android:exported="false" />
+            android:exported="true"/>
         <activity
             android:name=".gameItem"
             android:exported="false" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".UserGuide"
@@ -55,7 +55,7 @@
             android:name=".GamesActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".SplashScreen"
             android:configChanges="orientation|screenSize"
             android:exported="true">
             <intent-filter>

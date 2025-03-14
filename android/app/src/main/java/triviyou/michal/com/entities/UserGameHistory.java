@@ -7,12 +7,15 @@ public class UserGameHistory {
     private int gameId;
     private boolean isFinished;
     private int currentLevel;
+    private int failuresNumber;
 
-    public UserGameHistory(int gameId, String userId, boolean isFinished, int currentLevel) {
+
+    public UserGameHistory(int gameId, String userId, boolean isFinished, int currentLevel, int failuresNumber) {
         this.gameId = gameId;
         this.userId = userId;
         this.isFinished = isFinished;
         this.currentLevel = currentLevel;
+        this.failuresNumber = failuresNumber;
     }
 
     public UserGameHistory() {
@@ -50,5 +53,11 @@ public class UserGameHistory {
         this.currentLevel = currentLevel;
     }
 
+    public int getFailuresNumber() {
+        return failuresNumber;
+    }
 
+    public void setFailuresNumber(int failuresNumber) {
+        this.failuresNumber = failuresNumber;
+    }
 }

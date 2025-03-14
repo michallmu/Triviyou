@@ -36,23 +36,20 @@ public class NotificationReceiver extends BroadcastReceiver {
             message = context.getString(R.string.thereAre) + countHistories + context.getString(R.string.didntFinish);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
-                .setSmallIcon(R.drawable.finishgameclear) // Add your app's notification icon
-                .setContentTitle("תזכורת קטנה")
+                .setSmallIcon(R.drawable.finishgameclear)
+                .setContentTitle(context.getString(R.string.reminding))
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setAutoCancel(true)
                 .setColor(ContextCompat.getColor(context, R.color.blue));
 
-
-
-
         int notificationId = 1;
         notificationManager.notify(notificationId, builder.build());
 
         new Handler().postDelayed(() -> {
-            notificationManager.cancel(notificationId); // Dismiss the notification after 8 seconds
-        }, 8000); // 8000 milliseconds = 8 seco
+            notificationManager.cancel(notificationId); // dismiss the notification after 8 seconds
+        }, 8000); // 8000 milliseconds = 8 seconds
     }
 
 }

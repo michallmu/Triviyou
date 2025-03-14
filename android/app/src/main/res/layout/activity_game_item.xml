@@ -8,7 +8,6 @@
     android:background="#F9F9F9"
     android:layout_marginBottom="8dp">
 
-    <!-- Text (Name and Description) on the left -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -45,7 +44,6 @@
             android:focusableInTouchMode="false" />
     </LinearLayout>
 
-    <!-- Image on the right -->
     <ImageView
         android:id="@+id/imgGame"
         android:layout_width="70dp"

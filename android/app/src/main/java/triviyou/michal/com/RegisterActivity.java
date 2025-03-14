@@ -47,6 +47,11 @@ public class RegisterActivity extends AppCompatActivity {
         bCreateAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!Helper.isInternetAvailable(context)) {
+                    helper.toasting(context,getString(R.string.noInternetConnection));
+                    return;
+                }
+
                 String stEmail = etEmailRegister.getText().toString();
                 String stPassword = etPasswordRegister.getText().toString();
                 String stRepeatPassword = etRepeatPasswordRegister.getText().toString();
@@ -54,6 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
                 if (validate(stEmail, stPassword, stRepeatPassword)) {
                     checkIfEmailExistsAndRegister(stEmail, stPassword);
                 }
+
+
             }
 
 
@@ -64,13 +71,14 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
                             if (isNewUser) {
+
                                 createNewUser(email, password);
                             } else {
                                 Toast.makeText(RegisterActivity.this, getString(R.string.emailAlreadyExists), Toast.LENGTH_SHORT).show();
                             }
-                        } else {
+                        } /*else {
                             Toast.makeText(RegisterActivity.this, getString(R.string.ErrorCheckingEmail), Toast.LENGTH_SHORT).show();
-                        }
+                        }*/
                     }
                 });
             }
@@ -80,12 +88,13 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Registration success, user is created
+                            // registration success, user is created
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             if (user != null) {
-                                // Save additional user details like nickname to database if needed
+
+                                // save additional user details like nickname to database if needed
                                 Toast.makeText(RegisterActivity.this, getString(R.string.registeredSuccessfuly), Toast.LENGTH_SHORT).show();
-                                // Redirect to PlayActivity
+                                // redirect to games
                                 startActivity(new Intent(RegisterActivity.this, GamesActivity.class));
                                 finish();
                             }
@@ -96,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                                 Toast.makeText(RegisterActivity.this, getString(R.string.emailAlreadyExists), Toast.LENGTH_SHORT).show();
                             } else {
-                                Toast.makeText(RegisterActivity.this, "הרשמה נכשלה: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, getString(R.string.registrationFailed) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
