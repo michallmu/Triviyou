@@ -127,12 +127,11 @@ public class QuestionActivity extends AppCompatActivity {
             selectAnswer = getSelectAnswer(selectAnswer);
             if(selectAnswer == 0)
             {
-                Toast.makeText(context, R.string.noAnswerSelected, Toast.LENGTH_SHORT).show();
+                helper.toasting(context, getString(R.string.noAnswerSelected));
             }
             else if (selectAnswer != questionList.get(0).correctAnswer) {
                 failuresNumber++;
-                Toast.makeText(this, getString(R.string.wrongAnswerTryAgain), Toast.LENGTH_SHORT).show();
-                updateUserGameHistoryInDB(userLevel, failuresNumber);
+                helper.toasting(context, getString(R.string.wrongAnswerTryAgain));
             }
             else {
                 // answer is correct
@@ -259,19 +258,18 @@ public class QuestionActivity extends AppCompatActivity {
                                     // show the first question from the list
                                     showSingleQuestion(questionList.get(0)); // show the first question
                                 } else {
-                                    Toast.makeText(QuestionActivity.this, "No questions found.", Toast.LENGTH_SHORT).show();
-
+                                    helper.toasting(context, getString(R.string.noQuestionFound));
                                 }
 
                                 Log.d("QuestionList", "Questions fetched: " + questionList.size());
                             } else {
 
                                 Log.e("FirestoreError", "Error fetching questions: ", task.getException());
-                                Toast.makeText(QuestionActivity.this, getString(R.string.errorFetchingData), Toast.LENGTH_SHORT).show();
+                                helper.toasting(context, getString(R.string.errorFetchingData));
                             }
                         } catch (Exception e) {
                             Log.e("FirestoreException", "Exception in Firestore callback: ", e);
-                            Toast.makeText(QuestionActivity.this, getString(R.string.unexpectedErrorOccurred), Toast.LENGTH_SHORT).show();
+                            helper.toasting(context, getString(R.string.unexpectedErrorOccurred));
                         }
 
 
@@ -281,8 +279,7 @@ public class QuestionActivity extends AppCompatActivity {
         }
         catch (Exception e) {
             Log.e("DatabaseException", "Exception in getQuestionsFromDB: ", e);
-            Toast.makeText(QuestionActivity.this, "Unexpected error occurred while fetching questions", Toast.LENGTH_SHORT).show();
-
+            helper.toasting(context, getString(R.string.unexpectedErrorOccurred));
         }
     }
 
@@ -338,9 +335,10 @@ public class QuestionActivity extends AppCompatActivity {
 
     private void startTimer(int userLevel) {
         // cancel any existing timer if it's already running
-        if (countdownTimer != null) {
+        if (countdownTimer != null ) {
             countdownTimer.cancel();
         }
+
 
         countdownTimer = new CountDownTimer((userLevel * 1000) + 8000, 1000) { // Milliseconds
             @SuppressLint("SetTextI18n")

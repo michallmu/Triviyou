@@ -74,11 +74,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 createNewUser(email, password);
                             } else {
-                                Toast.makeText(RegisterActivity.this, getString(R.string.emailAlreadyExists), Toast.LENGTH_SHORT).show();
+                                helper.toasting(context, getString(R.string.emailAlreadyExists));
                             }
-                        } /*else {
-                            Toast.makeText(RegisterActivity.this, getString(R.string.ErrorCheckingEmail), Toast.LENGTH_SHORT).show();
-                        }*/
+                        }
                     }
                 });
             }
@@ -93,7 +91,7 @@ public class RegisterActivity extends AppCompatActivity {
                             if (user != null) {
 
                                 // save additional user details like nickname to database if needed
-                                Toast.makeText(RegisterActivity.this, getString(R.string.registeredSuccessfuly), Toast.LENGTH_SHORT).show();
+                                helper.toasting(context, getString(R.string.registeredSuccessfuly));
                                 // redirect to games
                                 startActivity(new Intent(RegisterActivity.this, GamesActivity.class));
                                 finish();
@@ -103,9 +101,9 @@ public class RegisterActivity extends AppCompatActivity {
                             // can happened in case some users register in parallel
 
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                Toast.makeText(RegisterActivity.this, getString(R.string.emailAlreadyExists), Toast.LENGTH_SHORT).show();
+                                helper.toasting(context, getString(R.string.emailAlreadyExists));
                             } else {
-                                Toast.makeText(RegisterActivity.this, getString(R.string.registrationFailed) + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                helper.toasting(context, getString(R.string.registrationFailed)+ task.getException().getMessage());
                             }
                         }
                     }

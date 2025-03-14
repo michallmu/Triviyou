@@ -190,7 +190,7 @@ public class ProfileActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 takePhoto(); // if permission granted, proceed with taking the photo
             } else {
-                Toast.makeText(this, getString(R.string.cameraPermissionsRequired), Toast.LENGTH_SHORT).show();
+                helper.toasting(context, getString(R.string.cameraPermissionsRequired));
             }
         }
     }
@@ -296,6 +296,8 @@ public class ProfileActivity extends AppCompatActivity {
                     .commit();
             isFragmentDisplayed = false;
         }
+
+
     }
 
     private void replaceFragment(Fragment fragment) {
@@ -303,5 +305,6 @@ public class ProfileActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutChangePassword, fragment);
         fragmentTransaction.commit();
+
     }
 }

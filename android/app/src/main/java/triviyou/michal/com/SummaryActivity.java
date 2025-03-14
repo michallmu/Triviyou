@@ -34,6 +34,7 @@ public class SummaryActivity extends AppCompatActivity {
     CountDownTimer countDownTimer;
     TextView tvTimer, tvResults;
     String userId;
+    Helper helper = new Helper();
     boolean isButtonClicked = false;
     int gameId, summaryDuration = 15000, grade;
 
@@ -110,7 +111,7 @@ public class SummaryActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     Log.w("Firestore", "Error deleting document", e);
-                    Toast.makeText(this, getString(R.string.errorDeletingGame), Toast.LENGTH_SHORT).show();
+                    helper.toasting(context, getString(R.string.errorDeletingGame));
                 });
     }
 
