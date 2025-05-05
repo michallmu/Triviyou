@@ -1,7 +1,5 @@
 package triviyou.michal.com.entities;
-
 import java.util.Objects;
-
 public class Game {
     private int id;          // GUID
     private String name;
@@ -10,9 +8,7 @@ public class Game {
     private String imageUrl;
     private boolean isActive;
 
-    public Game()
-    {
-
+    public Game() {
     }
     public Game(int id,String name, String name_en, String description ,String imageUrl,boolean isActive) {
         this.id = id;

@@ -1,5 +1,4 @@
 package triviyou.michal.com;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -18,7 +17,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -30,9 +28,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.google.firebase.auth.FirebaseAuth;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -50,13 +46,13 @@ public class ProfileActivity extends AppCompatActivity {
     TextView tvWantChangePassword, tvIwantLogOut;
     Intent inputIntent, goGames, goLogin;
 
-    private static final String FRAGMENT_TAG = "CHANGE_PASSWORD_FRAGMENT"; // תגית לפרגמנט
+    private static final String FRAGMENT_TAG = "CHANGE_PASSWORD_FRAGMENT";
     private static final int CAMERA_PERMISSION_CODE = 100;
-    private static final int REQUEST_CAMERA = 1; // קבוע לזיהוי בקשה לצילום
-    private static final int REQUEST_GALLERY = 2; // קבוע לזיהוי בקשה מהגלריה
-    private static final int STORAGE_PERMISSION_CODE = 101; // קבוע לבדוק הרשאת אחסון
+    private static final int REQUEST_CAMERA = 1; // identifying a photo request
+    private static final int REQUEST_GALLERY = 2; //identifying a gallery request
+    private static final int STORAGE_PERMISSION_CODE = 101; //identifying a storage permission.
     private Uri imageUri;
-    private boolean isFragmentDisplayed = false; // משתנה שמנהל את מצב הפרגמנט
+    private boolean isFragmentDisplayed = false; // manages the fragment state
     Helper helper = new Helper();
     FirebaseAuth auth = FirebaseAuth.getInstance();
     String userId = auth.getCurrentUser().getUid();

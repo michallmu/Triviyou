@@ -33,7 +33,7 @@
         android:layout_marginTop="145dp"
         android:fontFamily="serif"
         android:gravity="center"
-        android:text="הרשמה"
+        android:text="@string/registration"
         android:textColor="#004680"
         android:textStyle="bold"
         android:textSize="30dp" />
@@ -47,7 +47,7 @@
         android:background="@drawable/round_background"
         android:fontFamily="serif"
         android:gravity="right"
-        android:hint="כתובת אימייל"
+        android:hint="@string/enterEmail"
         android:inputType="textEmailAddress"
         android:textColor="#333333"
         android:textColorHint="#333333" />

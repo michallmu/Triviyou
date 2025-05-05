@@ -1,5 +1,4 @@
 package triviyou.michal.com;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -103,9 +102,6 @@ public class QuestionActivity extends AppCompatActivity {
                     helper.toasting(context, getString(R.string.noInternetConnection));
                     return;
                 }
-                if (countdownTimer != null) {
-                    countdownTimer.cancel();
-                }
 
                 onSubmitClicked();            }
         });
@@ -136,6 +132,11 @@ public class QuestionActivity extends AppCompatActivity {
             else {
                 // answer is correct
                 // so first - remove the question from the list
+
+                if (countdownTimer != null) {
+                    countdownTimer.cancel();
+                }
+
                 userLevel = questionList.get(0).getLevel();
                 questionList.remove(0);
                 if((questionList.size()>0) && (questionList.get(0).getLevel() == (userLevel + 1))) {
@@ -161,12 +162,14 @@ public class QuestionActivity extends AppCompatActivity {
         if (userGameHistory == null) {
             userLevel = 1;
             failuresNumber = 0;
-        }
+
+            }
         else {
             userLevel = userGameHistory.getCurrentLevel();
             failuresNumber = userGameHistory.getFailuresNumber();
             if (userGameHistory.isFinished()) {
                 moveToSummaryActivity();
+
             }
         }
 
@@ -287,10 +290,19 @@ public class QuestionActivity extends AppCompatActivity {
     private void showSingleQuestion(Question question) {
         // just now, we visible the elements
         imgQuestion.setVisibility(View.GONE);
+        videoQuestion.setVisibility(View.GONE);
+
         videoQuestion.loadUrl("about:blank");
         videoQuestion.clearHistory();
-        videoQuestion.setVisibility(View.GONE);
-        showElements();
+        videoQuestion.clearCache(true);
+        videoQuestion.reload();
+
+
+        if (!Helper.isInternetAvailable(context)) {
+            helper.toasting(context, getString(R.string.noInternetConnection));
+            return; }
+        else
+            showElements();
 
         String qt = question.questionText;
         String qtInfo = getString(R.string.questionNumber) + question.id + "\n" + getString(R.string.correctAnswer) + question.correctAnswer + "\n" +getString(R.string.level) + question.level;
@@ -306,7 +318,12 @@ public class QuestionActivity extends AppCompatActivity {
         rbAnswer4.setText(question.answer4);
         rbAnswer4.setChecked(false);
 
-        startTimer(userLevel);
+        if ("video".equalsIgnoreCase(question.getQuestionType())) {
+            tvTimerQuestion.setVisibility(View.GONE);
+        } else {
+            startTimer(userLevel);
+            tvTimerQuestion.setVisibility(View.VISIBLE);
+        }
 
         String statusMessage = getString(R.string.statusMessage, userLevel, questionList.get(questionList.size() - 1).getLevel());
         tvShowLevel.setText(statusMessage);
@@ -314,7 +331,6 @@ public class QuestionActivity extends AppCompatActivity {
         switch (question.getQuestionType().toLowerCase()) {
             case "video":
                 videoQuestion.setVisibility(View.VISIBLE);
-                // videoQuestion.setVideoPath(question.getQuestionUrl());
                 videoQuestion.setWebViewClient(new WebViewClient());
                 String videoUrl = question.questionUrl;
                 videoQuestion.getSettings().setJavaScriptEnabled(true);
@@ -397,4 +413,6 @@ public class QuestionActivity extends AppCompatActivity {
         startActivity(goSummary);
 
     }
+
 }
+

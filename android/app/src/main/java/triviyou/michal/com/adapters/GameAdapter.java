@@ -1,5 +1,4 @@
 package triviyou.michal.com.adapters;
-
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -9,12 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
-
 import com.bumptech.glide.Glide;
 import java.util.List;
-
 import triviyou.michal.com.R;
 import triviyou.michal.com.entities.Game;
 
@@ -52,17 +48,8 @@ public class GameAdapter extends ArrayAdapter<Game> {
 
         Glide.with(context)
                 .load(game.getImageUrl())
-                .override(300, 300) // מגביל את גודל התמונה למניעת בעיות
+                .override(300, 300)
                 .into(imgGame);
-
-//        // מאפשר או מבטל לחיצה על הפריט
-//        convertView.setEnabled(game.isActive());
-//        convertView.setAlpha(game.isActive() ? 1.0f : 0.5f);
-
-        // מאזין קליקים לפריט ברמת ה-Adapter
-     //   convertView.setOnClickListener(v ->
-        //        Log.d("GameAdapter", "Clicked on game: " + game.getName())
-        //);
 
         return convertView;
     }

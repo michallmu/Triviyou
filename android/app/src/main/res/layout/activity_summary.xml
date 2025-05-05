@@ -55,7 +55,7 @@
         android:layout_width="275dp"
         android:layout_height="48dp"
         android:layout_gravity="center"
-        android:layout_marginTop="190dp"
+        android:layout_marginTop="220dp"
         android:backgroundTint="#58728C"
         android:fontFamily="serif"
         android:text="@string/backToGames"

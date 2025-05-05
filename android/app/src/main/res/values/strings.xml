@@ -6,13 +6,13 @@
     <string name="repeatNewPassword">אימות סיסמה חדשה</string>
     <string name="createrAccount">צור משתמש</string>
     <string name="reg">ליצירת חשבון חדש </string>
-    <string name="login">התחבר</string>
+    <string name="login">להתחברות</string>
     <string name="back">חזור</string>
     <string name="backLogin">חזור להתחברות</string>
     <string name="backSignup">חזור להרשמה</string>
     <string name="emptyStatement">יש למלא את כל השדות</string>
     <string name="messageEmptyOrInvalid">אימייל או סיסמה אינם תקינים, נסה שוב</string>
-    <string name="messagePassword">סיסמה לא תקינה, נסה שוב</string>
+    <string name="messagePassword">אורך הסיסמה חייב להיות 6 תווים לפחות</string>
     <string name="messageEmptyPassword">מלאו את כל השדות</string>
     <string name="messageNotEqualPasswords">הסיסמאות לא תואמות, נסה שוב</string>
     <string name="guide">מדריך למתחילים</string>
@@ -71,8 +71,14 @@
     <string name="cameraPermissionsRequired">נדרשות הרשאות מצלמה</string>
     <string name="errorFetchingData">שגיאה בשליפת הנתונים</string>
     <string name="unexpectedErrorOccurred">אירעה שגיאה לא צפויה</string>
-    <string name="registrationFailed">"הרשמה נכשלה: "</string>
+    <string name="registrationFailed">"הרשמה נכשלה"</string>
     <string name="automaticTransition">"מעבר אוטומטי בעוד "</string>
     <string name="errorDeletingGame">שגיאה במחיקת המשחק</string>
     <string name="noQuestionFound">לא נמצאו שאלות</string>
+    <string name="shortDescription">תיאור קצר של המשחק</string>
+    <string name="gameName">שם המשחק</string>
+    <string name="welcome">ברוכים הבאים</string>
+    <string name="enterEmail"> כתובת אימייל</string>
+    <string name="enterPassword"> סיסמה</string>
+    <string name="registration">הרשמה</string>
 </resources>

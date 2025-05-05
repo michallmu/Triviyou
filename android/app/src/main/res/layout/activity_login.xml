@@ -16,7 +16,7 @@
         android:layout_marginBottom="30dp"
         android:fontFamily="serif"
         android:gravity="center"
-        android:text="ברוכים הבאים"
+        android:text="@string/welcome"
         android:textColor="#004680"
         android:textSize="30dp"
         android:textStyle="bold" />
@@ -27,11 +27,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/round_background"
         android:fontFamily="serif"
-        android:hint="הכנס כתובת אימייל"
+        android:hint="@string/enterEmail"
         android:inputType="textEmailAddress"
         android:padding="12dp"
         android:layout_marginBottom="8dp"
-        android:text="shlomi@gmail.com"
         android:textColor="#333333"
         android:textColorHint="#3d6664"
         android:gravity="right" />
@@ -43,11 +42,10 @@
         android:layout_height="wrap_content"
         android:background="@drawable/round_background"
         android:fontFamily="serif"
-        android:hint="הכנס סיסמה"
+        android:hint="@string/enterPassword"
         android:inputType="textPassword"
         android:padding="12dp"
         android:textColor="#333333"
-        android:text="123456789"
         android:textColorHint="#3d6664"
         android:layout_marginBottom="15dp"
         android:gravity="right" />
@@ -59,7 +57,7 @@
         android:backgroundTint="#004680"
         android:fontFamily="serif"
         android:padding="12dp"
-        android:text="התחבר"
+        android:text="@string/login"
         android:textColor="#FFFFFF"
         android:textSize="18dp"
         android:textStyle="bold" />

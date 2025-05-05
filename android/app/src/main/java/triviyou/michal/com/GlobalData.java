@@ -25,6 +25,4 @@ public class GlobalData {
     public void setNotificationAppeared(boolean notificationAppeared) {
         this.notificationAppeared = notificationAppeared;
     }
-
-
 }

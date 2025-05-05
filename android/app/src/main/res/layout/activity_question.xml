@@ -10,13 +10,6 @@
     android:background="#F9F9F9"
     tools:context=".QuestionActivity">
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_gravity="center" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +35,6 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <!-- Question Text -->
     <TextView
         android:id="@+id/tvQuestionText"
         android:layout_width="wrap_content"

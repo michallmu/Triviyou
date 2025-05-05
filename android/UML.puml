@@ -1,0 +1,165 @@
+@startuml
+class GlobalData {
+- {static} GlobalData instance
+- boolean notificationAppeared
+}
+
+class LoginActivity {
+~ Context context
+~ Intent goGames
+~ EditText etEmail
+~ Button bLogin
+~ TextView tvRegisterLink
+~ String email
+~ Helper helper
+~ FirebaseAuth mAuth
+}
+
+class GamesActivity {
+- ListView lvGames
+- FirebaseFirestore db
+- List<Game> gameList
+~ GameAdapter adapter
+~ Intent goUserGuide
+~ Context context
+~ Helper helper
+~ BottomNavigationView bottomNavigationView
+~ String email
+}
+
+class Question {
++ int id
++ String answer1
++ String answer2
++ String answer3
++ String answer4
++ int gameId
++ int level
++ String questionText
++ String questionType
++ String questionUrl
++ int correctAnswer
+}
+
+class UserGameHistory {
+- String userId
+- int gameId
+- boolean isFinished
+- int currentLevel
+- int failuresNumber
+}
+
+class gameItem {
+}
+class ProfileActivity {
+~ Context context
+~ ImageButton imgbBack4
+~ ImageView imgAccount
+~ TextView tvWantChangePassword
+~ Intent inputIntent
+- {static} String FRAGMENT_TAG
+- {static} int CAMERA_PERMISSION_CODE
+- {static} int REQUEST_CAMERA
+- {static} int REQUEST_GALLERY
+- {static} int STORAGE_PERMISSION_CODE
+- Uri imageUri
+- boolean isFragmentDisplayed
+~ Helper helper
+~ FirebaseAuth auth
+~ String userId
+- ActivityResultLauncher<Intent> pickImageLauncher
+- ActivityResultLauncher<Intent> takePictureLauncher
+}
+
+class Game {
+- int id
+- String name
+- String name_en
+- String description
+- String imageUrl
+- boolean isActive
+}
+
+class QuestionActivity {
+~ Context context
+~ ImageButton imgBback6
+- FirebaseFirestore db
+~ Intent goGames
+- CountDownTimer countdownTimer
+~ String userId
+~ Helper helper
+~ ImageView imgQuestion
+~ WebView videoQuestion
+~ TextView tvShowLevel
+~ RadioGroup answersGroup
+~ RadioButton rbAnswer1
+~ Button bSubmit
+~ int userLevel
+- List<Question> questionList
+}
+
+class RegisterActivity {
+~ ImageButton imgBback1
+~ Context context
+~ Intent inputIntent
+~ EditText etEmailRegister
+~ Button bCreateAcc
+~ Helper helper
+- FirebaseAuth firebaseAuth
+}
+
+class Helper {
+}
+class UserGuide {
+~ Context context
+~ ImageButton imgBback2
+~ Intent inputIntent
+}
+
+class NotificationReceiver {
+~ int countHistories
+}
+
+class changePasswordFragment {
+~ View view
+~ Context context
+~ Button bChangePassword
+~ EditText etNewPassword
+~ Helper helper
+}
+
+class SummaryActivity {
+~ FirebaseFirestore db
+~ Context context
+~ Intent goGames
+~ Button bBackGamesList
+~ CountDownTimer countDownTimer
+~ TextView tvTimer
+~ String userId
+~ Helper helper
+~ boolean isButtonClicked
+~ int gameId
+}
+
+class SplashScreen {
+}
+class GameAdapter {
+- Context context
+- List<Game> games
+}
+
+
+
+AppCompatActivity <|-- LoginActivity
+AppCompatActivity <|-- GamesActivity
+AppCompatActivity <|-- gameItem
+AppCompatActivity <|-- ProfileActivity
+AppCompatActivity <|-- QuestionActivity
+AppCompatActivity <|-- RegisterActivity
+AppCompatActivity <|-- UserGuide
+BroadcastReceiver <|-- NotificationReceiver
+Fragment <|-- changePasswordFragment
+AppCompatActivity <|-- SummaryActivity
+AppCompatActivity <|-- SplashScreen
+ArrayAdapter <|-- GameAdapter
+@enduml

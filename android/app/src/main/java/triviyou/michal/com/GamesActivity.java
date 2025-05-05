@@ -1,12 +1,10 @@
 package triviyou.michal.com;
+import static androidx.core.content.ContextCompat.getSystemService;
 import static triviyou.michal.com.R.*;
-
 import android.Manifest;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -20,7 +18,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import java.util.ArrayList;
 import java.util.List;
 import triviyou.michal.com.adapters.GameAdapter;
@@ -31,7 +28,6 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
 public class GamesActivity extends AppCompatActivity {
 
     private ListView lvGames;
