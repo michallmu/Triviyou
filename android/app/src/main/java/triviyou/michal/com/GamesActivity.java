@@ -90,6 +90,20 @@ public class GamesActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Helper.onActivityStarted(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Helper.onActivityStopped(this);
+    }
+
+
+
     private void checkUnfinishedGamesForUser() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String userId = auth.getCurrentUser().getUid();
@@ -111,10 +125,12 @@ public class GamesActivity extends AppCompatActivity {
     private void scheduleNotification(int countHistories) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
+        intent.putExtra("notification_type", "notificationShowHistories");
         intent.putExtra("countHistories", countHistories); // Pass message
 
         try {
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             long triggerTime = System.currentTimeMillis() + 3000;
 
             if (alarmManager != null) {

@@ -41,13 +41,13 @@ public class QuestionActivity extends AppCompatActivity {
     Helper helper = new Helper();
     ImageView imgQuestion;
     WebView videoQuestion;
-    TextView tvShowLevel, tvQuestionText, tvQuestionInfo, tvTimerQuestion;
+    TextView tvShowLevel, tvQuestionText, tvQuestionInfo, tvTimerQuestion, tvPodium;
     RadioGroup answersGroup;
     RadioButton rbAnswer1, rbAnswer2, rbAnswer3, rbAnswer4;
     Button bSubmit;
     int userLevel, gameId, failuresNumber, selectedAnswer, checkedId;
     private List<Question> questionList = new LinkedList<>(); // initialize as an empty list
-
+    Boolean isTop = false;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -66,6 +66,7 @@ public class QuestionActivity extends AppCompatActivity {
         tvQuestionText = findViewById(R.id.tvQuestionText);
         tvQuestionInfo = findViewById(R.id.tvQuestionInfo);
         tvTimerQuestion = findViewById(R.id.tvTimerQuestion);
+        tvPodium = findViewById(R.id.tvPodium);
         rbAnswer1 = findViewById(R.id.rbAnswer1);
         rbAnswer2 = findViewById(R.id.rbAnswer2);
         rbAnswer3 = findViewById(R.id.rbAnswer3);
@@ -107,6 +108,19 @@ public class QuestionActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Helper.onActivityStarted(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Helper.onActivityStopped(this);
+    }
+
 
     private void showElements() {
         rbAnswer1.setVisibility(View.VISIBLE);
@@ -216,6 +230,35 @@ public class QuestionActivity extends AppCompatActivity {
         });
     }
 
+    private void isUserTopFromDB(String userId, int gameId) {
+
+
+        db.collection("userGameHistory")
+                .whereEqualTo("gameId", gameId)
+                .get()
+                .addOnSuccessListener(snapshot -> {
+                    int maxLevel = 0;
+                    for (DocumentSnapshot doc : snapshot) {
+
+                        Long levelLong = doc.getLong("currentLevel");
+                        if (levelLong != null) {
+                            maxLevel = Math.max(maxLevel, levelLong.intValue());
+                        }
+                    }
+                    isTop = (userLevel == maxLevel);
+
+                    //check if user on pudiom (3 first places)
+                    if(isTop)
+                    {
+                        tvPodium.setVisibility(View.VISIBLE);
+                        tvPodium.setText(getString(R.string.podiumText));
+                    }
+                    else
+                        tvPodium.setVisibility(View.INVISIBLE);
+                });
+
+    }
+
     private void updateUserGameHistoryInDB(int userLevel, int failuresNumber) {
 
         UserGameHistory userGameHistory = new UserGameHistory(gameId,userId,questionList.isEmpty(),userLevel, failuresNumber);
@@ -224,8 +267,10 @@ public class QuestionActivity extends AppCompatActivity {
         // save to Firestore in "userGameHistory" collection
         db.collection("userGameHistory").document(documentId)
                 .set(userGameHistory)
-                .addOnSuccessListener(aVoid ->
-                        System.out.println("UserGameHistory saved successfully!")
+                .addOnSuccessListener(aVoid -> {
+
+                    isUserTopFromDB( userId,  gameId);
+                    System.out.println("UserGameHistory saved successfully!"); }
                 )
                 .addOnFailureListener(e ->
                         System.err.println("Error saving UserGameHistory: " + e.getMessage())

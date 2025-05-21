@@ -97,7 +97,8 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isFragmentDisplayed) {
-                    closeFragment();
+                    Helper.FragmentHelper.closeFragment(getSupportFragmentManager(), FRAGMENT_TAG);
+                    isFragmentDisplayed = false;
                     tvWantChangePassword.setText(getString(R.string.iWantChangePass));
                 } else {
                     showFragment();
@@ -128,9 +129,24 @@ public class ProfileActivity extends AppCompatActivity {
                         .show(); // show the alert dialog
 
             }
+
         });
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Helper.onActivityStarted(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Helper.onActivityStopped(this);
+    }
+
+
 
     // define a Launcher for the gallery action
     private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
@@ -267,7 +283,8 @@ public class ProfileActivity extends AppCompatActivity {
                 imageUri = data.getData();
                 imgAccount.setImageURI(imageUri);
                 saveImageToInternalStorage(imageUri); // saving the image to internal storage (if needed)
-            } else if (requestCode == REQUEST_CAMERA) {
+            }
+            else if (requestCode == REQUEST_CAMERA) {
                 imgAccount.setImageURI(imageUri); // displaying the captured image**
                 saveImageToInternalStorage(imageUri); // saving the image to internal storage**
             }
@@ -283,18 +300,7 @@ public class ProfileActivity extends AppCompatActivity {
         isFragmentDisplayed = true;
     }
 
-    private void closeFragment() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
-        if (fragment != null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .remove(fragment)
-                    .commit();
-            isFragmentDisplayed = false;
-        }
 
-
-    }
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

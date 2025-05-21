@@ -158,4 +158,18 @@
         android:textColor="#6A7278"
         android:textSize="15dp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvPodium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginTop="10dp"
+        android:fontFamily="serif"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#000000"
+        android:background="#8195B3"
+        android:textSize="20dp"
+        android:textStyle="bold" />
 </LinearLayout>

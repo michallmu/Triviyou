@@ -93,6 +93,18 @@ public class SummaryActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Helper.onActivityStarted(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Helper.onActivityStopped(this);
+    }
+
 
     private void deleteUserGameHistory(String userId, int gameId) {
         String documentId = userId + "_" + gameId; // the document id

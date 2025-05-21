@@ -64,7 +64,7 @@
     <string name="shortPasswordChange">העדכון נכשל, נסה סיסמה ארוכה יותר\n\n</string>
     <string name="numberOfFailures">"מספר הטעויות שלך הוא: "</string>
     <string name="noInternetConnection">אין חיבור לאינטרנט</string>
-    <string name="reminding">תזכורת קטנה</string>
+    <string name="reminding">TRIVIYOU</string>
     <string name="yes">כן</string>
     <string name="no">לא</string>
     <string name="sureLogOut">אתה בטוח שאתה רוצה להתנתק?</string>
@@ -81,4 +81,6 @@
     <string name="enterEmail"> כתובת אימייל</string>
     <string name="enterPassword"> סיסמה</string>
     <string name="registration">הרשמה</string>
+    <string name="reminderContinuePlaying">מזמינים אותך להמשיך לשחק!\n</string>
+    <string name="podiumText">הנך מוביל במשחק👑</string>
 </resources>

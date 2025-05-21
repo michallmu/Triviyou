@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
     private void checkValidAuth(String email, String password) {
         mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email, password)

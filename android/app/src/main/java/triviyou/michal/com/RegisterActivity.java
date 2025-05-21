@@ -62,6 +62,8 @@ public class RegisterActivity extends AppCompatActivity {
                     checkIfEmailExistsAndRegister(stEmail, stPassword);
                 }
             }
+
+
             private void checkIfEmailExistsAndRegister(final String email, final String password) { // checking if this email is already exists (has account)
                 firebaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                     @Override
@@ -103,6 +105,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+
             }
 
             private boolean validate(String stEmail, String stPassword, String stRepeatPassword) {
