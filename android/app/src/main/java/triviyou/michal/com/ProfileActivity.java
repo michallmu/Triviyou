@@ -50,7 +50,6 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int REQUEST_CAMERA = 1; // identifying a photo request
     private static final int REQUEST_GALLERY = 2; //identifying a gallery request
-    private static final int STORAGE_PERMISSION_CODE = 101; //identifying a storage permission
     private Uri imageUri;
     private boolean isFragmentDisplayed = false; // manages the fragment state
     Helper helper = new Helper();
@@ -75,7 +74,7 @@ public class ProfileActivity extends AppCompatActivity {
         goLogin = new Intent(context, LoginActivity.class);
 
 
-        // Load the saved profile image
+        // load previously saved profile picture (if exists)
         loadImageFromStorage();
 
 
@@ -131,40 +130,29 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Helper.onActivityStarted(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Helper.onActivityStopped(this);
-    }
-
-
     // define a Launcher for the gallery action
+    // this is the modern way to receive results from activities like the gallery
     private ActivityResultLauncher<Intent> pickImageLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                     imageUri = result.getData().getData();
-                    imgAccount.setImageURI(imageUri);
+                    imgAccount.setImageURI(imageUri); // save selected image
                 }
             });
 
     // define a Launcher for the camera action
+    // this is the modern result launcher for camera
     private ActivityResultLauncher<Intent> takePictureLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == RESULT_OK) {
-                    imgAccount.setImageURI(imageUri);
+                    imgAccount.setImageURI(imageUri); // save captured image
                 }
             });
 
 
-
+    // show dialog to choose camera or gallery
     private void selectImageFromStorage() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.chooseImageSource)
@@ -192,6 +180,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
+    // when user responds to the permission request
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == CAMERA_PERMISSION_CODE) {
@@ -203,6 +192,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    // start camera intent and prepare file to save the image
     private void takePhoto() {
         try {
             Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -218,6 +208,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    // load saved image from internal storage using shared preferences
     private void loadImageFromStorage() {
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         String imagePath = preferences.getString(userId, null);
@@ -231,6 +222,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    // create a file to store camera image
     private File createImageFile() {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
         File storageDir = getExternalFilesDir(null);
@@ -242,6 +234,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    // save the image (from gallery or camera) into app's internal directory
     private void saveImageToInternalStorage(Uri imageUri) {
         try {
             // get the input stream of the selected image
@@ -306,14 +299,5 @@ public class ProfileActivity extends AppCompatActivity {
             isFragmentDisplayed = false;
         }
         tvWantChangePassword.setText(getString(R.string.iWantChangePass));
-
-
-    }
-
-    private void replaceFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayoutChangePassword, fragment);
-        fragmentTransaction.commit();
     }
 }

@@ -93,18 +93,6 @@ public class SummaryActivity extends AppCompatActivity {
             }
         });
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Helper.onActivityStarted(this); // cancel notification when activity is visible
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Helper.onActivityStopped(this); // set notification when activity is not visible
-    }
-
 
     private void deleteUserGameHistory(String userId, int gameId) {
         String documentId = userId + "_" + gameId; // create document id from userId and gameId

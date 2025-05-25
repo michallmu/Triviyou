@@ -5,7 +5,17 @@
       <config />
     </shared>
     <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_games.xml">
+        <config>
+          <theme>@style/Theme.Triviyou</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+        <config>
+          <theme>@style/Theme.Triviyou</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml">
         <config>
           <theme>@style/Theme.Triviyou</theme>
         </config>
@@ -25,6 +35,11 @@
           <theme>@style/Theme.Triviyou</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_user_guide.xml">
+        <config>
+          <theme>@style/Theme.Triviyou</theme>
+        </config>
+      </layout>
     </layouts>
   </component>
   <component name="AutoImportSettings">
@@ -32,24 +47,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="08fedd6e-4c1a-495a-ba24-80beb4879c2e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/adapters/CheckApplicationState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UML.puml" beforeDir="false" afterPath="$PROJECT_DIR$/UML.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/GamesActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/GamesActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/GlobalData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/GlobalData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/GlobalData.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/Helper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/NotificationReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/NotificationReceiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/ProfileActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/QuestionActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/QuestionActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/RegisterActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/SplashScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/SplashScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/SummaryActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/SummaryActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/UserGuide.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/UserGuide.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/changePasswordFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/changePasswordFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_question.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_question.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +68,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\ADMIN\.android\avd\Pixel_6_Pro.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\ADMIN\.android\avd\Dror.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -81,6 +90,13 @@
         </projects_view>
       </state>
     </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -119,7 +135,10 @@
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/מיכל טריוויו",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RunManager">

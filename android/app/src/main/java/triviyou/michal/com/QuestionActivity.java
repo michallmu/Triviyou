@@ -109,19 +109,6 @@ public class QuestionActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Helper.onActivityStarted(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Helper.onActivityStopped(this);
-    }
-
-
     private void showElements() {
         rbAnswer1.setVisibility(View.VISIBLE);
         rbAnswer2.setVisibility(View.VISIBLE);
@@ -135,24 +122,24 @@ public class QuestionActivity extends AppCompatActivity {
             // check if the selected answer is correct
             int selectAnswer = 0;
             selectAnswer = getSelectAnswer(selectAnswer);
-            if(selectAnswer == 0)
-            {
+            if(selectAnswer == 0) { // no answer selected
                 helper.toasting(context, getString(R.string.noAnswerSelected));
             }
-            else if (selectAnswer != questionList.get(0).correctAnswer) {
+            else if (selectAnswer != questionList.get(0).correctAnswer) { // answer is wrong
                 failuresNumber++;
                 helper.toasting(context, getString(R.string.wrongAnswerTryAgain));
             }
             else {
                 // answer is correct
                 // so first - remove the question from the list
-
                 if (countdownTimer != null) {
-                    countdownTimer.cancel();
+                    countdownTimer.cancel(); // stop timer
                 }
 
-                userLevel = questionList.get(0).getLevel();
-                questionList.remove(0);
+                userLevel = questionList.get(0).getLevel(); // get level of question
+                questionList.remove(0); // remove the question
+
+                // if next question is higher level, update level
                 if((questionList.size()>0) && (questionList.get(0).getLevel() == (userLevel + 1))) {
                     userLevel = questionList.get(0).getLevel();
                 }
@@ -165,7 +152,7 @@ public class QuestionActivity extends AppCompatActivity {
                 }
                 else {
                     // show next question after submit
-                    showSingleQuestion(questionList.get(0)); // get next question
+                    showSingleQuestion(questionList.get(0)); // show next question
                 }
             }
         }
@@ -173,21 +160,20 @@ public class QuestionActivity extends AppCompatActivity {
 
     // method to continue with the rest of the logic after fetching the user history data
     private void continueAfterGettingUserHistory(UserGameHistory userGameHistory) {
-        if (userGameHistory == null) {
+        if (userGameHistory == null) { // no history found
             userLevel = 1;
             failuresNumber = 0;
-
-            }
-        else {
+        }
+        else { // history exists
             userLevel = userGameHistory.getCurrentLevel();
             failuresNumber = userGameHistory.getFailuresNumber();
-            if (userGameHistory.isFinished()) {
+            if (userGameHistory.isFinished()) { // game already finished
                 moveToSummaryActivity();
 
             }
         }
 
-        // get the questions from Firestore
+        // get the questions from Firestore for this level
         getQuestionsFromDB(gameId, userLevel);
 
 
@@ -231,35 +217,31 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void isUserTopFromDB(String userId, int gameId) {
-
-
+        // get all documents from 'userGameHistory' where gameId matches
         db.collection("userGameHistory")
                 .whereEqualTo("gameId", gameId)
                 .get()
                 .addOnSuccessListener(snapshot -> {
                     int maxLevel = 0;
                     for (DocumentSnapshot doc : snapshot) {
-                        Long levelLong = doc.getLong("currentLevel");
+                        Long levelLong = doc.getLong("currentLevel"); // get the user's level from this document
                         if (levelLong != null) {
-                            maxLevel = Math.max(maxLevel, levelLong.intValue());
+                            maxLevel = Math.max(maxLevel, levelLong.intValue()); // update maxLevel if this one is higher
                         }
                     }
-                    isTop = (userLevel == maxLevel);
-
-                    //check if user on pudiom (3 first places)
+                    isTop = (userLevel == maxLevel); // check if this user is at the top level
                     if(isTop)
                     {
                         tvPodium.setVisibility(View.VISIBLE);
                         tvPodium.setText(getString(R.string.podiumText));
                     }
                     else
-                        tvPodium.setVisibility(View.INVISIBLE);
+                        tvPodium.setVisibility(View.INVISIBLE); // hide the message if not top
                 });
 
     }
 
     private void updateUserGameHistoryInDB(int userLevel, int failuresNumber) {
-
         UserGameHistory userGameHistory = new UserGameHistory(gameId,userId,questionList.isEmpty(),userLevel, failuresNumber);
         String documentId = userId + "_" + gameId;
 
@@ -268,7 +250,7 @@ public class QuestionActivity extends AppCompatActivity {
                 .set(userGameHistory)
                 .addOnSuccessListener(aVoid -> {
 
-                    isUserTopFromDB( userId,  gameId);
+                    isUserTopFromDB( userId,  gameId); // after saving, check if user is the top player
                     System.out.println("UserGameHistory saved successfully!"); }
                 )
                 .addOnFailureListener(e ->
@@ -290,7 +272,7 @@ public class QuestionActivity extends AppCompatActivity {
                         try{
                             // hide loading indicator after the task completes
                             if (task.isSuccessful()) {
-                                questionList.clear(); // clear old data
+                                questionList.clear(); // remove old questions
 
                                 // the task return document (json) for each question in FB
                                 for (QueryDocumentSnapshot document : task.getResult()) {
@@ -301,8 +283,6 @@ public class QuestionActivity extends AppCompatActivity {
 
                                 // ensure we have data before calling initQuestion
                                 if (!questionList.isEmpty()) {
-
-                                    // show the first question from the list
                                     showSingleQuestion(questionList.get(0)); // show the first question
                                 } else {
                                     helper.toasting(context, getString(R.string.noQuestionFound));
@@ -363,8 +343,10 @@ public class QuestionActivity extends AppCompatActivity {
         rbAnswer4.setChecked(false);
 
         if ("video".equalsIgnoreCase(question.getQuestionType())) {
+            // if the question type is "video" (ignoring case), don't show the timer
             tvTimerQuestion.setVisibility(View.GONE);
         } else {
+            // if it's not a video question, start the timer based on user level
             startTimer(userLevel);
             tvTimerQuestion.setVisibility(View.VISIBLE);
         }

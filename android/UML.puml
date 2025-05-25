@@ -1,7 +1,7 @@
 @startuml
-class GlobalData {
-- {static} GlobalData instance
-- boolean notificationAppeared
+class CheckApplicationState {
+~ Context context
+- int activityCount
 }
 
 class LoginActivity {
@@ -61,7 +61,6 @@ class ProfileActivity {
 - {static} int CAMERA_PERMISSION_CODE
 - {static} int REQUEST_CAMERA
 - {static} int REQUEST_GALLERY
-- {static} int STORAGE_PERMISSION_CODE
 - Uri imageUri
 - boolean isFragmentDisplayed
 ~ Helper helper
@@ -96,6 +95,7 @@ class QuestionActivity {
 ~ Button bSubmit
 ~ int userLevel
 - List<Question> questionList
+~ Boolean isTop
 }
 
 class RegisterActivity {
@@ -150,6 +150,8 @@ class GameAdapter {
 
 
 
+ActivityLifecycleCallbacks <|.. CheckApplicationState
+Application <|-- CheckApplicationState
 AppCompatActivity <|-- LoginActivity
 AppCompatActivity <|-- GamesActivity
 AppCompatActivity <|-- gameItem

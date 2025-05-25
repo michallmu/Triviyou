@@ -80,30 +80,8 @@ public class GamesActivity extends AppCompatActivity {
         lvGames.setAdapter(adapter); // set adapter to ListView
 
         getGamesFromDB(); // load games from Firestore
-
-        // global data is actually a singleton i used to show the notification once after login
-        // check unfinished games and notify if needed
-        if (!GlobalData.getInstance().isNotificationAppeared()) {
-            checkUnfinishedGamesForUser();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
-                GlobalData.getInstance().setNotificationAppeared(true); // Mark as shown
-            }
-        }
+        checkUnfinishedGamesForUser();
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Helper.onActivityStarted(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Helper.onActivityStopped(this);
-    }
-
 
     // check if user has unfinished games
     private void checkUnfinishedGamesForUser() {
@@ -134,13 +112,10 @@ public class GamesActivity extends AppCompatActivity {
         try {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-            long triggerTime = System.currentTimeMillis() + 3 * 1000;
+            long triggerTime = System.currentTimeMillis() + 1500; //(1.5 seconds)
 
             if (alarmManager != null) {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent); // schedule alarm
-                Log.d("AlarmManager", "Notification scheduled in 3 seconds with message: " + countHistories);
-            } else {
-                Log.e("AlarmManager", "Failed to get AlarmManager instance.");
             }
         }
 
@@ -167,8 +142,6 @@ public class GamesActivity extends AppCompatActivity {
                             gameList.add(game);
                         }
                         adapter.notifyDataSetChanged(); // update ListView
-
-                        
                         // set item click listener after data is fetched
                         lvGames.setOnItemClickListener((parent, view, position, id) -> {
                             Log.d("ItemClick", "Item clicked at position: " + position);  // log click event
