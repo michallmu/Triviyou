@@ -58,8 +58,9 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
+    // try to login using Firebase Authentication
     private void checkValidAuth(String email, String password) {
+        // login successful, go to GamesActivity
         mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
@@ -68,7 +69,8 @@ public class LoginActivity extends AppCompatActivity {
                         goGames.putExtra("email", email);
                         goGames.putExtra("userId", user.getUid());
                         startActivity(goGames);
-                    } else { // sign in failed
+                    } else { // sign in failed, show error message
+                        // get the error message from the failed Firebase login task
                         String errorMessage = task.getException().getMessage();
                         Log.e("LoginError", errorMessage);
                         helper.toasting(context, getString(R.string.messageEmptyOrInvalid));

@@ -13,11 +13,12 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_splash_screen);
-        int splashScreenDuration = 2500; //
-                new Handler().postDelayed(() -> {
+
+        int splashScreenDuration = 2500;
+                new Handler().postDelayed(() -> { // wait before opening next screen
                     Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
                     startActivity(intent);
-                    finish();
+                    finish(); // close splash screen so user can't go back to it
                 }, splashScreenDuration);
     }
 

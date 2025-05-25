@@ -1,38 +1,40 @@
 package triviyou.michal.com;
+
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class changePasswordFragment extends Fragment {
-   View view;
-   Context context;
-   Button bChangePassword;
-   EditText etNewPassword, etRepeatNewPassword;
-   Helper helper = new Helper();
-    private static final String FRAGMENT_TAG = "CHANGE_PASSWORD_FRAGMENT";
+
+    View view;
+    Context context;
+    Button bChangePassword;
+    EditText etNewPassword, etRepeatNewPassword;
+    Helper helper = new Helper();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_change_password, container, false);
+        view = inflater.inflate(R.layout.fragment_change_password, container, false); // xml connection
 
         context = getActivity();
         etNewPassword = view.findViewById(R.id.etNewPassword);
         etRepeatNewPassword = view.findViewById(R.id.etRepeatNewPassword);
         bChangePassword = view.findViewById(R.id.bChangePassword);
-
 
         bChangePassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +51,6 @@ public class changePasswordFragment extends Fragment {
                     return;
                 }
 
-                // בדיקת אם הסיסמה ריקה
                 if (newPassword.equals("")) {
                     helper.toasting(context, getString(R.string.messageEmptyPassword));
                     return;
@@ -63,10 +64,11 @@ public class changePasswordFragment extends Fragment {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         helper.toasting(context, getString(R.string.passwordUpdatedSuccessfully));
-                                        Helper.FragmentHelper.closeFragment(requireActivity().getSupportFragmentManager(), FRAGMENT_TAG);
-
-
-                                    } else {
+                                        if (getActivity() instanceof ProfileActivity) {
+                                            ((ProfileActivity) getActivity()).closeFragment();
+                                        }
+                                    }
+                                    else {
                                         helper.toasting(context, getString(R.string.shortPasswordChange));
                                     }
                                 }
@@ -74,8 +76,6 @@ public class changePasswordFragment extends Fragment {
                 }
             }
         });
-
-
         return view;
     }
 }

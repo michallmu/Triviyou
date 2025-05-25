@@ -39,18 +39,20 @@ public class NotificationReceiver extends BroadcastReceiver {
         }
 
         else {
-            return; //the device is older 26
+            return; // notifications not supported on older Android versions
         }
 
-        //build the messsage to show in notification
-        String message = context.getString(R.string.allThe);
+        //build the message to show in notification
+        String message = " ";
         if (notificationType.equals("notificationShowHistories") && countHistories > 0)
             message = context.getString(R.string.thereAre) + countHistories + context.getString(R.string.didntFinish);
 
+        // if it's a reminder to play again, change the message
         if (notificationType.equals("notificationToPlayAgain")) {
             message = context.getString(R.string.reminderContinuePlaying);
         }
 
+        // build the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.finishgameclear)
                 .setContentTitle(context.getString(R.string.reminding))
@@ -61,7 +63,10 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setColor(ContextCompat.getColor(context, R.color.blue));
 
         int notificationId = 1;
+        // show the notification
         notificationManager.notify(notificationId, builder.build());
+
+        // if autoDismiss is true, cancel the notification after 8 seconds
         if(autoDismiss) {
             new Handler().postDelayed(() -> notificationManager.cancel(notificationId), 8000);
         }

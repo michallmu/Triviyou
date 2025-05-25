@@ -1,13 +1,15 @@
 package triviyou.michal.com;
 
+// Singleton class to store global data accessible throughout the app
 public class GlobalData {
-    private static GlobalData instance;
-    private boolean notificationAppeared; // Replace with your variable type
+    private static GlobalData instance; // single instance of GlobalData
+    private boolean notificationAppeared; // flag to track notification status
 
-    private GlobalData() {
+    private GlobalData() { // private constructor to prevent direct instantiation
     }
 
     public static synchronized GlobalData getInstance() {
+        // create instance if not exists
         if (instance == null) {
             instance = new GlobalData();
         }
@@ -15,6 +17,7 @@ public class GlobalData {
     }
 
     public static void setInstance(GlobalData instance) {
+        // allow replacing the singleton instance if needed (rarely used)
         GlobalData.instance = instance;
     }
 

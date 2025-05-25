@@ -239,7 +239,6 @@ public class QuestionActivity extends AppCompatActivity {
                 .addOnSuccessListener(snapshot -> {
                     int maxLevel = 0;
                     for (DocumentSnapshot doc : snapshot) {
-
                         Long levelLong = doc.getLong("currentLevel");
                         if (levelLong != null) {
                             maxLevel = Math.max(maxLevel, levelLong.intValue());

@@ -74,18 +74,20 @@ public class GamesActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance(); // initialize Firestore
 
+        // setup game list and adapter
         gameList = new ArrayList<>();
         adapter = new GameAdapter(this, gameList);
-
         lvGames.setAdapter(adapter); // set adapter to ListView
-        getGamesFromDB();
+
+        getGamesFromDB(); // load games from Firestore
 
         // global data is actually a singleton i used to show the notification once after login
+        // check unfinished games and notify if needed
         if (!GlobalData.getInstance().isNotificationAppeared()) {
             checkUnfinishedGamesForUser();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
-                GlobalData.getInstance().setNotificationAppeared(true);
+                GlobalData.getInstance().setNotificationAppeared(true); // Mark as shown
             }
         }
     }
@@ -103,25 +105,26 @@ public class GamesActivity extends AppCompatActivity {
     }
 
 
-
+    // check if user has unfinished games
     private void checkUnfinishedGamesForUser() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String userId = auth.getCurrentUser().getUid();
 
         db.collection("userGameHistory")
-                .whereEqualTo("userId", userId)
-                .whereEqualTo("finished", false)
+                .whereEqualTo("userId", userId) // filter by userId
+                .whereEqualTo("finished", false) // get only unfinished games
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     // queryDocumentSnapshots, means , that user have at least one history doc in db.
-                    // otherwise , we not  popup him
+                    // otherwise, we not popup him
                     if (!queryDocumentSnapshots.isEmpty()) {
-                        scheduleNotification(queryDocumentSnapshots.size());
+                        scheduleNotification(queryDocumentSnapshots.size()); // schedule reminder
                     }
                 })
                 .addOnFailureListener(e -> Log.e("Firestore", "Error fetching unfinished games", e));
     }
 
+    // schedule a notification after 3 seconds
     private void scheduleNotification(int countHistories) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
@@ -131,10 +134,10 @@ public class GamesActivity extends AppCompatActivity {
         try {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent,
                     PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-            long triggerTime = System.currentTimeMillis() + 3000;
+            long triggerTime = System.currentTimeMillis() + 3 * 1000;
 
             if (alarmManager != null) {
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent); // schedule alarm
                 Log.d("AlarmManager", "Notification scheduled in 3 seconds with message: " + countHistories);
             } else {
                 Log.e("AlarmManager", "Failed to get AlarmManager instance.");
@@ -146,6 +149,7 @@ public class GamesActivity extends AppCompatActivity {
         }
     }
 
+    // load games from Firestore and set in list
     private void getGamesFromDB() {
         db.collection("games")
                 .get()
@@ -154,10 +158,10 @@ public class GamesActivity extends AppCompatActivity {
                         gameList.clear(); // clear old data
 
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Game game = document.toObject(Game.class);
+                            Game game = document.toObject(Game.class); // convert to Game
 
                             //this handle the boolean from firestore object
-                            boolean isActive = document.getBoolean("isActive");
+                            boolean isActive = document.getBoolean("isActive"); // get 'isActive'
                             game.setActive(isActive);
 
                             gameList.add(game);

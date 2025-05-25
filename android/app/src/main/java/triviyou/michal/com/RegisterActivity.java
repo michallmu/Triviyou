@@ -39,7 +39,8 @@ public class RegisterActivity extends AppCompatActivity {
         etRepeatPasswordRegister = findViewById(R.id.etRepeatPasswordRegister);
         bCreateAcc = findViewById(R.id.bCreateAcc);
         imgBback1 = findViewById(R.id.imgBback1);
-        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance(); // get firebase instance
+
 
         imgBback1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,14 +65,14 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
 
-            private void checkIfEmailExistsAndRegister(final String email, final String password) { // checking if this email is already exists (has account)
+            private void checkIfEmailExistsAndRegister(final String email, final String password) {  // check if email already has account
                 firebaseAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                     @Override
                     public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
                         if (task.isSuccessful()) {
                             boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
                             if (isNewUser) {
-                                createNewUser(email, password);
+                                createNewUser(email, password); // email is free
                             } else {
                                 helper.toasting(context, getString(R.string.emailAlreadyExists));
                             }
@@ -85,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // registration success, user is created
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
+                            FirebaseUser user = firebaseAuth.getCurrentUser(); // get new user
                             if (user != null) {
                                 // save additional user details like nickname to database if needed
                                 helper.toasting(context, getString(R.string.registeredSuccessfuly));
@@ -122,7 +123,7 @@ public class RegisterActivity extends AppCompatActivity {
                     helper.toasting(context, getString(R.string.messageNotEqualPasswords));
                     return false;
                 }
-                return true;
+                return true; // valid input
             }
         });
     }

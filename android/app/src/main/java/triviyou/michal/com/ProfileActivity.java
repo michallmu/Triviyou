@@ -50,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int REQUEST_CAMERA = 1; // identifying a photo request
     private static final int REQUEST_GALLERY = 2; //identifying a gallery request
-    private static final int STORAGE_PERMISSION_CODE = 101; //identifying a storage permission.
+    private static final int STORAGE_PERMISSION_CODE = 101; //identifying a storage permission
     private Uri imageUri;
     private boolean isFragmentDisplayed = false; // manages the fragment state
     Helper helper = new Helper();
@@ -97,9 +97,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isFragmentDisplayed) {
-                    Helper.FragmentHelper.closeFragment(getSupportFragmentManager(), FRAGMENT_TAG);
-                    isFragmentDisplayed = false;
-                    tvWantChangePassword.setText(getString(R.string.iWantChangePass));
+                    closeFragment();
                 } else {
                     showFragment();
                     tvWantChangePassword.setText(getString(R.string.close));
@@ -129,7 +127,6 @@ public class ProfileActivity extends AppCompatActivity {
                         .show(); // show the alert dialog
 
             }
-
         });
 
     }
@@ -145,7 +142,6 @@ public class ProfileActivity extends AppCompatActivity {
         super.onStop();
         Helper.onActivityStopped(this);
     }
-
 
 
     // define a Launcher for the gallery action
@@ -220,7 +216,7 @@ public class ProfileActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("error camera", "", e);
         }
-}
+    }
 
     private void loadImageFromStorage() {
         SharedPreferences preferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
@@ -283,15 +279,14 @@ public class ProfileActivity extends AppCompatActivity {
                 imageUri = data.getData();
                 imgAccount.setImageURI(imageUri);
                 saveImageToInternalStorage(imageUri); // saving the image to internal storage (if needed)
-            }
-            else if (requestCode == REQUEST_CAMERA) {
+            } else if (requestCode == REQUEST_CAMERA) {
                 imgAccount.setImageURI(imageUri); // displaying the captured image**
                 saveImageToInternalStorage(imageUri); // saving the image to internal storage**
             }
         }
     }
 
-    private void showFragment() {
+    public void showFragment() {
         Fragment fragment = new changePasswordFragment();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -300,13 +295,25 @@ public class ProfileActivity extends AppCompatActivity {
         isFragmentDisplayed = true;
     }
 
+    public void closeFragment() {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG);
+        if (fragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .remove(fragment)
+                    .commitNow();
 
+            isFragmentDisplayed = false;
+        }
+        tvWantChangePassword.setText(getString(R.string.iWantChangePass));
+
+
+    }
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutChangePassword, fragment);
         fragmentTransaction.commit();
-
     }
 }

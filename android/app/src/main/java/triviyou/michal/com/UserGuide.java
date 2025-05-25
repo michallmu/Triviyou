@@ -38,18 +38,15 @@ public class UserGuide extends AppCompatActivity {
         });
     }
 
-    @Override
+    @Override // runs when the screen becomes visible to the user
     protected void onStart() {
         super.onStart();
-        Helper.onActivityStarted(this);
+        Helper.onActivityStarted(this); // cancel the notification because the user opened the app
     }
 
-    @Override
+    @Override // runs when the screen is no longer visible
     protected void onStop() {
         super.onStop();
-        Helper.onActivityStopped(this);
+        Helper.onActivityStopped(this); // set a notification reminder because the user left the app
     }
-
-
-
 }

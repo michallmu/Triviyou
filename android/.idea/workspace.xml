@@ -15,6 +15,11 @@
           <theme>@style/Theme.Triviyou</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml">
+        <config>
+          <theme>@style/Theme.Triviyou</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_summary.xml">
         <config>
           <theme>@style/Theme.Triviyou</theme>
@@ -26,7 +31,26 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08fedd6e-4c1a-495a-ba24-80beb4879c2e" name="Changes" comment="" />
+    <list default="true" id="08fedd6e-4c1a-495a-ba24-80beb4879c2e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/GamesActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/GamesActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/GlobalData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/GlobalData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/Helper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/NotificationReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/NotificationReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/ProfileActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/QuestionActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/QuestionActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/RegisterActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/SplashScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/SplashScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/SummaryActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/SummaryActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/UserGuide.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/UserGuide.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/changePasswordFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/changePasswordFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_question.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_question.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,16 +108,17 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Android App.app.executor": "Debug",
+    "Android App.app.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/code/MICHALANDROID",
+    "last_opened_file_path": "C:/מיכל טריוויו",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
@@ -152,21 +177,5 @@
       <updated>1747595657646</updated>
     </task>
     <servers />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/QuestionActivity.java</url>
-          <line>323</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/triviyou/michal/com/QuestionActivity.java</url>
-          <line>317</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

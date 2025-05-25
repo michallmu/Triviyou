@@ -31,7 +31,7 @@ public class SummaryActivity extends AppCompatActivity {
     TextView tvTimer, tvResults;
     String userId;
     Helper helper = new Helper();
-    boolean isButtonClicked = false;
+    boolean isButtonClicked = false; // used to prevent auto navigation if a button is clicked
     int gameId, summaryDuration = 15000, grade;
 
     @SuppressLint("MissingInflatedId")
@@ -52,28 +52,28 @@ public class SummaryActivity extends AppCompatActivity {
 
         grade = inputIntent.getIntExtra("grade",grade);
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        userId = auth.getCurrentUser().getUid();
+        FirebaseAuth auth = FirebaseAuth.getInstance(); // get current user
+        userId = auth.getCurrentUser().getUid(); // get user id
 
         gameId = inputIntent.getIntExtra("gameId", gameId);
 
 
-        getUserHistory(userId, gameId);
+        getUserHistory(userId, gameId); // load user game history
 
         countDownTimer = new CountDownTimer(summaryDuration, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                tvTimer.setText(getString(R.string.automaticTransition) + (millisUntilFinished / 1000) + " שניות");
+                tvTimer.setText(getString(R.string.automaticTransition) + (millisUntilFinished / 1000) + " שניות"); // update countdown text every second
             }
 
             @Override
             public void onFinish() {
                 if (!isButtonClicked) {
                     startActivity(goGames);
-                    finish();
+                    finish();  // close this activity
                 }
             }
-        }.start();
+        }.start(); // start the countdown timer
 
 
         bStartGame.setOnClickListener(new View.OnClickListener() {
@@ -89,30 +89,30 @@ public class SummaryActivity extends AppCompatActivity {
                 isButtonClicked = true; // prevent auto navigation
                 countDownTimer.cancel();
                 startActivity(goGames);
-                finish();
+                finish(); // close this activity
             }
         });
     }
     @Override
     protected void onStart() {
         super.onStart();
-        Helper.onActivityStarted(this);
+        Helper.onActivityStarted(this); // cancel notification when activity is visible
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Helper.onActivityStopped(this);
+        Helper.onActivityStopped(this); // set notification when activity is not visible
     }
 
 
     private void deleteUserGameHistory(String userId, int gameId) {
-        String documentId = userId + "_" + gameId; // the document id
+        String documentId = userId + "_" + gameId; // create document id from userId and gameId
 
         db.collection("userGameHistory").document(documentId)
                 .delete()
                 .addOnSuccessListener(aVoid -> {
-                    startGame.putExtra("gameId", gameId);
+                    startGame.putExtra("gameId", gameId); // pass gameId to new game
                     startActivity(startGame);
 
                     Log.d("Firestore", "Document successfully deleted!");
@@ -128,7 +128,7 @@ public class SummaryActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (countDownTimer != null) {
-            countDownTimer.cancel();
+            countDownTimer.cancel(); // cancel timer when activity is destroyed
         }
     }
 
@@ -144,7 +144,7 @@ public class SummaryActivity extends AppCompatActivity {
                 if (documentSnapshot != null && documentSnapshot.exists()) {
                     // document exists, process it
                     try {
-                        UserGameHistory userGameHistory = documentSnapshot.toObject(UserGameHistory.class);
+                        UserGameHistory userGameHistory = documentSnapshot.toObject(UserGameHistory.class); // convert to object
                         if (userGameHistory.getFailuresNumber() > 0)
                             tvResults.setText(getString(R.string.numberOfFailures) + userGameHistory.getFailuresNumber());
                     }
